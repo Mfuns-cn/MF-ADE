@@ -1,3 +1,8 @@
+/**
+ * 初始化配置接口
+ */
+
 export interface InitConfigInterface{
-    canvas:Element
+    /**渲染的画布 */
+    containers:Element
 }

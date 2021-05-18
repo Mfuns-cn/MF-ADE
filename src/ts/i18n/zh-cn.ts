@@ -1,3 +1,3 @@
 export default {
-    "canvas is null" : "画布为空"
+    "Containers is null" : "容器为空"
 }

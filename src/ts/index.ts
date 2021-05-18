@@ -1,13 +1,14 @@
 import "../css/base.css";
 import { Controller } from './Controller/Controller';
 import { i18n } from "./i18n"
+import { InitConfigInterface } from "./interface/InitConfigInterface";
 class MfunsDanMaku {
-    main() {
+    main(config:InitConfigInterface) {
         //类型检查
-        if (!canvas) {
-            throw ReferenceError(i18n.t("canvas is null"))
+        if (!config.containers) {
+            throw ReferenceError(i18n.t("Containers is null"))
         }
-        new Controller(canvas)
+        new Controller(config.containers)
     }
 }
 //添加进全局
