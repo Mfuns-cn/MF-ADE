@@ -1,0 +1,34 @@
+#box{
+    border: 1px solid black;
+    width: 600px;
+    height: 800px;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+}
+
+.block {
+    width: 100px;
+    /* height: 100px;*/
+    /*animation-name: example;
+    animation-duration: 4s;
+    animation-timing-function: linear; */
+    transform: translateZ(0) ;
+    position: absolute;
+    transition:transform 100ms linear;
+
+}
+
+
+@keyframes example{
+    from {
+       transform: translateX(600px);
+
+       /* left: 0px; */
+    }
+    to{
+        transform: translateX(-100px);
+        /* left: 100px; */
+        
+    }
+}
