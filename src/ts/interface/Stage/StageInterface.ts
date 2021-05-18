@@ -1,6 +1,7 @@
-import { ColorInterface } from "./ColorInterface";
-import { PositionInterface } from "./PositionInterface";
-import { SizeInterface } from "./SizeInterface";
+import { ColorInterface } from "../Style/ColorInterface";
+import { PositionInterface } from "../Style/PositionInterface";
+import { RendererInterface } from "../Renderer/RendererInterface";
+import { SizeInterface } from "../Style/SizeInterface";
 
 export interface StageInterface{
     /**
@@ -19,5 +20,11 @@ export interface StageInterface{
      * @param containersSize 容器尺寸
      */
     stageBackgroundColor(containersSize:SizeInterface):ColorInterface;
+
+    /**
+     * 接收渲染器对象
+     * @param render 渲染器对象
+     */
+    stageRenderer(render:RendererInterface):boolean;
 }
 

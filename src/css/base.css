@@ -1,0 +1,6 @@
+.danmaku-containers{
+    position: relative;
+}
+.danmaku-containers .stage{
+    position: absolute;
+}

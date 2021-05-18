@@ -3,6 +3,6 @@
  */
 
 export interface InitConfigInterface{
-    /**渲染的画布 */
-    containers:Element
+    /**渲染的容器 */
+    containers:HTMLElement
 }

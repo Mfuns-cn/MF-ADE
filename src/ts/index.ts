@@ -8,7 +8,7 @@ class MfunsDanMaku {
         if (!config.containers) {
             throw ReferenceError(i18n.t("Containers is null"))
         }
-        new Controller(config.containers)
+        new Controller(config.containers).mount()
     }
 }
 //添加进全局
