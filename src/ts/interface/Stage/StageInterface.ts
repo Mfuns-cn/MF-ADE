@@ -27,5 +27,10 @@ export interface StageInterface{
      * @param render 渲染器对象
      */
     stageRenderer(render:RendererInterface):boolean;
+
+    /**
+     * 获取渲染器对象
+     */
+    getRenderer():RendererInterface | null
 }
 

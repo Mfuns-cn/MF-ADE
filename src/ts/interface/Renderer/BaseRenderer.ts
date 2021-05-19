@@ -19,7 +19,6 @@ export class BaseRenderer implements RendererInterface{
             return true
         }else{
             return false
-        }
-        
+        }  
     }
 }

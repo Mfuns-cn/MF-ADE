@@ -12,6 +12,11 @@ class MfunsDanMaku {
          let c =  new Controller(config.containers)
          c.registStage(new BaseStage(),1)
          c.mount()
+
+         //监听大小变化
+         window.addEventListener("resize",()=>{
+             c.resize()
+         })
     }
 }
 //添加进全局

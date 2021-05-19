@@ -84,6 +84,19 @@ export class Controller {
         }
         this.containers.classList.add("danmaku-containers")
     }
+
+    /**
+     * 重置尺寸
+     */
+    public resize(){
+        //重置舞台的尺寸
+        this.stageList.forEach((stage)=>{
+            let render = stage.getRenderer()
+            if( render ){
+                render.updateCanvasStyle(this.getCanvasStylByStage(stage));
+            }
+        })
+    }
     /**
      * 创建div容器 
      */
