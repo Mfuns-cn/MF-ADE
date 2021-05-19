@@ -1,6 +1,13 @@
 .danmaku-containers{
     position: relative;
 }
+.danmaku-containers  *{
+    box-sizing: border-box;
+}
 .danmaku-containers .stage{
     position: absolute;
 }
+.danmaku-containers-debug *{
+    border: 1px solid black;
+}
+

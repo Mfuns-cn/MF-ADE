@@ -1,6 +1,10 @@
 
 import { SizeInterface } from "../interface/Style/SizeInterface";
 import { StageInterface } from "../interface/Stage/StageInterface";
+import { Context } from "../Context/Context";
+import { i18n } from "../i18n";
+import { canvasStyle } from "../interface/Style/CanvasStyle";
+import { RendererFactory } from "../interface/Renderer/RendererFactory";
 
 /**
  * 控制器 ，统一管理整个弹幕系统
@@ -19,7 +23,6 @@ export class Controller {
      * 舞台列表
      */
     protected stageList: StageInterface[] = [];
-
     constructor(containers: HTMLElement) {
         this.containers = containers
         //获取实时的style对象，当大小发生变化时，会更新自身
@@ -55,16 +58,19 @@ export class Controller {
      * 将舞台挂载到容器中
      */
     public mount() {
+        console.log(i18n.t("Start mount stage"));
+        //遍历每一个舞台
         this.stageList.forEach((stage) => {
-
-            let size = stage.stageSize(this.getContainersSize())
-            let pos = stage.stagePosition(this.getContainersSize())
+            //获取一个div
             let div = this.getDIV()
-            div.style.width = size.width + "px";
-            div.style.height = size.height + "px";
-            div.style.left = pos.x + "px"
-            div.style.top = pos.y + "px"
-
+            //给舞台初始化渲染器
+            let render = RendererFactory.getRenderInstance("base");
+            //将div挂载到渲染器
+            render.setCanvasContainer(div)
+            //设置舞台渲染器
+            stage.stageRenderer(render);
+            //更新渲染器内画布样式
+            render.updateCanvasStyle(this.getCanvasStylByStage(stage))
         })
     }
 
@@ -72,15 +78,32 @@ export class Controller {
      * 初始化弹幕容器
      */
     protected initContainer() {
-        this.containers.classList.add("danmaku-containers");
+        if (Context.debug) {
+            //debug模式
+            this.containers.classList.add("danmaku-containers-debug")
+        }
+        this.containers.classList.add("danmaku-containers")
     }
     /**
      * 创建div容器 
      */
-    protected getDIV():HTMLElement{
+    protected getDIV(): HTMLElement {
         let div = document.createElement("div");
         div.classList.add("stage")
+        this.containers.appendChild(div);
         return div;
+    }
+
+    /**
+     * 根据舞台对象创建一个canvasStyle
+     * @param stage 舞台对象
+     * @returns 
+     */
+    protected getCanvasStylByStage(stage: StageInterface): canvasStyle {
+        let size = stage.stageSize(this.getContainersSize())
+        let color = stage.stageBackgroundColor(this.getContainersSize())
+        let pos = stage.stagePosition(this.getContainersSize(), size)
+        return { position: pos, color: color, size: size }
     }
 
 }

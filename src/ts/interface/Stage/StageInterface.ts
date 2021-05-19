@@ -12,8 +12,9 @@ export interface StageInterface{
     /**
      * 设置舞台位置
      * @param containersSize 容器的尺寸
+     * @param stageSize 舞台的尺寸
      */
-    stagePosition(containersSize:SizeInterface):PositionInterface;
+    stagePosition(containersSize:SizeInterface,stageSize:SizeInterface):PositionInterface;
 
     /**
      * 设置舞台背景

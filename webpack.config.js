@@ -8,7 +8,10 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   resolve: {
-    extensions: ['.js', '.ts', '.vue', '.json']
+    extensions: ['.js', '.ts', '.vue', '.json'],
+    alias: {
+      "src": path.join(__dirname, "./src") // 这样@符号就表示项目根目录中src这一层路径
+    }
  },
   module: {
     rules: [
