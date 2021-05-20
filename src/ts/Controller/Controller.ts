@@ -4,7 +4,7 @@ import { StageInterface } from "../interface/Stage/StageInterface";
 import { Context } from "../Context/Context";
 import { i18n } from "../i18n";
 import { canvasStyle } from "../interface/Style/CanvasStyle";
-import { RendererFactory } from "../interface/Renderer/RendererFactory";
+import { RendererFactory } from "src/ts/Factory/RendererFactory";
 
 /**
  * 控制器 ，统一管理整个弹幕系统
@@ -64,13 +64,14 @@ export class Controller {
             //获取一个div
             let div = this.getDIV()
             //给舞台初始化渲染器
-            let render = RendererFactory.getRenderInstance("base");
+            let render = RendererFactory.getRenderInstance("css3");
             //将div挂载到渲染器
             render.setCanvasContainer(div)
             //设置舞台渲染器
             stage.stageRenderer(render);
             //更新渲染器内画布样式
             render.updateCanvasStyle(this.getCanvasStylByStage(stage))
+            stage.test()
         })
     }
 

@@ -1,3 +1,4 @@
+import { DanmakuItemInterface } from "../Danmaku/DanmakuItemInterface";
 import { canvasStyle } from "../Style/CanvasStyle";
 
 /**
@@ -15,4 +16,13 @@ export interface RendererInterface{
      */
     updateCanvasStyle(style:canvasStyle):boolean;
 
+    /**
+     * 渲染弹幕
+     */
+    addDanmaku(danmaku:DanmakuItemInterface):boolean
+
+    /**
+     * 刷新渲染器，一般一秒钟会调用60次
+     */
+    refresh():boolean
 }

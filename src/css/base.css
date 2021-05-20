@@ -6,6 +6,7 @@
 }
 .danmaku-containers .stage{
     position: absolute;
+    overflow: hidden;
 }
 .danmaku-containers-debug *{
     border: 1px solid black;

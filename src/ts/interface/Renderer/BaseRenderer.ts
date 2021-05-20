@@ -1,9 +1,16 @@
 
 import { UnitTools } from "src/ts/util/UnitTools";
+import { DanmakuItemInterface } from "../Danmaku/DanmakuItemInterface";
 import { canvasStyle } from "../Style/CanvasStyle";
 import { RendererInterface } from "./RendererInterface";
 
 export class BaseRenderer implements RendererInterface{
+    addDanmaku(danmaku: DanmakuItemInterface): boolean {
+        throw new Error("Method not implemented.");
+    }
+    refresh(): boolean {
+        throw new Error("Method not implemented.");
+    }
     protected canvas?:HTMLElement
     setCanvasContainer(canvas: HTMLElement): boolean {
         this.canvas = canvas

@@ -1,26 +1,28 @@
+import { LinearAnimation } from "../Danmaku/Animation/LinearAnimation";
+import { BaseDanmaku } from "../Danmaku/BaseDanmaku";
 import { RendererInterface } from "../Renderer/RendererInterface";
 import { ColorInterface } from "../Style/ColorInterface";
 import { PositionInterface } from "../Style/PositionInterface";
 import { SizeInterface } from "../Style/SizeInterface";
 import { StageInterface } from "./StageInterface";
 
-export class BaseStage implements StageInterface {
+export abstract class BaseStage implements StageInterface {
 
     protected renderer: RendererInterface;
     stageSize(containersSize: SizeInterface): SizeInterface {
         return {
-            width: containersSize.width * 0.8,
-            height: containersSize.height * 0.3
+            width: containersSize.width,
+            height: containersSize.height
         }
     }
-    stagePosition(containersSize: SizeInterface, stageSize: SizeInterface): PositionInterface {
+    stagePosition(): PositionInterface {
         return {
-            x: (containersSize.width - stageSize.width) / 2,
-            y: containersSize.height - stageSize.height
+            x:0,
+            y:0
         }
     }
     stageBackgroundColor(): ColorInterface {
-        return { r: 0, g: 0, b: 0, a: 1 }
+        return { r: 0, g: 0, b: 0, a: 0 }
     }
     stageRenderer(render: RendererInterface): boolean {
         this.renderer = render
@@ -28,6 +30,9 @@ export class BaseStage implements StageInterface {
     }
     getRenderer(): RendererInterface {
         return this.renderer
+    }
+    test(){
+       this.getRenderer().addDanmaku(new BaseDanmaku("111"))
     }
 
 
