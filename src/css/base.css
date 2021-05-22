@@ -9,6 +9,6 @@
     overflow: hidden;
 }
 .danmaku-containers-debug *{
-    border: 1px solid black;
+    /* outline: 1px solid black; */
 }
 

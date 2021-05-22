@@ -2,6 +2,7 @@ import { UnitTools } from "src/ts/util/UnitTools";
 import { AnimationInterface } from "../Danmaku/Animation/AnimationInterface";
 import { DanmakuItemInterface } from "../Danmaku/DanmakuItemInterface";
 import { canvasStyle } from "../Style/CanvasStyle";
+import { DanmakuStyle } from "../Style/DanmakuStyle";
 import { RendererInterface } from "./RendererInterface";
 
 
@@ -45,6 +46,7 @@ export class CSS3Renderer implements RendererInterface {
             let obj: DanmakuObj = {
                 element: div,
                 animation: danmaku.getAnimation(),
+                style:danmaku.getStyle(),
                 child: []
             }
             let child = danmaku.getChild()
@@ -68,6 +70,7 @@ export class CSS3Renderer implements RendererInterface {
         let array:Array<HTMLElement> = []
         danmakuobj.forEach((item)=>{
             let element = item.element;
+            element.style.transform = UnitTools.Matrix3dString(item.animation.getMatrix(0));
             if (item.child){
                 let eles = this.recursionDiv(item.child)
                 eles.forEach((ele)=>{
@@ -92,6 +95,7 @@ export class CSS3Renderer implements RendererInterface {
 }
 interface DanmakuObj {
     element: HTMLElement,
+    style:DanmakuStyle
     animation: AnimationInterface
     child: DanmakuObj[]
 }

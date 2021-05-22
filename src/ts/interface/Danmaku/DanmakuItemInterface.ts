@@ -1,4 +1,4 @@
-import { canvasStyle } from "../Style/CanvasStyle";
+import { DanmakuStyle } from "../Style/DanmakuStyle";
 import { AnimationInterface } from "./Animation/AnimationInterface";
 
 /**
@@ -8,5 +8,5 @@ export interface DanmakuItemInterface{
     getContent():string
     getChild():DanmakuItemInterface[]
     getAnimation():AnimationInterface
-    getStyle():canvasStyle
+    getStyle():DanmakuStyle
 }
