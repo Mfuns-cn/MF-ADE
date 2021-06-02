@@ -1,4 +1,4 @@
-import { ColorInterface } from "./ColorInterface";
+import { Color } from "./Unit/Color";
 import { PositionInterface } from "./PositionInterface";
 import { SizeInterface } from "./SizeInterface";
 /**
@@ -6,6 +6,6 @@ import { SizeInterface } from "./SizeInterface";
  */
 export interface canvasStyle{
     size:SizeInterface,
-    color:ColorInterface,
+    color:Color,
     position:PositionInterface
 }

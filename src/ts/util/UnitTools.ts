@@ -1,5 +1,5 @@
 import { i18n } from "../i18n";
-import { ColorInterface } from "../interface/Style/ColorInterface";
+import { Color } from "../interface/Style/Unit/Color";
 
 export class UnitTools{
     /**
@@ -11,14 +11,6 @@ export class UnitTools{
         return num + "px";
     }
     /**
-     * 拼接rgba()颜色字符串
-     * @param color 颜色
-     * @returns 
-     */
-    static colorString(color:ColorInterface):string{
-        return "rgba(" + color.r + "," + color.g + "," + color.b + "," + color.a + ")"
-    }
-    /**
      * 拼接 Matrix3d() 字符串
      * @param arr 16位数字
      */
@@ -28,4 +20,7 @@ export class UnitTools{
         }
         return "Matrix3d(" + arr.join(",") + ")";
     }
+    // static UnitFactory(type:string,obj):string{
+
+    // }
 }

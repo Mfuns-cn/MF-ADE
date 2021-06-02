@@ -1,4 +1,4 @@
-import { ColorInterface } from "../Style/ColorInterface";
+import { Color } from "../Style/Unit/Color";
 import { PositionInterface } from "../Style/PositionInterface";
 import { RendererInterface } from "../Renderer/RendererInterface";
 import { SizeInterface } from "../Style/SizeInterface";
@@ -20,7 +20,7 @@ export interface StageInterface{
      * 设置舞台背景
      * @param containersSize 容器尺寸
      */
-    stageBackgroundColor(containersSize:SizeInterface):ColorInterface;
+    stageBackgroundColor(containersSize:SizeInterface):Color;
 
     /**
      * 接收渲染器对象
@@ -32,5 +32,10 @@ export interface StageInterface{
      * 获取渲染器对象
      */
     getRenderer():RendererInterface | null
+
+    /**
+     * 刷新舞台
+     */
+    refresh():boolean
 }
 

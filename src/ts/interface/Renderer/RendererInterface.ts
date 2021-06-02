@@ -22,7 +22,7 @@ export interface RendererInterface{
     addDanmaku(danmaku:DanmakuItemInterface):boolean
 
     /**
-     * 刷新渲染器，一般一秒钟会调用60次
+     * 刷新渲染器，会根据刷新率调用
      */
-    refresh():boolean
+    refresh(time):boolean
 }

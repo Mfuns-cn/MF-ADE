@@ -1,4 +1,5 @@
 import { DanmakuStyle } from "../Style/DanmakuStyle";
+import { SizeInterface } from "../Style/SizeInterface";
 import { AnimationInterface } from "./Animation/AnimationInterface";
 
 /**

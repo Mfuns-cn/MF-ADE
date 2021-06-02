@@ -5,6 +5,8 @@ import { Context } from "../Context/Context";
 import { i18n } from "../i18n";
 import { canvasStyle } from "../interface/Style/CanvasStyle";
 import { RendererFactory } from "src/ts/Factory/RendererFactory";
+import { PxSize } from "../interface/Style/Unit/PxSize";
+import { TimeLineInterface } from "../TimeLine/TimeLineInterface";
 
 /**
  * 控制器 ，统一管理整个弹幕系统
@@ -21,23 +23,43 @@ export class Controller {
     protected canvasStyle: CSSStyleDeclaration;
     /**
      * 舞台列表
-     */
+    */
     protected stageList: StageInterface[] = [];
+    /**
+     * 暂停
+     */
+    protected pause:boolean = true;
+   
+    /**
+     * 时间轴对象
+     */
+   public timeLine?:TimeLineInterface
     constructor(containers: HTMLElement) {
         this.containers = containers
         //获取实时的style对象，当大小发生变化时，会更新自身
         this.canvasStyle = window.getComputedStyle(containers);
         //初始化容器
         this.initContainer()
-    }
+        let that = this;
+        (function animloop() {
+            
+            if(!that.pause){
+                // console.log(1);
+                
+                that.refresh()
+            }
+            requestAnimationFrame(animloop);
 
+            
+        })()
+    }
     /**
      * 获得容器尺寸
      */
     public getContainersSize(): SizeInterface {
         return {
-            width: parseInt(this.canvasStyle.width),
-            height: parseInt(this.canvasStyle.height)
+            width: new PxSize(parseInt(this.canvasStyle.width)) ,
+            height: new PxSize(parseInt(this.canvasStyle.height))
         }
     }
     /**
@@ -71,7 +93,6 @@ export class Controller {
             stage.stageRenderer(render);
             //更新渲染器内画布样式
             render.updateCanvasStyle(this.getCanvasStylByStage(stage))
-            stage.test()
         })
     }
 
@@ -84,6 +105,7 @@ export class Controller {
             this.containers.classList.add("danmaku-containers-debug")
         }
         this.containers.classList.add("danmaku-containers")
+        
     }
 
     /**
@@ -118,6 +140,17 @@ export class Controller {
         let color = stage.stageBackgroundColor(this.getContainersSize())
         let pos = stage.stagePosition(this.getContainersSize(), size)
         return { position: pos, color: color, size: size }
+    }
+
+    refresh(){
+        //通知每个舞台刷新
+        this.stageList.forEach((stage)=>{
+            // console.log(1)
+            stage.refresh()
+        })
+    }
+    setTimeLine(timeLine:TimeLineInterface){
+        this.timeLine = timeLine;
     }
 
 }

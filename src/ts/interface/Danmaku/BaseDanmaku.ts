@@ -1,4 +1,7 @@
 import { DanmakuStyle } from "../Style/DanmakuStyle";
+import { Color } from "../Style/Unit/Color";
+import { PxSize } from "../Style/Unit/PxSize";
+import { Shadow } from "../Style/Unit/Shadow";
 import { AnimationInterface } from "./Animation/AnimationInterface";
 import { LinearAnimation } from "./Animation/LinearAnimation";
 import { DanmakuItemInterface } from "./DanmakuItemInterface";
@@ -13,7 +16,7 @@ export class BaseDanmaku implements DanmakuItemInterface {
         return this.content
     }
     getChild(): DanmakuItemInterface[] {
-        if (Math.random() > 0.1) {
+        if (Math.random() < 0.3) {
             return [new BaseDanmaku(Math.random() + '')]
         }
         return []
@@ -24,20 +27,14 @@ export class BaseDanmaku implements DanmakuItemInterface {
     }
     getStyle(): DanmakuStyle {
         return {
-            position: {
-                x: 0,
-                y: 0
+            fontStyle: {
+                fontSize: new PxSize(100),
             },
-            color: {
-                r: 0, g: 0, b: 0, a: 1
-            },
-            background: {
-                r: 0, g: 0, b: 0, a: .1
-            },
-            size: {
-                width: 100,
-                height: 30
+            boxStyle: {
+                boxShadow: new Shadow(new PxSize(10), new PxSize(10), new PxSize(10), new Color(0, 0, 0, .3)),
+                backgroundColor: new Color(0,255,255,1)
             }
         }
     }
 }
+
