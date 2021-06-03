@@ -6,7 +6,6 @@ import { i18n } from "../i18n";
 import { canvasStyle } from "../interface/Style/CanvasStyle";
 import { RendererFactory } from "src/ts/Factory/RendererFactory";
 import { PxSize } from "../interface/Style/Unit/PxSize";
-import { TimeLineInterface } from "../TimeLine/TimeLineInterface";
 
 /**
  * 控制器 ，统一管理整个弹幕系统
@@ -28,12 +27,7 @@ export class Controller {
     /**
      * 暂停
      */
-    protected pause:boolean = true;
-   
-    /**
-     * 时间轴对象
-     */
-   public timeLine?:TimeLineInterface
+    protected pause: boolean = true;
     constructor(containers: HTMLElement) {
         this.containers = containers
         //获取实时的style对象，当大小发生变化时，会更新自身
@@ -42,15 +36,13 @@ export class Controller {
         this.initContainer()
         let that = this;
         (function animloop() {
-            
-            if(!that.pause){
-                // console.log(1);
-                
+
+            if (!that.pause) {
                 that.refresh()
             }
             requestAnimationFrame(animloop);
 
-            
+
         })()
     }
     /**
@@ -58,7 +50,7 @@ export class Controller {
      */
     public getContainersSize(): SizeInterface {
         return {
-            width: new PxSize(parseInt(this.canvasStyle.width)) ,
+            width: new PxSize(parseInt(this.canvasStyle.width)),
             height: new PxSize(parseInt(this.canvasStyle.height))
         }
     }
@@ -105,17 +97,17 @@ export class Controller {
             this.containers.classList.add("danmaku-containers-debug")
         }
         this.containers.classList.add("danmaku-containers")
-        
+
     }
 
     /**
      * 重置尺寸
      */
-    public resize(){
+    public resize() {
         //重置舞台的尺寸
-        this.stageList.forEach((stage)=>{
+        this.stageList.forEach((stage) => {
             let render = stage.getRenderer()
-            if( render ){
+            if (render) {
                 render.updateCanvasStyle(this.getCanvasStylByStage(stage));
             }
         })
@@ -142,15 +134,11 @@ export class Controller {
         return { position: pos, color: color, size: size }
     }
 
-    refresh(){
+    refresh() {
         //通知每个舞台刷新
-        this.stageList.forEach((stage)=>{
+        this.stageList.forEach((stage) => {
             // console.log(1)
             stage.refresh()
         })
     }
-    setTimeLine(timeLine:TimeLineInterface){
-        this.timeLine = timeLine;
-    }
-
 }

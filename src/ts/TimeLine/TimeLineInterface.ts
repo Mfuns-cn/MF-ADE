@@ -1,5 +1,9 @@
-import { DanmakuItemInterface } from "../interface/Danmaku/DanmakuItemInterface";
+import { TimeLineDanmaku } from "./TimeLineDanmaku";
 
 export interface TimeLineInterface{
-    getDanmakuList(time:number):{danmaku:DanmakuItemInterface,time:number}
+    /**
+     * 获取弹幕列表
+     * @param time 当前播放时间
+     */
+    getDanmakuList(time:number):TimeLineDanmaku[]
 }

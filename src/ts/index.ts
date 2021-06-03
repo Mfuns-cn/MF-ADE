@@ -3,9 +3,7 @@ import { Controller } from './Controller/Controller';
 import { i18n } from "./i18n"
 import { InitConfigInterface } from "./interface/InitConfigInterface";
 import { TestStage } from "./interface/Stage/TestStage";
-import { TestLine } from "./TimeLine/TestLine";
 class MfunsDanMaku {
-    line = new TestLine()
 
     main(config: InitConfigInterface) {
         //类型检查
@@ -15,15 +13,10 @@ class MfunsDanMaku {
         let c = new Controller(config.containers)
         c.registStage(new TestStage(), 1)
         c.mount()
-
-        c.setTimeLine(new TestLine())
         //监听大小变化
         window.addEventListener("resize", () => {
             c.resize()
         })
-    }
-    getLine(){
-        return this.line
     }
 }
 //添加进全局

@@ -11,4 +11,10 @@ export interface AnimationInterface{
      * @param time 
      */
     getStyle(time:number):DanmakuStyle|false
+
+    /**
+     * 设置动画参数
+     * @param json json格式的参数
+     */
+    setParams(param:{[idx: string]:any}):boolean
 }

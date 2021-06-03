@@ -1,4 +1,7 @@
-class Cubic {
+/**
+ * 贝塞尔相关工具函数
+ */
+export class Cubic {
     px3: number
     px2: number
     px1: number
