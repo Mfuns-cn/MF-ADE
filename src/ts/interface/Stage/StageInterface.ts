@@ -2,22 +2,23 @@ import { Color } from "../Style/Unit/Color";
 import { PositionInterface } from "../Style/PositionInterface";
 import { RendererInterface } from "../Renderer/RendererInterface";
 import { SizeInterface } from "../Style/SizeInterface";
+import { TimeLineInterface } from "src/ts/TimeLine/TimeLineInterface";
 
 export interface StageInterface{
     /**
-     * 设置舞台的尺寸
+     * 获取舞台的尺寸
      * @param containersSize 容器的尺寸
      */
     stageSize(containersSize:SizeInterface):SizeInterface;
     /**
-     * 设置舞台位置
+     * 获取舞台位置
      * @param containersSize 容器的尺寸
      * @param stageSize 舞台的尺寸
      */
     stagePosition(containersSize:SizeInterface,stageSize:SizeInterface):PositionInterface;
 
     /**
-     * 设置舞台背景
+     * 获取舞台背景
      * @param containersSize 容器尺寸
      */
     stageBackgroundColor(containersSize:SizeInterface):Color;
@@ -29,6 +30,10 @@ export interface StageInterface{
     stageRenderer(render:RendererInterface):boolean;
 
     /**
+     * 设置时间轴对象
+     */
+    timeLine(timeLine:TimeLineInterface):boolean
+    /**
      * 获取渲染器对象
      */
     getRenderer():RendererInterface | null
@@ -36,6 +41,9 @@ export interface StageInterface{
     /**
      * 刷新舞台
      */
-    refresh():boolean
+    refresh(time:number):boolean
+
+
+    
 }
 

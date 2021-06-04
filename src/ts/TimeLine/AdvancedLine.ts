@@ -5,7 +5,7 @@ import { TimeLineInterface } from "./TimeLineInterface";
 export class AdvancedLine implements TimeLineInterface {
 
     /**
-     * 上次获取时间
+     * 上次获取时间(10ms)
      */
     lastTime: number = 0
     /**
@@ -33,6 +33,9 @@ export class AdvancedLine implements TimeLineInterface {
      */
     addDanmaku(danmaku: DanmakuItemInterface, start: number, end: number) {
         let index = this.timeToIndex(start);
+        if(!this.danmakuList[index]){
+            this.danmakuList[index] = []
+        }
         this.danmakuList[index].push({
             danmaku: danmaku,
             start: start,
@@ -47,18 +50,24 @@ export class AdvancedLine implements TimeLineInterface {
     protected timeToIndex(time: number): number {
         return Math.floor(time / 10)
     }
-    getDanmakuList(time: number): TimeLineDanmaku[] {
+    getDanmakuList(time: number):{skip:boolean;DanmakuList:TimeLineDanmaku[]}  {
         time = this.timeToIndex(time);
         //如果请求的时间超过了时间轴。。。
         if (time < 0 || time > this.tolalTime) {
-            return [];
+            return {skip:false,DanmakuList:[]};
         }
 
         let arr: TimeLineDanmaku[] = [];
-        if (this.lastTime < time && time - this.lastTime < 10) {
+        let skip = false;
+        if (this.lastTime < time && time - this.lastTime < 5) {
             //正常播放情况,遍历期间的所有内容
-            for (let a = this.lastTime; a <= time; a++) {
+            // console.log(this.lastTime);
+            
+            for (let a = this.lastTime; a < time; a++) {
+                
                 if (this.danmakuList[a]) {
+                    // console.log(time);
+                    
                     arr.push(...this.danmakuList[a])
                 }
             }
@@ -67,23 +76,28 @@ export class AdvancedLine implements TimeLineInterface {
             //否则说明播放发生了跳转，则遍历找到合适的内容
             //查找范围：在当前时间之前开始的，并且结束于当前时间之后的，
             //先找到之前开始的
-            for (let timeIndex = 0; timeIndex <= time; timeIndex++) {
+            // console.log(time);
+            for (let timeIndex = 0; timeIndex < time; timeIndex++) {
+                // console.log(timeIndex);
+                
                 if (!this.danmakuList[timeIndex]) {
-                    break;//当前时间不存在
+                    continue;//当前时间不存在
                 }
                 //接着再查找当前时间之后结束的
                 for (let l = 0; l < this.danmakuList.length; l++) {
                     if (this.danmakuList[timeIndex][l]
                         &&
                         this.timeToIndex(this.danmakuList[timeIndex][l].end)
-                        >= time) {
+                        > time) {
                         arr.push(this.danmakuList[timeIndex][l])
                     }
                 }
             }
+            skip = true;
 
         }
-        return arr;
+        this.lastTime = time
+        return {skip:skip,DanmakuList:arr};
     }
 
 }

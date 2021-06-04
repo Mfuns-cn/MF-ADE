@@ -30,4 +30,6 @@ export interface DanmakuItemInterface{
      * @param param 
      */
     setParams(param:{[idx: string]:any}):boolean
+
+    startTime():number
 }

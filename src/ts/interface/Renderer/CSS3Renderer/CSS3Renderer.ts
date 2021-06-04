@@ -8,6 +8,7 @@ import { DanmakuObj, DanmakuTool } from "./CssDanmakuObj";
 
 
 export class CSS3Renderer implements RendererInterface {
+
     canvasSize: SizeInterface = {
         width: new PxSize(1600),
         height: new PxSize(900)
@@ -62,5 +63,14 @@ export class CSS3Renderer implements RendererInterface {
         DanmakuTool.recursionStyle(this.danmakuList,this.canvas,time)
         return true;
     }
-
+    reset(): boolean {
+        //清空画布
+        if(this.canvas){
+            this.canvas.innerHTML = "";
+        }
+        //清空数组
+        this.danmakuList = []
+        return true
+        
+    }
 }

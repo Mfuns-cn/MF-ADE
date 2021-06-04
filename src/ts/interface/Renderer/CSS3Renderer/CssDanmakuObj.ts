@@ -8,6 +8,7 @@ export interface DanmakuObj {
     style: DanmakuStyle
     animation: AnimationInterface
     child: DanmakuObj[]
+    start:number
 }
 
 export class DanmakuTool {
@@ -25,7 +26,8 @@ export class DanmakuTool {
                 element: div,
                 animation: danmaku.getAnimation(),
                 style: danmaku.getStyle(),
-                child: []
+                child: [],
+                start:danmaku.startTime()
             }
             let child = danmaku.getChild()
             let childObj;
@@ -91,15 +93,13 @@ export class DanmakuTool {
      * 递归设置弹幕动画
      * @param danmaku 
      */
-    static recursionStyle(danmaku:DanmakuObj[],canvas:HTMLElement,time:number){ 
+    static recursionStyle(danmaku:DanmakuObj[],canvas:HTMLElement,abstime:number){ 
        
-            
         danmaku.forEach((dan,key)=>{
             //更新弹幕样式
+            let time = abstime - dan.start;
             
-            
-            
-            // console.log(dan.element);
+        
             
             let sty;
             let max;

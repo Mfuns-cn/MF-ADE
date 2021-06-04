@@ -6,6 +6,8 @@ import { i18n } from "../i18n";
 import { canvasStyle } from "../interface/Style/CanvasStyle";
 import { RendererFactory } from "src/ts/Factory/RendererFactory";
 import { PxSize } from "../interface/Style/Unit/PxSize";
+import { AdvancedLine } from "../TimeLine/AdvancedLine";
+import { BaseDanmaku } from "../interface/Danmaku/BaseDanmaku";
 
 /**
  * 控制器 ，统一管理整个弹幕系统
@@ -25,9 +27,21 @@ export class Controller {
     */
     protected stageList: StageInterface[] = [];
     /**
-     * 暂停
+     * 暂停状态
      */
-    protected pause: boolean = true;
+    protected pauseStatus: boolean = true;
+    /**
+     * 时间戳
+     */
+    protected timeStamp: number = 0;
+    /**
+     * 播放的时间
+     */
+    protected time: number = 0;
+    /**
+     * 跳转状态
+     */
+    skipStatus: boolean = false;
     constructor(containers: HTMLElement) {
         this.containers = containers
         //获取实时的style对象，当大小发生变化时，会更新自身
@@ -37,7 +51,7 @@ export class Controller {
         let that = this;
         (function animloop() {
 
-            if (!that.pause) {
+            if (!that.pauseStatus) {
                 that.refresh()
             }
             requestAnimationFrame(animloop);
@@ -83,6 +97,19 @@ export class Controller {
             render.setCanvasContainer(div)
             //设置舞台渲染器
             stage.stageRenderer(render);
+            //设置舞台时间轴
+            let timeline = new AdvancedLine(300000)
+            let danmu = new BaseDanmaku()
+            danmu.setContent("123")
+            danmu.setParams({
+                start:1000,
+                fontStyle:{
+                    color:"red",
+                    fontSize:100
+                }
+            })
+            timeline.addDanmaku(danmu,1000,10000)
+            stage.timeLine(timeline)
             //更新渲染器内画布样式
             render.updateCanvasStyle(this.getCanvasStylByStage(stage))
         })
@@ -135,10 +162,46 @@ export class Controller {
     }
 
     refresh() {
+
+        this.time = Date.now() - this.timeStamp
         //通知每个舞台刷新
         this.stageList.forEach((stage) => {
             // console.log(1)
-            stage.refresh()
+            stage.refresh(this.time)
         })
+    }
+
+    /**
+     * 暂停
+     */
+    pause() {
+        if (!this.pauseStatus) {
+            this.pauseStatus = true;
+        }
+    }
+    /**
+     * 播放
+     */
+    start() {
+        if (this.pauseStatus) {
+            //同步时间
+            this.timeStamp = Date.now() - this.time;
+            this.pauseStatus = false;
+        }
+    }
+    /**
+     * 跳转
+     */
+    skip(time: number) {
+        if (this.pauseStatus) {
+            //如果是暂停
+            this.time = time;
+        } else {
+            //否则使用这个方法
+            this.timeStamp = Date.now() - time
+        }
+    }
+    getTime() {
+        return this.time
     }
 }

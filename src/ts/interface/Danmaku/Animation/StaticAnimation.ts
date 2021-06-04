@@ -6,11 +6,10 @@ import { AnimationInterface } from "./AnimationInterface";
  */
 export default class StaticAnimation implements AnimationInterface {
 
-    time: number;
-    x: number;
-    y: number;
-    z: number;
-
+    time: number = 10000;
+    x: number = 0;
+    y: number = 0;
+    z: number = 0;
     setParams(param: { [idx: string]: any; }): boolean {
         let def = 0;
         this.time = param.time || def
@@ -26,7 +25,7 @@ export default class StaticAnimation implements AnimationInterface {
             1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
-            this.x, this.y, this.z, 1
+            0.1*time , this.y, this.z, 1
 
         ]
     }

@@ -5,18 +5,31 @@ import { InitConfigInterface } from "./interface/InitConfigInterface";
 import { TestStage } from "./interface/Stage/TestStage";
 class MfunsDanMaku {
 
+    controller:Controller; 
     main(config: InitConfigInterface) {
         //类型检查
         if (!config.containers) {
             throw ReferenceError(i18n.t("Containers is null"))
         }
-        let c = new Controller(config.containers)
-        c.registStage(new TestStage(), 1)
-        c.mount()
+        this.controller = new Controller(config.containers)
+        this.controller.registStage(new TestStage(), 1)
+        this.controller.mount()
         //监听大小变化
         window.addEventListener("resize", () => {
-            c.resize()
+            this.controller.resize()
         })
+    }
+    pause(){
+        this.controller.pause()
+    }
+    start(){
+        this.controller.start()
+    }
+    skip(time:number){
+        this.controller.skip(time)
+    }
+    time(){
+        return this.controller.getTime()
     }
 }
 //添加进全局

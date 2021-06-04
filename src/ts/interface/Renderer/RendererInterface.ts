@@ -24,5 +24,10 @@ export interface RendererInterface{
     /**
      * 刷新渲染器，会根据刷新率调用
      */
-    refresh(time):boolean
+    refresh(time:number):boolean
+
+    /**
+     * 重置渲染器
+     */
+    reset():boolean
 }

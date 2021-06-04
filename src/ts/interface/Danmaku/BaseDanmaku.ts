@@ -14,32 +14,16 @@ import { DanmakuItemInterface } from "./DanmakuItemInterface";
  */
 export class BaseDanmaku implements DanmakuItemInterface {
 
-    defPxSize = new PxSize(0);
-    defColor = Color.getColor("black")
-    fontStyle: FontInterface = {
-        fontStyle: Fontstyle.inherit,
-        fontWeight: 400,
-        fontFamily: "sans-serif",
-        fontSize: new PxSize(16),
-        color: this.defColor,
-        textShadow: new Shadow(this.defPxSize, this.defPxSize, this.defPxSize, this.defColor),
-    }
 
-    boxStyle: BoxStyleInterface = {
-        //边框
-        borderTop: new Border(0, "solid", Color.getColor("black")),
-        borderBottom: new Border(0, "solid", Color.getColor("black")),
-        borderLeft: new Border(0, "solid", Color.getColor("black")),
-        borderRight: new Border(0, "solid", Color.getColor("black")),
-        //阴影
-        boxShadow: new Shadow(this.defPxSize, this.defPxSize, this.defPxSize, this.defColor),
-        //背景
-        backgroundColor: this.defColor,
-    }
+    fontStyle: FontInterface = {}
+
+    boxStyle: BoxStyleInterface = {}
+    start:number;
     /**
      * 设置参数
      * 正确的格式为
      * {
+     *   start:number
      *   fontStyle:{},
      *   boxStyle:{}
      * }
@@ -48,26 +32,43 @@ export class BaseDanmaku implements DanmakuItemInterface {
      */
     setParams(param: { [idx: string]: any; }): boolean {
         //设置文字样式
-        if (param.fontStyle) {
-            let fontStyle = param.fontStyle
-            fontStyle.style ? this.fontStyle.fontStyle = fontStyle.fontStyle : null;
-            fontStyle.fontWeight ? this.fontStyle.fontWeight = fontStyle.fontWeight : null;
-            fontStyle.fontFamily ? this.fontStyle.fontFamily = fontStyle.fontFamily : null;
-            fontStyle.fontSize ? this.fontStyle.fontSize = new PxSize(fontStyle.fontSize) : null;
-            //颜色为文字
-            fontStyle.color ?this.fontStyle.color = this.getColor(fontStyle.color):0;
-            fontStyle.textShadow ? this.fontStyle.textShadow =
-                new Shadow(new PxSize(fontStyle.textShadow.h),
-                    new PxSize(fontStyle.textShadow.v),
-                    new PxSize(fontStyle.textShadow.blur),
-                    this.getColor(fontStyle.textShadow.blur),
-                    fontStyle.textShadow.inset) : 0;
-
+        try{
+            if (param.fontStyle) {
+                let fontStyle = param.fontStyle
+                fontStyle.style && (this.fontStyle.fontStyle = fontStyle.fontStyle);
+                fontStyle.fontWeight && (this.fontStyle.fontWeight = fontStyle.fontWeight);
+                fontStyle.fontFamily && (this.fontStyle.fontFamily = fontStyle.fontFamily);
+                fontStyle.fontSize && (this.fontStyle.fontSize = new PxSize(fontStyle.fontSize));
+                //颜色为文字
+                fontStyle.color && (this.fontStyle.color = this.getColor(fontStyle.color));
+                fontStyle.textShadow && (this.fontStyle.textShadow =
+                    new Shadow(new PxSize(fontStyle.textShadow.h),
+                        new PxSize(fontStyle.textShadow.v),
+                        new PxSize(fontStyle.textShadow.blur),
+                        this.getColor(fontStyle.textShadow.blur),
+                        fontStyle.textShadow.inset));
+    
+            }
+            //设置盒子样式
+            if (param.boxStyle) {
+                let boxStyle = param.boxStyle;
+                boxStyle.borderTop && (this.boxStyle.borderTop = new Border(boxStyle.borderTop.width, boxStyle.borderTop.style, this.getColor(boxStyle.borderTop.color)))
+                boxStyle.borderBottom && (this.boxStyle.borderBottom = new Border(boxStyle.borderBottom.width, boxStyle.borderBottom.style, this.getColor(boxStyle.borderBottom.color)))
+                boxStyle.borderLeft && (this.boxStyle.borderLeft = new Border(boxStyle.borderLeft.width, boxStyle.borderLeft.style, this.getColor(boxStyle.borderLeft.color)))
+                boxStyle.borderRight && (this.boxStyle.borderRight = new Border(boxStyle.borderRight.width, boxStyle.borderRight.style, this.getColor(boxStyle.borderRight.color)))
+                boxStyle.boxShadow && (this.boxStyle.boxShadow = new Shadow(new PxSize(boxStyle.boxShadow.h),
+                    new PxSize(boxStyle.boxShadow.v),
+                    new PxSize(boxStyle.boxShadow.blur),
+                    this.getColor(boxStyle.boxShadow.color),
+                    boxStyle.boxShadow.inset))
+            }
+            //设置开始时间
+            param.start &&　(this.start = parseInt(param.start))
+        }catch(e){
+            console.warn(e);
+            return false;
         }
-        //设置盒子样式
-        if(param.boxStyle){
-            let boxStyle = param.boxStyle
-        }
+       
         return true
     }
     /**
@@ -75,11 +76,12 @@ export class BaseDanmaku implements DanmakuItemInterface {
      * @param color 
      * @returns 
      */
-    getColor(color?:any):Color{
+    getColor(color?: any): Color {
         try {
-            if(color &&　(typeof color) == "string"){
+            //如果是颜色名称
+            if (color && (typeof color) == "string") {
                 return Color.getColor(color);
-            }else {
+            } else {
                 return new Color(color.r,
                     color.g,
                     color.b,
@@ -94,7 +96,9 @@ export class BaseDanmaku implements DanmakuItemInterface {
     getType(): string {
         return "base"
     }
-
+    setContent(str:string){
+        this.content = str;
+    }
     getContent(): string {
         return this.content
     }
@@ -109,6 +113,9 @@ export class BaseDanmaku implements DanmakuItemInterface {
             fontStyle: this.fontStyle,
             boxStyle: this.boxStyle
         }
+    }
+    startTime(): number {
+        return this.start
     }
 }
 
