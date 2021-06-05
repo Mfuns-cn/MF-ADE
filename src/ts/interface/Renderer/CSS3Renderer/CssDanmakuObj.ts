@@ -111,6 +111,9 @@ export class DanmakuTool {
             }
             //如果都不存在，则表示动画已经完成，销毁元素
             if(!(sty || max)){
+                console.log(111);
+                
+                
                 if(dan.element.parentElement){
                     //从父元素删除节点
                     dan.element.parentElement.removeChild(dan.element)

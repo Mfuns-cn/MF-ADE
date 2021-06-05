@@ -12,4 +12,5 @@ export interface BoxStyleInterface{
     boxShadow?:Shadow
     //背景
     backgroundColor?:Color
+
 }

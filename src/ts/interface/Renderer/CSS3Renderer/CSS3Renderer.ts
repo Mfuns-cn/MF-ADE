@@ -65,6 +65,7 @@ export class CSS3Renderer implements RendererInterface {
     }
     reset(): boolean {
         //清空画布
+        
         if(this.canvas){
             this.canvas.innerHTML = "";
         }

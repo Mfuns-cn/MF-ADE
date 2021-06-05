@@ -59,7 +59,7 @@ export class AdvancedLine implements TimeLineInterface {
 
         let arr: TimeLineDanmaku[] = [];
         let skip = false;
-        if (this.lastTime < time && time - this.lastTime < 5) {
+        if (this.lastTime <= time && time - this.lastTime < 5) {
             //正常播放情况,遍历期间的所有内容
             // console.log(this.lastTime);
             
@@ -78,8 +78,6 @@ export class AdvancedLine implements TimeLineInterface {
             //先找到之前开始的
             // console.log(time);
             for (let timeIndex = 0; timeIndex < time; timeIndex++) {
-                // console.log(timeIndex);
-                
                 if (!this.danmakuList[timeIndex]) {
                     continue;//当前时间不存在
                 }

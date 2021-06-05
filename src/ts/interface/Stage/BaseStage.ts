@@ -49,6 +49,7 @@ export abstract class BaseStage implements StageInterface {
         if(list = this.timeLineObj?.getDanmakuList(time) || {skip:false,DanmakuList:[]}){
             if(list.skip){
                 // console.log(list.skip);
+
                 
                 this.renderer?.reset()
             }

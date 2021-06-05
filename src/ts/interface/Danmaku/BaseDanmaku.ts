@@ -7,6 +7,7 @@ import { PxSize } from "../Style/Unit/PxSize";
 import { Shadow } from "../Style/Unit/Shadow";
 import { AnimationInterface } from "./Animation/AnimationInterface";
 import StaticAnimation from "./Animation/StaticAnimation";
+import { TranslateAnimation } from "./Animation/TranslateAnimation";
 import { DanmakuItemInterface } from "./DanmakuItemInterface";
 
 /**
@@ -106,7 +107,7 @@ export class BaseDanmaku implements DanmakuItemInterface {
         return []
     }
     getAnimation(): AnimationInterface {
-        return new StaticAnimation()
+        return new TranslateAnimation()
     }
     getStyle(): DanmakuStyle {
         return {

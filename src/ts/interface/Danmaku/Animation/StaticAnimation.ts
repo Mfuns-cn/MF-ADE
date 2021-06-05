@@ -1,5 +1,6 @@
 import { DanmakuStyle } from "../../Style/DanmakuStyle";
 import { AnimationInterface } from "./AnimationInterface";
+import { Matrix } from "./Matrix";
 
 /**
  * 静止动画 仅仅悬停在某一个位置一定时间
@@ -19,15 +20,17 @@ export default class StaticAnimation implements AnimationInterface {
         return true
     }
     getMatrix(time: number): false | number[] {
+        // console.log(time);
+
         if (time > this.time) return false;
 
         return [
             1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
-            0.1*time , this.y, this.z, 1
-
+            this.x, this.y, this.z, 1
         ]
+
     }
     getStyle(): false | DanmakuStyle {
         return false
