@@ -66,4 +66,15 @@ export class Matrix {
         }
         return arr;
     }
+    /**
+     * 获得一个无效果的4x4矩阵
+     */
+    static getNullMatrix():number[]{
+        return [
+            1,0,0,0,
+            0,1,0,0,
+            0,0,1,0,
+            0,0,0,1
+        ]
+    }
 }

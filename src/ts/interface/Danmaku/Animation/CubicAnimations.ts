@@ -6,6 +6,7 @@ import { Cubic } from "./Cubic";
  * 贝塞尔动画类
  */
 export abstract class CubicAnimations implements AnimationInterface {
+
     /**
      * 贝塞尔函数
      */
@@ -17,22 +18,26 @@ export abstract class CubicAnimations implements AnimationInterface {
     /**
      * 动画总时间
      */
-    time: number = 3000
-    currentTime:number = 0
+    duration: number = 3000
+    //currentTime:number = 0
     getMatrix(time: number): false | number[] {
         if (this.isEnd(time)) return false
         // console.log(time);
-        
-        return this.getMatrixForCubic(this.getProgress(time),time)
+        let p = this.getProgress(time)
+        return this.getMatrixForCubic(p,time*p)
     }
     getStyle(time: number): false | DanmakuStyle {
         if (this.isEnd(time)) return false
-        return this.getCubicStyle(this.getProgress(time),time)
+        let p = this.getProgress(time)
+        return this.getCubicStyle(p,time*p)
     }
     setParams(param: { [idx: string]: any; }): boolean {
         this.cubic = param.cubic ? param.cubic : this.cubic
-        this.time = param.time ? param.time : this.time
+        this.duration = param.duration ? param.time : this.duration
         return true
+    }
+    getDuration(): number {
+        return this.duration;
     }
     /**
      * 根据动画时间获取动画进度
@@ -41,7 +46,7 @@ export abstract class CubicAnimations implements AnimationInterface {
      */
     getProgress(time: number):number {
         //计算当前动画进度
-        let progress: number = time/this.time 
+        let progress: number = time/this.duration 
         // console.log(progress);
         
         //计算出实际动画进度
@@ -60,7 +65,7 @@ export abstract class CubicAnimations implements AnimationInterface {
      * 判断动画是否结束
      */
     protected isEnd(time: number) {
-        return time > this.time
+        return time > this.duration
     }
     /**
      * 获取贝塞尔函数

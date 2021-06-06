@@ -1,5 +1,4 @@
 import { i18n } from "../i18n";
-import { Color } from "../interface/Style/Unit/Color";
 
 export class UnitTools{
     /**

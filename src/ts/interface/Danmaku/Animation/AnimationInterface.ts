@@ -17,4 +17,9 @@ export interface AnimationInterface{
      * @param json json格式的参数
      */
     setParams(param:{[idx: string]:any}):boolean
+
+    /**
+     * 获取动画总时长
+     */
+    getDuration():number;
 }
