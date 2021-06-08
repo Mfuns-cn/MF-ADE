@@ -1,13 +1,13 @@
+import { AnimationFactory } from "src/ts/Factory/AnimationFactory";
 import { BoxStyleInterface } from "../Style/BoxStyleInterface";
 import { DanmakuStyle } from "../Style/DanmakuStyle";
-import { FontInterface, Fontstyle } from "../Style/FontInterface";
+import { FontInterface } from "../Style/FontInterface";
 import { Border } from "../Style/Unit/Border";
 import { Color } from "../Style/Unit/Color";
 import { PxSize } from "../Style/Unit/PxSize";
 import { Shadow } from "../Style/Unit/Shadow";
 import { AnimationInterface } from "./Animation/AnimationInterface";
 import StaticAnimation from "./Animation/StaticAnimation";
-import { TranslateAnimation } from "./Animation/TranslateAnimation";
 import { DanmakuItemInterface } from "./DanmakuItemInterface";
 
 /**
@@ -19,7 +19,8 @@ export class BaseDanmaku implements DanmakuItemInterface {
     fontStyle: FontInterface = {}
 
     boxStyle: BoxStyleInterface = {}
-    start:number;
+    start:number = 0;
+    animation:AnimationInterface
     /**
      * 设置参数
      * 正确的格式为
@@ -33,9 +34,9 @@ export class BaseDanmaku implements DanmakuItemInterface {
      */
     setParams(param: { [idx: string]: any; }): boolean {
         //设置文字样式
-        try{
-            if (param.fontStyle) {
-                let fontStyle = param.fontStyle
+        // try{
+            if (param?.fontStyle) {
+                let fontStyle = param?.fontStyle
                 fontStyle.style && (this.fontStyle.fontStyle = fontStyle.fontStyle);
                 fontStyle.fontWeight && (this.fontStyle.fontWeight = fontStyle.fontWeight);
                 fontStyle.fontFamily && (this.fontStyle.fontFamily = fontStyle.fontFamily);
@@ -51,8 +52,8 @@ export class BaseDanmaku implements DanmakuItemInterface {
     
             }
             //设置盒子样式
-            if (param.boxStyle) {
-                let boxStyle = param.boxStyle;
+            if (param?.boxStyle) {
+                let boxStyle = param?.boxStyle;
                 boxStyle.borderTop && (this.boxStyle.borderTop = new Border(boxStyle.borderTop.width, boxStyle.borderTop.style, this.getColor(boxStyle.borderTop.color)))
                 boxStyle.borderBottom && (this.boxStyle.borderBottom = new Border(boxStyle.borderBottom.width, boxStyle.borderBottom.style, this.getColor(boxStyle.borderBottom.color)))
                 boxStyle.borderLeft && (this.boxStyle.borderLeft = new Border(boxStyle.borderLeft.width, boxStyle.borderLeft.style, this.getColor(boxStyle.borderLeft.color)))
@@ -64,11 +65,14 @@ export class BaseDanmaku implements DanmakuItemInterface {
                     boxStyle.boxShadow.inset))
             }
             //设置开始时间
-            param.start &&　(this.start = parseInt(param.start))
-        }catch(e){
-            console.warn(e);
-            return false;
-        }
+            param?.start &&　(this.start = param?.start)
+
+            
+            param?.animation && (this.animation = AnimationFactory.getAnimations(param?.animation.type,param?.animation.params) ||  new StaticAnimation())
+        // }catch(e){
+        //     console.warn(e);
+        //     return false;
+        // }
        
         return true
     }
@@ -107,7 +111,9 @@ export class BaseDanmaku implements DanmakuItemInterface {
         return []
     }
     getAnimation(): AnimationInterface {
-        return new TranslateAnimation()
+        console.log(this.animation);
+        
+        return this.animation
     }
     getStyle(): DanmakuStyle {
         return {

@@ -102,13 +102,111 @@ export class Controller {
             let danmu = new BaseDanmaku()
             danmu.setContent("123")
             danmu.setParams({
-                start:1000,
-                fontStyle:{
-                    color:"red",
-                    fontSize:100
+                start: 1000,
+                fontStyle: {
+                    color: "red",
+                    fontSize: 100
+                },
+                animation: {
+                    type: "group",
+                    params: {
+
+                        animations: [
+                            {
+                                type: "list",
+                                params: {
+                                    cubic: [.25, .1, .25, 1],
+                                    animations: [
+                                        {
+                                            type: "translate",
+                                            params: {
+                                                duration: 5000,
+                                                path: {
+                                                    x1: 600,
+                                                    y1: 900,
+                                                    x2: 600,
+                                                    y2: 100
+                                                }
+                                            }
+                                        },
+                                    ]
+                                }
+                            },
+                            {
+                                type: "repeat",
+
+                                params: {
+                                    repeat: 30,
+                                    animation: {
+                                        type: "rotateY",
+                                        params: {
+                                            duration: 700
+                                        }
+                                    },
+                                }
+                            }
+
+                        ]
+
+                    }
+
                 }
             })
-            timeline.addDanmaku(danmu,1000,10000)
+            let danmu2 = new BaseDanmaku()
+            danmu.setContent("456")
+            danmu.setParams({
+                start: 0,
+                fontStyle: {
+                    color: "red",
+                    fontSize: 100
+                },
+                animation: {
+                    type: "group",
+                    params: {
+
+                        animations: [
+                            {
+                                type: "list",
+                                params: {
+                                    cubic: [.25, .1, .25, 1],
+                                    animations: [
+                                        {
+                                            type: "translate",
+                                            params: {
+                                                duration: 5000,
+                                                path: {
+                                                    x1: 600,
+                                                    y1: 900,
+                                                    x2: 600,
+                                                    y2: 100
+                                                }
+                                            }
+                                        },
+                                    ]
+                                }
+                            },
+                            {
+                                type: "repeat",
+
+                                params: {
+                                    repeat: 30,
+                                    animation: {
+                                        type: "rotateY",
+                                        params: {
+                                            duration: 700
+                                        }
+                                    },
+                                }
+                            }
+
+                        ]
+
+                    }
+
+                }
+            })
+            timeline.addDanmaku(danmu, 1000, 10000)
+            timeline.addDanmaku(danmu2,100,9000)
             stage.timeLine(timeline)
             //更新渲染器内画布样式
             render.updateCanvasStyle(this.getCanvasStylByStage(stage))
@@ -194,7 +292,7 @@ export class Controller {
      */
     skip(time: number) {
         if (this.pauseStatus) {
-            //如果是暂停
+            //如果是暂停状态
             this.time = time;
         } else {
             //否则使用这个方法

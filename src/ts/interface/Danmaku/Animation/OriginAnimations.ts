@@ -8,21 +8,21 @@ export abstract class OriginAnimations extends CubicAnimations {
     origin:number[] = [0,0,0]
     setParams(param: { [idx: string]: any; }): boolean {
         if (!super.setParams(param)) return false;
-        this.origin =  param.origin && this.origin
+        this.origin =  param?.origin || this.origin
         return true
     }
     getMatrixForCubic(progress: number): number[] | false{
         let arr = this.getMatrixForOrigin(progress)
         if(!arr) return false
         arr = Matrix.mult([
-            0, 0, 0, 0,
+            1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
             -this.origin[0], -this.origin[1], -this.origin[2], 1
 
         ],arr)
         return Matrix.mult(arr,[
-            0, 0, 0, 0,
+            1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
             this.origin[0], this.origin[1], this.origin[2], 1

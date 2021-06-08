@@ -15,10 +15,10 @@ export default class StaticAnimation implements AnimationInterface {
     z: number = 0;
     setParams(param: { [idx: string]: any; }): boolean {
         let def = 0;
-        this.time = param.time || def
-        this.x = param.x || def
-        this.y = param.y || def
-        this.z = param.z || def
+        this.time = param?.time || def
+        this.x = param?.x || def
+        this.y = param?.y || def
+        this.z = param?.z || def
         return true
     }
     getMatrix(time: number): false | number[] {

@@ -22,6 +22,7 @@ export class DanmakuTool {
         danmaku.forEach((danmaku) => {
             let div = this.createDiv(danmaku.getContent())
             this.setStyle(div,danmaku.getStyle());
+            
             let obj: DanmakuObj = {
                 element: div,
                 animation: danmaku.getAnimation(),
@@ -94,12 +95,11 @@ export class DanmakuTool {
      * @param danmaku 
      */
     static recursionStyle(danmaku:DanmakuObj[],canvas:HTMLElement,abstime:number){ 
-       
         danmaku.forEach((dan,key)=>{
             //更新弹幕样式
             let time = abstime - dan.start;
             
-        
+            console.log(dan.animation);
             
             let sty;
             let max;
@@ -109,9 +109,9 @@ export class DanmakuTool {
             if(max = dan.animation.getMatrix(time)){
                 dan.element.style.transform = UnitTools.Matrix3dString(max);
             }
+            
             //如果都不存在，则表示动画已经完成，销毁元素
             if(!(sty || max)){
-                console.log(111);
                 
                 
                 if(dan.element.parentElement){

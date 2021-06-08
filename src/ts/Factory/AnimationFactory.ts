@@ -1,5 +1,7 @@
+import { AnimationInterface } from "../interface/Danmaku/Animation/AnimationInterface";
 import { GroupAnimations } from "../interface/Danmaku/Animation/GroupAnimations";
 import { ListAnimations } from "../interface/Danmaku/Animation/ListAnimations";
+import { RepeatAnimations } from "../interface/Danmaku/Animation/RepeatAnimations";
 import { RotationXAnimation } from "../interface/Danmaku/Animation/RotationXAnimation";
 import { RotationYAnimation } from "../interface/Danmaku/Animation/RotationYAnimation";
 import { RotationZAnimation } from "../interface/Danmaku/Animation/RotationZAnimation";
@@ -16,13 +18,30 @@ export class AnimationFactory {
         "rotateZ":RotationZAnimation,//z轴旋转
         "scale":ScaleAnimations,//缩放
         "list":ListAnimations,//动画列表
-        "group":GroupAnimations//动画组
+        "group":GroupAnimations,//动画组
+        "repeat":RepeatAnimations//重复动画
     }
 
-    static getAnimations(type:string,params){
+    static getAnimations(type:string,params):AnimationInterface | false{
         if(this.animationList[type]){
+            // console.log(params);
+            
             let ani = new this.animationList[type]()
             ani.setParams(params)
+            return ani;
         }
+        return false;
+    }
+    static getAnimationsList(list:{type:string,params: { [idx: string]: any; }}[]):AnimationInterface[]{
+        let animationList:AnimationInterface[] = []
+        list.forEach((val)=>{
+            
+            let ani = this.getAnimations(val.type,val.params)
+            
+            if(ani){
+                animationList.push(ani);
+            }
+        })
+        return animationList
     }
 }

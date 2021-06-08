@@ -48,7 +48,6 @@ export class CSS3Renderer implements RendererInterface {
             this.canvas?.appendChild(ele)
         })
         this.danmakuList.push(...danmakuobj);
-        DanmakuTool.recursionStyle(this.danmakuList,this.canvas,0)
         // console.log(this.danmakuList);
         
         return true;
@@ -60,6 +59,7 @@ export class CSS3Renderer implements RendererInterface {
         if (!this.canvas) {
             return false;
         }
+        
         DanmakuTool.recursionStyle(this.danmakuList,this.canvas,time)
         return true;
     }

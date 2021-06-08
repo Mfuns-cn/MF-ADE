@@ -9,7 +9,7 @@ export class ScaleAnimations extends OriginAnimations{
     = {x1:1,y1:1,z1:1,x2:1.5,y2:1.5,z2:1.5}
     setParams(param: { [idx: string]: any; }): boolean {
         if (!super.setParams(param)) return false;
-        this.scale = param.scale ||　this.scale
+        this.scale = param?.scale ||　this.scale
         return true
     }
     getMatrixForOrigin(progress: number): false | number[] {

@@ -9,10 +9,10 @@ export abstract class RotationAnimation extends OriginAnimations {
     angle:{start:number,end:number} = {start:0,end:360}
     setParams(param: { [idx: string]: any; }): boolean {
         if (!super.setParams(param)) return false;
-        this.angle = param.angle || this.angle
+        this.angle = Object.assign(this.angle,param?.angle)
         return true
     }
-    getCubicStyle(progress: number): false | DanmakuStyle {
+    getCubicStyle(_progress: number): false | DanmakuStyle {
         return false;
     }
     /**

@@ -1,4 +1,5 @@
 
+import { AnimationFactory } from "src/ts/Factory/AnimationFactory";
 import { deepMerge } from "src/ts/util/deepMerge";
 import { DanmakuStyle } from "../../Style/DanmakuStyle";
 import { AnimationInterface } from "./AnimationInterface";
@@ -11,17 +12,29 @@ import { Matrix } from "./Matrix";
  */
 export class GroupAnimations extends CubicAnimations {
     animations: AnimationInterface[] = []
+    /**
+     * 每个动画结束的累计矩阵
+     */
+     cumulativeMatrix: number[][] = []
     setParams(param: { [idx: string]: any; }): boolean {
         super.setParams(param);
-        this.animations = param.animations || []
+        console.log(param);
+        this.animations = AnimationFactory.getAnimationsList(param?.animations)
+        console.log(this.animations);
+        
         //计算出最大的动画时长
-        this.animations.forEach((val)=>{
-            if(val.getDuration() > this.duration){
+        this.animations.forEach((val,key)=>{
+            let dur = val.getDuration()
+             //计算最后一帧
+            this.cumulativeMatrix[key] = val.getMatrix(dur) || Matrix.getNullMatrix();
+            if(dur > this.duration){
+               
                 //这里覆盖了父类的属性
                 //实际上，只有父类的时长不够，才会被更新
                 this.duration = val.getDuration();
             }
         })
+        
         return true;
     }
     getCubicStyle(_progress: number,time:number): false | DanmakuStyle {
@@ -50,12 +63,17 @@ export class GroupAnimations extends CubicAnimations {
             0,0,0,1
         ]
         //倒着计算所有的矩阵
-        for(let i = this.animations.length - 1;i < 0;i--){
+        for(let i = this.animations.length - 1;i >= 0;i--){
             let matrix = this.animations[i].getMatrix(time)
+            // console.log(matrix);
+            
             if(matrix){
                 arr = Matrix.mult(arr,matrix);
+            }else{
+                arr = Matrix.mult(arr,this.cumulativeMatrix[i]);
             }
         }
+        
         return arr;
     }
 

@@ -5,10 +5,10 @@ export class TranslateAnimation extends CubicAnimations {
 
     path: { x1: number, y1: number, z1: number, x2: number, y2: number, z2: number }
         =
-        { x1: 0, y1: 0, x2: 1000, y2: 500, z1: 0, z2: 1000 }
+        { x1: 0, y1: 0, x2: 0, y2: 0, z1: 0, z2: 0 }
     setParams(param: { [idx: string]: any; }): boolean {
         if (!super.setParams(param)) return false;
-        this.path = param.path || this.path
+        this.path = Object.assign(this.path,param?.path)
         return true
     }
     getCubicStyle(): false | DanmakuStyle {

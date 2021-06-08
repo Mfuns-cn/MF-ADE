@@ -20,39 +20,14 @@
     var a = new MfunsDanMaku()
     a.main({containers:document.getElementById("body")})
 
+
+
+
+
     let time = document.getElementById("time")
     setInterval(()=>{
         time.innerText = a.time()/1000
     },100)
-
-    //函数性能测试
-
-    // let a = [];
-    // for(let i = 0;i<=10000000;i++){
-    //     a.push(i)
-    // }
-
-    // let z = 0;
-    // let time = new Date()
-    // a.filter((i)=>{
-    //     // z += i;
-    //     return true
-    // })
-    // let time2 = new Date()
-    // console.log(time2.getTime() - time.getTime());
-    // z1 = 0
-    // let time3 = new Date()
-    // let arr = []
-    // for(let f = 0;f<a.length;f++){
-    //     // z1 += a[f];
-    //     f == a[f]
-    //     // a[f]
-    //     // arr.push(f)
-    // }
-    // let time4 = new Date()
-    // console.log(time4.getTime() - time3.getTime());
-    // console.log(z,z1);
-    
 
 </script>
 </html>

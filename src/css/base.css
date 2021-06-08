@@ -7,7 +7,7 @@
 .danmaku-containers .stage{
     position: absolute;
     overflow: hidden;
-    perspective:1500px;
+    perspective:1000px;
     transform-style: preserve-3d;
 }
 .danmaku-containers-debug *{

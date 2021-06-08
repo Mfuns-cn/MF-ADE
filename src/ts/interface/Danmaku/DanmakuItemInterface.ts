@@ -31,5 +31,8 @@ export interface DanmakuItemInterface{
      */
     setParams(param:{[idx: string]:any}):boolean
 
+    /**
+     * 弹幕开始时间
+     */
     startTime():number
 }
