@@ -19,7 +19,8 @@ export class GroupAnimations extends CubicAnimations {
     setParams(param: { [idx: string]: any; }): boolean {
         super.setParams(param);
         console.log(param);
-        this.animations = AnimationFactory.getAnimationsList(param?.animations)
+        
+        this.animations = AnimationFactory.getAnimationsList(param?.animations || [])
         console.log(this.animations);
         
         //计算出最大的动画时长

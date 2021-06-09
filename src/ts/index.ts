@@ -12,6 +12,7 @@ class MfunsDanMaku {
             throw ReferenceError(i18n.t("Containers is null"))
         }
         this.controller = new Controller(config.containers)
+        this.controller.addGetDanmakuFunction("advance",config.danmaku)
         this.controller.registStage(new TestStage(), 1)
         this.controller.mount()
         //监听大小变化
@@ -31,6 +32,10 @@ class MfunsDanMaku {
     time(){
         return this.controller.getTime()
     }
+    reset(){
+        this.controller.reset()
+    }
+        
 }
 //添加进全局
 if (globalThis) {

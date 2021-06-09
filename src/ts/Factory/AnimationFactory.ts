@@ -27,21 +27,25 @@ export class AnimationFactory {
             // console.log(params);
             
             let ani = new this.animationList[type]()
+            // console.log(ani);
+            
             ani.setParams(params)
             return ani;
         }
         return false;
     }
-    static getAnimationsList(list:{type:string,params: { [idx: string]: any; }}[]):AnimationInterface[]{
+    static getAnimationsList(list:{key: { [idx: string]: any; }}[]):AnimationInterface[]{
         let animationList:AnimationInterface[] = []
-        list.forEach((val)=>{
+        console.log(list);
+        
+        for (const key in list) {
+            console.log(key);
             
-            let ani = this.getAnimations(val.type,val.params)
-            
+            let ani =  this.getAnimations(key,list[key])
             if(ani){
                 animationList.push(ani);
             }
-        })
+        }
         return animationList
     }
 }

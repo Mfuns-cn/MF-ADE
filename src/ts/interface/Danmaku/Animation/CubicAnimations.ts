@@ -20,15 +20,15 @@ export abstract class CubicAnimations implements AnimationInterface {
      */
     duration: number = 3000
     //currentTime:number = 0
-    getMatrix(time: number,exceeds?:boolean): false | number[] {
+    getMatrix(time: number): false | number[] {
         
-        if (this.isEnd(time) &&　exceeds) return false
+        if (this.isEnd(time)) return false
         let p = this.getProgress(time)
         let a = this.getMatrixForCubic(p, this.duration * p)
         return a
     }
-    getStyle(time: number,exceeds?:boolean): false | DanmakuStyle {
-        if (this.isEnd(time) && exceeds) return false
+    getStyle(time: number): false | DanmakuStyle {
+        if (this.isEnd(time)) return false
         let p = this.getProgress(time)
         return this.getCubicStyle(p, this.duration * p)
     }

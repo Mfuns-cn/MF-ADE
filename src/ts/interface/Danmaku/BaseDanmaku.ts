@@ -20,7 +20,9 @@ export class BaseDanmaku implements DanmakuItemInterface {
 
     boxStyle: BoxStyleInterface = {}
     start:number = 0;
-    animation:AnimationInterface
+    animation?:AnimationInterface
+    content:string = ""
+    child:DanmakuItemInterface[] = []
     /**
      * 设置参数
      * 正确的格式为
@@ -34,7 +36,8 @@ export class BaseDanmaku implements DanmakuItemInterface {
      */
     setParams(param: { [idx: string]: any; }): boolean {
         //设置文字样式
-        // try{
+        try{
+            param?.content && (this.content = param?.content)
             if (param?.fontStyle) {
                 let fontStyle = param?.fontStyle
                 fontStyle.style && (this.fontStyle.fontStyle = fontStyle.fontStyle);
@@ -63,16 +66,21 @@ export class BaseDanmaku implements DanmakuItemInterface {
                     new PxSize(boxStyle.boxShadow.blur),
                     this.getColor(boxStyle.boxShadow.color),
                     boxStyle.boxShadow.inset))
+                boxStyle?.backgroundColor && (this.boxStyle.backgroundColor = this.getColor(boxStyle?.backgroundColor ))
             }
             //设置开始时间
             param?.start &&　(this.start = param?.start)
 
             
-            param?.animation && (this.animation = AnimationFactory.getAnimations(param?.animation.type,param?.animation.params) ||  new StaticAnimation())
-        // }catch(e){
-        //     console.warn(e);
-        //     return false;
-        // }
+            
+            
+            param?.animation && (this.animation =  param?.animation ||  new StaticAnimation())
+            console.log(this.animation);
+            param?.child && (this.child = param.child)
+        }catch(e){
+            console.warn(e);
+            return false;
+        }
        
         return true
     }
@@ -97,22 +105,19 @@ export class BaseDanmaku implements DanmakuItemInterface {
             return Color.getColor("black");
         }
     }
-    content: string
     getType(): string {
         return "base"
-    }
-    setContent(str:string){
-        this.content = str;
     }
     getContent(): string {
         return this.content
     }
     getChild(): DanmakuItemInterface[] {
-        return []
+        return this.child
     }
     getAnimation(): AnimationInterface {
-        console.log(this.animation);
-        
+        if(!this.animation){
+            this.animation = new StaticAnimation()
+        }
         return this.animation
     }
     getStyle(): DanmakuStyle {

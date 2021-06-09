@@ -1,0 +1,4 @@
+<!ELEMENT danmaku (text*)>
+<!ELEMENT text  (animations*)>
+<!ELEMENT animations  (text*)>
+<!ATTLIST text content CDATA "">

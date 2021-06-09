@@ -15,18 +15,17 @@ export class ListAnimations extends CubicAnimations {
     cumulativeTime: number[] = []
     setParams(param: { [idx: string]: any; }): boolean {
         super.setParams(param);
-
-        this.animations = AnimationFactory.getAnimationsList(param?.animations)
-
-
+        this.animations = AnimationFactory.getAnimationsList(param?.animations || [])
 
         let duration = 0;
         this.cumulativeMatrix[0] = Matrix.getNullMatrix();
         this.cumulativeTime[0] = duration
+        
         this.animations.forEach((val, key) => {
             let dur = val.getDuration()
-
-
+            console.log(val);
+            
+            
             //自增1，因为0的结束帧的1的开头
             key++
             //计算出每个动画结束后的矩阵叠加,传入持续时间以获得最后一帧动画
@@ -39,8 +38,8 @@ export class ListAnimations extends CubicAnimations {
             this.cumulativeTime[key] = duration
 
         })
-        console.log(this.cumulativeMatrix);
-
+        
+        
         this.duration = duration;
         return true;
     }

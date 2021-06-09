@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,27 +8,39 @@
     <title>Document</title>
     <link rel="stylesheet" href="./test.css">
 </head>
+
 <body>
     <div id="body"></div>
     <button onclick="a.start()">开始</button>
     <button onclick="a.pause()">暂停</button>
-    <button onclick="a.skip(0)">重置</button>
+    <button onclick="a.reset()">重置</button>
     <span id="time">time</span>
     <!-- <video src="./" id="body"></video> -->
 </body>
 <script src="../dist/bundle.js"></script>
 <script>
     var a = new MfunsDanMaku()
-    a.main({containers:document.getElementById("body")})
-
-
-
-
+    a.main({
+        containers: document.getElementById("body"),
+        danmaku: (send) => {
+            let xhr = new XMLHttpRequest()
+            
+            xhr.onload = function () {
+                if(this.status == 200){
+                    console.log(this.response);
+                    send(this.response)
+                }
+            }
+            xhr.open("GET", "/test/demo.json")
+            xhr.send()
+        }
+    })
 
     let time = document.getElementById("time")
-    setInterval(()=>{
-        time.innerText = a.time()/1000
-    },100)
+    setInterval(() => {
+        time.innerText = a.time() / 1000
+    }, 100)
 
 </script>
+
 </html>

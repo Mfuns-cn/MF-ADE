@@ -4,46 +4,57 @@ import { RendererInterface } from "../Renderer/RendererInterface";
 import { SizeInterface } from "../Style/SizeInterface";
 import { TimeLineInterface } from "src/ts/TimeLine/TimeLineInterface";
 
-export interface StageInterface{
-    /**
-     * 获取舞台的尺寸
-     * @param containersSize 容器的尺寸
-     */
-    stageSize(containersSize:SizeInterface):SizeInterface;
+export interface StageInterface {
+
     /**
      * 获取舞台位置
      * @param containersSize 容器的尺寸
      * @param stageSize 舞台的尺寸
      */
-    stagePosition(containersSize:SizeInterface,stageSize:SizeInterface):PositionInterface;
-
+    stagePosition(containersSize: SizeInterface, stageSize: SizeInterface): PositionInterface;
     /**
-     * 获取舞台背景
-     * @param containersSize 容器尺寸
-     */
-    stageBackgroundColor(containersSize:SizeInterface):Color;
+    * 获取舞台背景
+    * @param containersSize 容器尺寸
+    */
+    stageBackgroundColor(containersSize: SizeInterface): Color;
+    /**
+      * 获取舞台的尺寸
+      * @param containersSize 容器的尺寸
+      */
+    stageSize(containersSize: SizeInterface): SizeInterface;
 
     /**
      * 接收渲染器对象
      * @param render 渲染器对象
      */
-    stageRenderer(render:RendererInterface):boolean;
+    stageRenderer(render: RendererInterface): boolean;
 
     /**
      * 设置时间轴对象
      */
-    timeLine(timeLine:TimeLineInterface):boolean
+    timeLine(timeLine: TimeLineInterface): boolean
     /**
      * 获取渲染器对象
      */
-    getRenderer():RendererInterface | null
+    getRenderer(): RendererInterface | null
 
     /**
      * 刷新舞台
      */
-    refresh(time:number):boolean
+    refresh(time: number): boolean
 
+    /**
+     * 期望的渲染器类型
+     */
+    rendererType(): string;
 
-    
+    /**
+     * 期望的时间轴类型
+     */
+    timeLineType(): string
+    /**
+     * 重置
+     */
+    reset():boolean
 }
 

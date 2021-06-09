@@ -99,7 +99,7 @@ export class DanmakuTool {
             //更新弹幕样式
             let time = abstime - dan.start;
             
-            console.log(dan.animation);
+            // console.log(dan.animation);
             
             let sty;
             let max;

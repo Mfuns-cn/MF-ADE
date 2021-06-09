@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE danmaku SYSTEM "test1.dtd">
+<danmaku>
+    <text content="asmin">
+        <animations>
+            
+        </animations>
+    </text>
+</danmaku>

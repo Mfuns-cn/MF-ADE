@@ -9,6 +9,7 @@ import { i18n } from "src/ts/i18n";
 import { TimeLineDanmaku } from "src/ts/TimeLine/TimeLineDanmaku";
 
 export abstract class BaseStage implements StageInterface {
+   
 
     protected renderer?: RendererInterface;
     protected timeLineObj?: TimeLineInterface
@@ -61,5 +62,16 @@ export abstract class BaseStage implements StageInterface {
         this.renderer.refresh(time)
         return true
     }
+    rendererType(): string {
+        return "css3"
+    }
+    timeLineType(): string {
+        return "advance"
+    }
 
+    reset(): boolean {
+        this?.renderer?.reset()
+        return true
+    
+    }
 }

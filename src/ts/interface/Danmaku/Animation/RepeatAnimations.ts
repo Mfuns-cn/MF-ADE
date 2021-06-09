@@ -40,6 +40,7 @@ export class RepeatAnimations extends CubicAnimations{
         //覆盖父级存活时间 
         //计算方式 单个弹幕时间 X 弹幕重复次数
         this.duration = this.animationTime * this.repeat
+        console.log(this.duration);
         
         return true
     }

@@ -16,23 +16,18 @@ export class AdvancedLine implements TimeLineInterface {
     danmakuList: TimeLineDanmaku[][] = [];
 
     /**
-     * 总时长（单位10ms）
-     */
-    tolalTime: number;
-
-    constructor(tolalTime: number) {
-        this.tolalTime = this.timeToIndex(tolalTime)
-    }
-
-
-    /**
      * 添加一个弹幕
      * @param danmaku 
      * @param start
      * @param end
      */
-    addDanmaku(danmaku: DanmakuItemInterface, start: number, end: number) {
+    addDanmaku(danmaku: DanmakuItemInterface, start?: number, end?: number) {
+
+        start = start || danmaku.startTime()
+
+        end = end || danmaku.getAnimation().getDuration() + start
         let index = this.timeToIndex(start);
+
         if(!this.danmakuList[index]){
             this.danmakuList[index] = []
         }
@@ -53,7 +48,7 @@ export class AdvancedLine implements TimeLineInterface {
     getDanmakuList(time: number):{skip:boolean;DanmakuList:TimeLineDanmaku[]}  {
         time = this.timeToIndex(time);
         //如果请求的时间超过了时间轴。。。
-        if (time < 0 || time > this.tolalTime) {
+        if (time < 0) {
             return {skip:false,DanmakuList:[]};
         }
 

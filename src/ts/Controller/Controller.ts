@@ -6,8 +6,8 @@ import { i18n } from "../i18n";
 import { canvasStyle } from "../interface/Style/CanvasStyle";
 import { RendererFactory } from "src/ts/Factory/RendererFactory";
 import { PxSize } from "../interface/Style/Unit/PxSize";
-import { AdvancedLine } from "../TimeLine/AdvancedLine";
-import { BaseDanmaku } from "../interface/Danmaku/BaseDanmaku";
+import { TimeLineFactory } from "../Factory/TimeLineFactort";
+import { JsonDanmakuParser } from "../Factory/DanmakuParser/JsonDanmakuParser";
 
 /**
  * 控制器 ，统一管理整个弹幕系统
@@ -42,6 +42,8 @@ export class Controller {
      * 跳转状态
      */
     skipStatus: boolean = false;
+
+    protected danmakuFunction: { [type: string]: (send: (str: string) => void) => void } = {}
     constructor(containers: HTMLElement) {
         this.containers = containers
         //获取实时的style对象，当大小发生变化时，会更新自身
@@ -86,131 +88,43 @@ export class Controller {
      * 将舞台挂载到容器中
      */
     public mount() {
-        console.log(i18n.t("Start mount stage"));
+        console.info(i18n.t("Start mount stage"));
         //遍历每一个舞台
         this.stageList.forEach((stage) => {
             //获取一个div
             let div = this.getDIV()
             //给舞台初始化渲染器
-            let render = RendererFactory.getRenderInstance("css3");
+            let render = RendererFactory.getRenderInstance(stage.rendererType());
             //将div挂载到渲染器
             render.setCanvasContainer(div)
             //设置舞台渲染器
             stage.stageRenderer(render);
             //设置舞台时间轴
-            let timeline = new AdvancedLine(300000)
-            let danmu = new BaseDanmaku()
-            danmu.setContent("123")
-            danmu.setParams({
-                start: 1000,
-                fontStyle: {
-                    color: "red",
-                    fontSize: 100
-                },
-                animation: {
-                    type: "group",
-                    params: {
+            let lineType = stage.timeLineType()
+            let timeline = TimeLineFactory.getTimeLine(lineType)
+            if (this.danmakuFunction[lineType]) {
+                console.log(1);
+                
+                this.danmakuFunction[stage.timeLineType()]((str) => {
+                    let a = new JsonDanmakuParser().parser(str)
+                    console.log(a);
 
-                        animations: [
-                            {
-                                type: "list",
-                                params: {
-                                    cubic: [.25, .1, .25, 1],
-                                    animations: [
-                                        {
-                                            type: "translate",
-                                            params: {
-                                                duration: 5000,
-                                                path: {
-                                                    x1: 600,
-                                                    y1: 900,
-                                                    x2: 600,
-                                                    y2: 100
-                                                }
-                                            }
-                                        },
-                                    ]
-                                }
-                            },
-                            {
-                                type: "repeat",
+                    a.forEach((danmaku) => {
 
-                                params: {
-                                    repeat: 30,
-                                    animation: {
-                                        type: "rotateY",
-                                        params: {
-                                            duration: 700
-                                        }
-                                    },
-                                }
-                            }
+                        // console.log(danmaku.getContent());
+                        timeline.addDanmaku(danmaku)
+                    })
 
-                        ]
 
-                    }
-
-                }
-            })
-            let danmu2 = new BaseDanmaku()
-            danmu.setContent("456")
-            danmu.setParams({
-                start: 0,
-                fontStyle: {
-                    color: "red",
-                    fontSize: 100
-                },
-                animation: {
-                    type: "group",
-                    params: {
-
-                        animations: [
-                            {
-                                type: "list",
-                                params: {
-                                    cubic: [.25, .1, .25, 1],
-                                    animations: [
-                                        {
-                                            type: "translate",
-                                            params: {
-                                                duration: 5000,
-                                                path: {
-                                                    x1: 600,
-                                                    y1: 900,
-                                                    x2: 600,
-                                                    y2: 100
-                                                }
-                                            }
-                                        },
-                                    ]
-                                }
-                            },
-                            {
-                                type: "repeat",
-
-                                params: {
-                                    repeat: 30,
-                                    animation: {
-                                        type: "rotateY",
-                                        params: {
-                                            duration: 700
-                                        }
-                                    },
-                                }
-                            }
-
-                        ]
-
-                    }
-
-                }
-            })
-            timeline.addDanmaku(danmu, 1000, 10000)
-            timeline.addDanmaku(danmu2,100,9000)
+                })
+            } else {
+                console.warn(i18n.t("danmaku get function is null :" + lineType));
+            }
             stage.timeLine(timeline)
             //更新渲染器内画布样式
             render.updateCanvasStyle(this.getCanvasStylByStage(stage))
         })
+       
     }
 
     /**
@@ -299,7 +213,23 @@ export class Controller {
             this.timeStamp = Date.now() - time
         }
     }
+    /**
+     * 重置整个系统
+     */
+    reset() {
+        //清空所有舞台
+        this.stageList.forEach((stage) => {
+            stage.reset()
+        })
+        this.pauseStatus = true
+        this.timeStamp = 0
+        this.time = 0
+        this.skipStatus = false
+    }
     getTime() {
         return this.time
+    }
+    addGetDanmakuFunction(type: string, fun: (send: (str: string) => void) => void) {
+        this.danmakuFunction[type] = fun
     }
 }

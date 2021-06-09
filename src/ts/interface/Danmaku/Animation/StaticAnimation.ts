@@ -9,13 +9,13 @@ export default class StaticAnimation implements AnimationInterface {
         return this.time;
     }
 
-    time: number = 10000;
+    time: number = 1000;
     x: number = 0;
     y: number = 0;
     z: number = 0;
     setParams(param: { [idx: string]: any; }): boolean {
         let def = 0;
-        this.time = param?.time || def
+        this.time = param?.time || this.time
         this.x = param?.x || def
         this.y = param?.y || def
         this.z = param?.z || def
