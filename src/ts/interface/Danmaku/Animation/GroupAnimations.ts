@@ -18,11 +18,8 @@ export class GroupAnimations extends CubicAnimations {
      cumulativeMatrix: number[][] = []
     setParams(param: { [idx: string]: any; }): boolean {
         super.setParams(param);
-        console.log(param);
         
-        this.animations = AnimationFactory.getAnimationsList(param?.animations || [])
-        console.log(this.animations);
-        
+        this.animations = AnimationFactory.getAnimationsList(param?.animations || [])      
         //计算出最大的动画时长
         this.animations.forEach((val,key)=>{
             let dur = val.getDuration()

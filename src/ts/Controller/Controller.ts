@@ -103,7 +103,6 @@ export class Controller {
             let lineType = stage.timeLineType()
             let timeline = TimeLineFactory.getTimeLine(lineType)
             if (this.danmakuFunction[lineType]) {
-                console.log(1);
                 
                 this.danmakuFunction[stage.timeLineType()]((str) => {
                     let a = new JsonDanmakuParser().parser(str)

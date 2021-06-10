@@ -25,7 +25,6 @@ export class AnimationFactory {
     static getAnimations(type:string,params):AnimationInterface | false{
         if(this.animationList[type]){
             // console.log(params);
-            
             let ani = new this.animationList[type]()
             // console.log(ani);
             
@@ -38,14 +37,12 @@ export class AnimationFactory {
         let animationList:AnimationInterface[] = []
         console.log(list);
         
-        for (const key in list) {
-            console.log(key);
-            
-            let ani =  this.getAnimations(key,list[key])
+        list?.forEach((val)=>{
+            let ani =  this.getAnimations(val["type"],val)
             if(ani){
                 animationList.push(ani);
             }
-        }
+        })
         return animationList
     }
 }

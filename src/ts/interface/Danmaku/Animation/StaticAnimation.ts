@@ -6,16 +6,16 @@ import { AnimationInterface } from "./AnimationInterface";
  */
 export default class StaticAnimation implements AnimationInterface {
     getDuration(): number {
-        return this.time;
+        return this.duration;
     }
 
-    time: number = 1000;
+    duration: number = 1000;
     x: number = 0;
     y: number = 0;
     z: number = 0;
     setParams(param: { [idx: string]: any; }): boolean {
         let def = 0;
-        this.time = param?.time || this.time
+        this.duration = param?.duration || this.duration
         this.x = param?.x || def
         this.y = param?.y || def
         this.z = param?.z || def
@@ -24,7 +24,7 @@ export default class StaticAnimation implements AnimationInterface {
     getMatrix(time: number): false | number[] {
         // console.log(time);
 
-        if (time > this.time) return false;
+        if (time > this.duration) return false;
 
         return [
             1, 0, 0, 0,

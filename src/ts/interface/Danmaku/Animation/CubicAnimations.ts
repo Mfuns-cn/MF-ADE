@@ -18,10 +18,9 @@ export abstract class CubicAnimations implements AnimationInterface {
     /**
      * 动画总时间
      */
-    duration: number = 3000
+    duration: number = 1
     //currentTime:number = 0
     getMatrix(time: number): false | number[] {
-        
         if (this.isEnd(time)) return false
         let p = this.getProgress(time)
         let a = this.getMatrixForCubic(p, this.duration * p)

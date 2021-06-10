@@ -10,7 +10,6 @@ export interface DanmakuObj {
     child: DanmakuObj[]
     start:number
 }
-
 export class DanmakuTool {
     /**
    * 递归构建弹幕对象
@@ -22,7 +21,6 @@ export class DanmakuTool {
         danmaku.forEach((danmaku) => {
             let div = this.createDiv(danmaku.getContent())
             this.setStyle(div,danmaku.getStyle());
-            
             let obj: DanmakuObj = {
                 element: div,
                 animation: danmaku.getAnimation(),
@@ -77,27 +75,18 @@ export class DanmakuTool {
     /**
      * 将样式设置到元素中
      */
-    static setStyle(element:HTMLElement,style:DanmakuStyle){
-        for (let key in style) {
-            for (const key1 in style[key]) {
-               if(typeof style[key][key1] == "object"){
-                   
-                    element.style[key1] = style[key][key1]?.string()
-               }else{
-                    element.style[key1] = style[key][key1]
-               }
-            }
-            
-        }
+    static setStyle(element:HTMLElement,style:{ [idx: string]: any; }){
+        
+        Object.assign(element.style,style)
     }
     /**
      * 递归设置弹幕动画
      * @param danmaku 
      */
-    static recursionStyle(danmaku:DanmakuObj[],canvas:HTMLElement,abstime:number){ 
+    static recursionStyle(danmaku:DanmakuObj[],canvas:HTMLElement,abstime:number,parentTime:number = 0){ 
         danmaku.forEach((dan,key)=>{
             //更新弹幕样式
-            let time = abstime - dan.start;
+            let time = parentTime == 0 ? abstime - dan.start: parentTime - dan.start;
             
             // console.log(dan.animation);
             
@@ -111,6 +100,7 @@ export class DanmakuTool {
             }
             
             //如果都不存在，则表示动画已经完成，销毁元素
+            //如果是子元素的情况，有可能存在弹幕未开始的情况
             if(!(sty || max)){
                 
                 
@@ -125,7 +115,7 @@ export class DanmakuTool {
                 delete danmaku[key];
             }
             //递归
-            this.recursionStyle(dan.child,canvas,time);
+            this.recursionStyle(dan.child,canvas,abstime,time);
         })
     }
 }

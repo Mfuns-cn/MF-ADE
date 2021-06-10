@@ -26,7 +26,7 @@ export abstract class BaseStage implements StageInterface {
         }
     }
     stageBackgroundColor(): Color {
-        return  new Color(0,0,0,.1);
+        return  new Color(0,0,0,0);
     }
     stageRenderer(render: RendererInterface): boolean {
         this.renderer = render

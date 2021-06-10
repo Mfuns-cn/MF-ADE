@@ -21,29 +21,24 @@ export class JsonDanmakuParser implements DanmakuParserInterface {
 
     getDanmaku(obj?: any[]):DanmakuItemInterface[] {
         let list:DanmakuItemInterface[] = []
+
         obj?.forEach((dan) => {
             
             let danmaku = DanmakuFactory.getDanmakuInstance(dan.type)
             if(!dan?.animations){
-                dan.animations = {
-                    "static":{}
-                }
-            }
-            console.log(AnimationFactory.getAnimations("list",{animations:dan?.animations}));
-            
+                dan.animations = [{type:"static"}]
+            } 
             danmaku.setParams({
                 start: dan?.start,
-                content:dan.content,
-                fontStyle: dan?.fontStyle,
-                boxStyle: dan?.boxStyle,
+                content:dan?.content,
+                style:dan?.style,
                 animation: AnimationFactory.getAnimations("list",{animations:dan?.animations}),//将列表组成一个list
                 child:this.getDanmaku(dan.childs)
             })
-            
+
             list.push(danmaku);
         })
         return list;
 
     }
-
 }
