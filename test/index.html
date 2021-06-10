@@ -10,11 +10,23 @@
 </head>
 
 <body>
-    <div id="body"></div>
-    <button onclick="a.start()">开始</button>
-    <button onclick="a.pause()">暂停</button>
-    <button onclick="a.reset()">重置</button>
-    <span id="time">time</span>
+    <div class="box">
+        <div id="body"></div>
+        <button onclick="a.start()">开始</button>
+        <button onclick="a.pause()">暂停</button>
+        <button onclick="a.reset()">重置</button>
+        <span id="time">time</span>
+    </div>
+
+
+    <div class="box">
+        <div id="body2"></div>
+        <button onclick="b.start()">开始</button>
+        <button onclick="b.pause()">暂停</button>
+        <button onclick="b.reset()">重置</button>
+        <span id="time1">time</span>
+    </div>
+
     <!-- <video src="./" id="body"></video> -->
 </body>
 <script src="../dist/bundle.js"></script>
@@ -24,10 +36,9 @@
         containers: document.getElementById("body"),
         danmaku: (send) => {
             let xhr = new XMLHttpRequest()
-            
+
             xhr.onload = function () {
-                if(this.status == 200){
-                    // console.log(this.response);
+                if (this.status == 200) {
                     send(this.response)
                 }
             }
@@ -35,11 +46,21 @@
             xhr.send()
         }
     })
+    var b = new MfunsDanMaku()
+    b.main({
+        containers: document.getElementById("body2"),
+        danmaku: (send) => {
+            let xhr = new XMLHttpRequest()
 
-    let time = document.getElementById("time")
-    setInterval(() => {
-        time.innerText = a.time() / 1000
-    }, 100)
+            xhr.onload = function () {
+                if (this.status == 200) {
+                    send(this.response)
+                }
+            }
+            xhr.open("GET", "/test/demo.json")
+            xhr.send()
+        }
+    })
 
 </script>
 

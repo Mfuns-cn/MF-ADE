@@ -1,5 +1,9 @@
-#body{
+#body ,#body2{
     width: 100%;
     height: 90vh;
     border: 1px solid black;
 }
+ .box{
+     float: left;
+     width: 50%;
+ }

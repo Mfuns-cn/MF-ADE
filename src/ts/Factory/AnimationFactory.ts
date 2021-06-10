@@ -35,7 +35,6 @@ export class AnimationFactory {
     }
     static getAnimationsList(list:{key: { [idx: string]: any; }}[]):AnimationInterface[]{
         let animationList:AnimationInterface[] = []
-        console.log(list);
         
         list?.forEach((val)=>{
             let ani =  this.getAnimations(val["type"],val)

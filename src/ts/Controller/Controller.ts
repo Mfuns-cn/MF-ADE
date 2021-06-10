@@ -106,7 +106,7 @@ export class Controller {
                 
                 this.danmakuFunction[stage.timeLineType()]((str) => {
                     let a = new JsonDanmakuParser().parser(str)
-                    console.log(a);
+                    // console.log(a);
 
                     a.forEach((danmaku) => {
 
