@@ -90,7 +90,7 @@ export class Controller {
     public mount() {
         console.info(i18n.t("Start mount stage"));
         //遍历每一个舞台
-        this.stageList.forEach((stage) => {
+        this.stageList.forEach((stage,key) => {
             //获取一个div
             let div = this.getDIV()
             //给舞台初始化渲染器
@@ -102,24 +102,13 @@ export class Controller {
             //设置舞台时间轴
             let lineType = stage.timeLineType()
             let timeline = TimeLineFactory.getTimeLine(lineType)
+            stage.timeLine(timeline)
             if (this.danmakuFunction[lineType]) {
-                
-                this.danmakuFunction[stage.timeLineType()]((str) => {
-                    let a = new JsonDanmakuParser().parser(str)
-                    // console.log(a);
-
-                    a.forEach((danmaku) => {
-
-                        // console.log(danmaku.getContent());
-                        timeline.addDanmaku(danmaku)
-                    })
-
-
-                })
+                    this.resetDanmaku(key)
             } else {
                 console.warn(i18n.t("danmaku get function is null :" + lineType));
             }
-            stage.timeLine(timeline)
+            
             //更新渲染器内画布样式
             render.updateCanvasStyle(this.getCanvasStylByStage(stage))
         })
@@ -230,5 +219,22 @@ export class Controller {
     }
     addGetDanmakuFunction(type: string, fun: (send: (str: string) => void) => void) {
         this.danmakuFunction[type] = fun
+    }
+    resetDanmaku(type:number){
+        if(this.stageList[type]){
+            let stage = this.stageList[type]
+            stage.getTimeLine().reset();
+            let lineType = stage.timeLineType();
+            let fun = this.danmakuFunction[lineType]
+            if(!!fun){
+                fun((res)=>{
+                    let parser = new JsonDanmakuParser();
+                    let timeline = stage.getTimeLine()
+                    parser.parser(res).forEach((danmaku) => {
+                        timeline.addDanmaku(danmaku)
+                    });
+                })
+            }
+        }
     }
 }

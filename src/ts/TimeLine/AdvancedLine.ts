@@ -3,6 +3,7 @@ import { TimeLineDanmaku } from "./TimeLineDanmaku";
 import { TimeLineInterface } from "./TimeLineInterface";
 
 export class AdvancedLine implements TimeLineInterface {
+  
 
     /**
      * 上次获取时间(10ms)
@@ -92,6 +93,9 @@ export class AdvancedLine implements TimeLineInterface {
         this.lastTime = time
         return {skip:skip,DanmakuList:arr};
     }
-
+    reset(): boolean {
+        this.danmakuList = []
+        return true
+    }
 }
 

@@ -15,4 +15,9 @@ export interface TimeLineInterface {
     * @param end
     */
     addDanmaku(danmaku: DanmakuItemInterface, start?: number, end?: number): void
+
+    /**
+     * 重置弹幕
+     */
+    reset():boolean
 }

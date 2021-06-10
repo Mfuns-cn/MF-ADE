@@ -33,6 +33,11 @@ export interface StageInterface {
      * 设置时间轴对象
      */
     timeLine(timeLine: TimeLineInterface): boolean
+
+    /**
+     * 获取时间轴对象
+     */
+    getTimeLine():TimeLineInterface
     /**
      * 获取渲染器对象
      */

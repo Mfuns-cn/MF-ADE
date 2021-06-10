@@ -33,9 +33,11 @@ class MfunsDanMaku {
         return this.controller.getTime()
     }
     reset(){
+        this.controller.resetDanmaku(1)
         this.controller.reset()
-    }
         
+    }
+
 }
 //添加进全局
 if (globalThis) {

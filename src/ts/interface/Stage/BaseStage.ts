@@ -9,7 +9,7 @@ import { i18n } from "src/ts/i18n";
 import { TimeLineDanmaku } from "src/ts/TimeLine/TimeLineDanmaku";
 
 export abstract class BaseStage implements StageInterface {
-   
+
 
     protected renderer?: RendererInterface;
     protected timeLineObj?: TimeLineInterface
@@ -44,7 +44,7 @@ export abstract class BaseStage implements StageInterface {
         this.timeLineObj = timeLine;
         return true;
     }
-    refresh(time):boolean{
+    refresh(time:number):boolean{
         if(!this.renderer) return false;
         let list:{ skip: boolean; DanmakuList: TimeLineDanmaku[]; }
         if(list = this.timeLineObj?.getDanmakuList(time) || {skip:false,DanmakuList:[]}){
@@ -74,4 +74,11 @@ export abstract class BaseStage implements StageInterface {
         return true
     
     }
+    getTimeLine(): TimeLineInterface {
+        if(!this.timeLineObj){
+            throw ReferenceError(i18n.t("Time line is null"));
+        }
+        return this.timeLineObj
+    }
+   
 }
