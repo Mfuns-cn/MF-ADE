@@ -31,7 +31,7 @@ export abstract class CubicAnimations implements AnimationInterface {
         let p = this.getProgress(time)
         return this.getCubicStyle(p, this.duration * p)
     }
-    setParams(param: { [idx: string]: any; }): boolean {  
+    setParams(param?: { [idx: string]: any; }): boolean {  
         this.cubic = param?.cubic ? param?.cubic : this.cubic
         this.duration = param?.duration ? param?.duration : this.duration
         return true

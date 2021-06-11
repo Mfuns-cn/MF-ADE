@@ -76,7 +76,6 @@ export class DanmakuTool {
      * 将样式设置到元素中
      */
     static setStyle(element:HTMLElement,style:{ [idx: string]: any; }){
-        
         Object.assign(element.style,style)
     }
     /**
@@ -93,6 +92,7 @@ export class DanmakuTool {
             let sty;
             let max;
             if(sty = dan.animation.getStyle(time)){
+            
                 this.setStyle(dan.element,sty)
             }
             if(max = dan.animation.getMatrix(time)){

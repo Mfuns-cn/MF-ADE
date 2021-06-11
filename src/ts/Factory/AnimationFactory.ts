@@ -1,6 +1,7 @@
 import { AnimationInterface } from "../interface/Danmaku/Animation/AnimationInterface";
 import { GroupAnimations } from "../interface/Danmaku/Animation/GroupAnimations";
 import { ListAnimations } from "../interface/Danmaku/Animation/ListAnimations";
+import { OpacityAnimations } from "../interface/Danmaku/Animation/OpacityAnimations";
 import { RepeatAnimations } from "../interface/Danmaku/Animation/RepeatAnimations";
 import { RotationXAnimation } from "../interface/Danmaku/Animation/RotationXAnimation";
 import { RotationYAnimation } from "../interface/Danmaku/Animation/RotationYAnimation";
@@ -19,7 +20,8 @@ export class AnimationFactory {
         "scale":ScaleAnimations,//缩放
         "list":ListAnimations,//动画列表
         "group":GroupAnimations,//动画组
-        "repeat":RepeatAnimations//重复动画
+        "repeat":RepeatAnimations,//重复动画
+        "opacity":OpacityAnimations
     }
 
     static getAnimations(type:string,params):AnimationInterface | false{
