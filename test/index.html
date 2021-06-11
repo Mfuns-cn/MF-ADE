@@ -10,10 +10,10 @@
 </head>
 
 <body>
-    <div class="box">
-        <textarea id="danmaku">
-            [
-    {
+    <div class="box"> 
+      <pre id="editor">
+
+   [{
         "type":"text",
         "start":0,
         "content":"",
@@ -141,34 +141,39 @@
         ]
     }
 ]
-        </textarea>
+
+      </pre>
+
     </div>
     <div class="box">
         <div id="body"></div>
-        <button onclick="a.start()">开始</button>
+        <button onclick="a.start()">继续</button>
         <button onclick="a.pause()">暂停</button>
-        <button onclick="a.reset()">重置</button>
+        <button onclick="a.reset()">读取编辑器</button>
         <span id="time">time</span>
     </div>
     <!-- <video src="./" id="body"></video> -->
 </body>
 <script src="../dist/bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" integrity="sha512-GZ1RIgZaSc8rnco/8CXfRdCpDxRCphenIiZ2ztLy3XQfCbQUSCuk8IudvNHxkRA3oUg6q0qejgN/qqyG1duv5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
+var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.session.setMode("ace/mode/json");
+var time = document.getElementById("time")
     var a = new MfunsDanMaku()
-    let tst = document.getElementById("danmaku")
     a.main({
         containers: document.getElementById("body"),
         danmaku: (send) => {
-            let xhr = new XMLHttpRequest()
-
-            xhr.onload = function () {
-                send(tst.valve)
-            }
-            xhr.open("GET", "/test/demo.json")
-            xhr.send()
+            send(editor.getValue())
         }
     })
 
-</script>
+  setInterval(()=>{
+    time.innerHTML = a.time()
+
+    },100)
+      </script>
 
 </html>

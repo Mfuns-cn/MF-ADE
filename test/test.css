@@ -1,13 +1,19 @@
 #body ,#body2{
-    width: 100%;
-    height: 90vh;
-    border: 1px solid black;
-}
- .box{
-     float: left;
-     width: 50%;
- }
- #danmaku{
+
      width: 100%;
      height: 100%;
  }
+   #editor {
+        margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left:0;
+    }
+    .box{
+      width:100%;
+      height:300px;
+      position: relative;
+      border:1px solid #888;
+    }
