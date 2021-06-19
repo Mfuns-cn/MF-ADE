@@ -10,8 +10,8 @@ import { DanmakuObj, DanmakuTool } from "./CssDanmakuObj";
 export class CSS3Renderer implements RendererInterface {
 
     canvasSize: SizeInterface = {
-        width: new PxSize(1600),
-        height: new PxSize(900)
+        width: new PxSize(1920),
+        height: new PxSize(1080)
     }
     canvas?: HTMLElement
     danmakuList: DanmakuObj[] = []

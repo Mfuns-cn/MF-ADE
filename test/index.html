@@ -10,141 +10,7 @@
 </head>
 
 <body>
-    <div class="box"> 
-      <pre id="editor">
 
-   [{
-        "type":"text",
-        "start":0,
-        "content":"",
-        "style":{
-            "backgroundColor":"rgba(0,0,0,1)",
-            "width":"50%",
-            "height":"40%"
-        },
-        "animations":[
-            {
-                "duration":1,
-                "type":"translate",
-                "path":{
-                    "x2":400,
-                    "y2":225
-                }
-            },
-            {
-                "type":"opacity",
-                "duration":2000
-            }
-        ]
-    },
-    {
-        "type":"text",
-        "content":"内",
-        "style":{
-            "fontSize":"150px",
-            "color":"white",
-            "zIndex":10
-        },
-        "animations":[
-            {
-                "type":"translate",
-                "duration":1000,
-                "cubic":[0.68, -0.55, 0.27, 1.55],
-                "path":{
-                    "x1":480,
-                    "y1":900,
-                    "x2":480,
-                    "y2":300
-                }
-            },{
-                "type":"static",
-                "duration":1000
-            }
-        ]
-    },
-    {
-        "type":"text",
-        "start":"200",
-        "content":"容",
-        "style":{
-            "fontSize":"150px",
-            "color":"white",
-            "zIndex":10
-        },
-        "animations":[
-            {
-                "type":"translate",
-                "duration":1000,
-                "cubic":[0.68, -0.55, 0.27, 1.55],
-                "path":{
-                    "x1":640,
-                    "y1":900,
-                    "x2":640,
-                    "y2":300
-                }
-            },{
-                "type":"static",
-                "duration":1000
-            }
-        ]
-    },
-    {
-        "type":"text",
-        "start":"400",
-        "content":"测",
-        "style":{
-            "fontSize":"150px",
-            "color":"white",
-            "zIndex":10
-        },
-        "animations":[
-            {
-                "type":"translate",
-                "duration":1000,
-                "cubic":[0.68, -0.55, 0.27, 1.55],
-                "path":{
-                    "x1":800,
-                    "y1":900,
-                    "x2":800,
-                    "y2":300
-                }
-            },{
-                "type":"static",
-                "duration":1000
-            }
-        ]
-    },
-    {
-        "type":"text",
-        "start":"600",
-        "content":"试",
-        "style":{
-            "fontSize":"150px",
-            "color":"white",
-            "zIndex":10
-        },
-        "animations":[
-            {
-                "type":"translate",
-                "duration":1000,
-                "cubic":[0.68, -0.55, 0.27, 1.55],
-                "path":{
-                    "x1":960,
-                    "y1":900,
-                    "x2":960,
-                    "y2":300
-                }
-            },{
-                "type":"static",
-                "duration":1000
-            }
-        ]
-    }
-]
-
-      </pre>
-
-    </div>
     <div class="box">
         <div id="body"></div>
         <button onclick="a.start()">继续</button>
@@ -155,25 +21,28 @@
     <!-- <video src="./" id="body"></video> -->
 </body>
 <script src="../dist/bundle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" integrity="sha512-GZ1RIgZaSc8rnco/8CXfRdCpDxRCphenIiZ2ztLy3XQfCbQUSCuk8IudvNHxkRA3oUg6q0qejgN/qqyG1duv5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 <script>
-var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/twilight");
-    editor.session.setMode("ace/mode/json");
-var time = document.getElementById("time")
-    var a = new MfunsDanMaku()
-    a.main({
+    var time = document.getElementById("time")
+    var a = new MfunsDanMaku({
         containers: document.getElementById("body"),
         danmaku: (send) => {
-            send(editor.getValue())
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "danmmaku.json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    send([xhr.responseText])
+                    a.start();
+                }
+            };
+            xhr.send()
+            
         }
     })
 
-  setInterval(()=>{
-    time.innerHTML = a.time()
+    setInterval(() => {
+        time.innerHTML = a.time()
 
-    },100)
-      </script>
+    }, 100)
+</script>
 
 </html>

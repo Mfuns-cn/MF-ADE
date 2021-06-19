@@ -6,7 +6,7 @@ import { TestStage } from "./interface/Stage/TestStage";
 class MfunsDanMaku {
 
     controller:Controller; 
-    main(config: InitConfigInterface) {
+    constructor(config: InitConfigInterface) {
         //类型检查
         if (!config.containers) {
             throw ReferenceError(i18n.t("Containers is null"))

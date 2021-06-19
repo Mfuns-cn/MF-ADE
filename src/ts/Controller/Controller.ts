@@ -43,7 +43,7 @@ export class Controller {
      */
     skipStatus: boolean = false;
 
-    protected danmakuFunction: { [type: string]: (send: (str: string) => void) => void } = {}
+    protected danmakuFunction: { [type: string]: (send: (str: string[]) => void) => void } = {}
     constructor(containers: HTMLElement) {
         this.containers = containers
         //获取实时的style对象，当大小发生变化时，会更新自身
@@ -103,7 +103,9 @@ export class Controller {
             let lineType = stage.timeLineType()
             let timeline = TimeLineFactory.getTimeLine(lineType)
             stage.timeLine(timeline)
+            //检察是否存在弹幕获取器
             if (this.danmakuFunction[lineType]) {
+                //如果存在，就获取弹幕
                     this.resetDanmaku(key)
             } else {
                 console.warn(i18n.t("danmaku get function is null :" + lineType));
@@ -217,7 +219,7 @@ export class Controller {
     getTime() {
         return this.time
     }
-    addGetDanmakuFunction(type: string, fun: (send: (str: string) => void) => void) {
+    addGetDanmakuFunction(type: string, fun: (send: (str: string[]) => void) => void) {
         this.danmakuFunction[type] = fun
     }
     resetDanmaku(type:number){
@@ -227,12 +229,14 @@ export class Controller {
             let lineType = stage.timeLineType();
             let fun = this.danmakuFunction[lineType]
             if(!!fun){
-                fun((res)=>{
+                fun((res:string[])=>{
                     let parser = new JsonDanmakuParser();
                     let timeline = stage.getTimeLine()
-                    parser.parser(res).forEach((danmaku) => {
-                        timeline.addDanmaku(danmaku)
-                    });
+                    res.forEach((danmakuStr:string)=>{
+                        parser.parser(danmakuStr).forEach((danmaku) => {
+                            timeline.addDanmaku(danmaku)
+                        });
+                    })
                 })
             }
         }
