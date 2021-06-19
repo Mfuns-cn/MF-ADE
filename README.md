@@ -1,6 +1,8 @@
-# Danmaku
-Mfuns 动画弹幕引擎 
+# MFuns 高级弹幕引擎 
 
+MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎 
+
+当前版本: `1.1.1 Beta` ，更新日期：`2021/6/19`
 ## 使用文档
 
 导入弹幕模块，并进行实例化的操作
@@ -50,8 +52,10 @@ containers 容器接受一个html元素,但并不会对元素的大小和位置�
 
 >如果不希望重新获取弹幕，请使用 `skip(0)` 进行跳转
 
-## 弹幕文档
-https://meogirl.ml
+## 相关链接
+
+- [弹幕文档](https://meogirl.ml/2021/06/11/danmaku/Mfuns%E5%BC%B9%E5%B9%95%E6%89%8B%E5%86%8C/)
+- [弹幕实验室](https://lab.meogirl.ml)
 
 ## 目前已实现
  - 贝塞尔曲线
