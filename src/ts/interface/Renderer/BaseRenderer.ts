@@ -8,7 +8,7 @@ export class BaseRenderer implements RendererInterface {
     reset(): boolean {
         throw new Error("Method not implemented.");
     }
-    addDanmaku(danmaku: DanmakuItemInterface): boolean {
+    addDanmaku(_danmaku: DanmakuItemInterface): boolean {
         return false;
     }
     refresh(): boolean {

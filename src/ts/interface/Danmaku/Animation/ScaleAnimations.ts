@@ -25,7 +25,7 @@ export class ScaleAnimations extends OriginAnimations{
         return m
 
     }
-    getCubicStyle(progress: number): false | DanmakuStyle {
+    getCubicStyle(_progress: number): false | DanmakuStyle {
        return false
     }
 

@@ -5,6 +5,14 @@ MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎
 当前版本: `1.1.1 Beta` ，更新日期：`2021/6/19`
 ## 使用文档
 
+### 下载 & 安装
+下载lib/bundle.js文件
+使用script标记导入到html中
+
+npm 方式：
+无，以后再说
+
+### 基本使用
 导入弹幕模块，并进行实例化的操作
 ```js
 var danmaku = new MfunsDanMaku({

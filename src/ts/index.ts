@@ -3,7 +3,7 @@ import { Controller } from './Controller/Controller';
 import { i18n } from "./i18n"
 import { InitConfigInterface } from "./interface/InitConfigInterface";
 import { TestStage } from "./interface/Stage/TestStage";
-class MfunsDanMaku {
+export class MfunsDanMaku {
 
     controller:Controller; 
     constructor(config: InitConfigInterface) {
@@ -43,4 +43,3 @@ class MfunsDanMaku {
 if (globalThis) {
     globalThis.MfunsDanMaku = MfunsDanMaku;
 }
-export default MfunsDanMaku;
