@@ -3,10 +3,10 @@ const path = require('path');
 module.exports = {
   entry: './src/ts/index.ts',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'lib'),
     filename: 'bundle.js',
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.ts', '.vue', '.json'],
     alias: {

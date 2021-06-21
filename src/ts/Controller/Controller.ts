@@ -4,7 +4,10 @@ import { StageInterface } from "../interface/Stage/StageInterface";
 import { Context } from "../Context/Context";
 import { i18n } from "../i18n";
 import { canvasStyle } from "../interface/Style/CanvasStyle";
-import { RendererFactory } from "../interface/Renderer/RendererFactory";
+import { RendererFactory } from "src/ts/Factory/RendererFactory";
+import { PxSize } from "../interface/Style/Unit/PxSize";
+import { TimeLineFactory } from "../Factory/TimeLineFactort";
+import { JsonDanmakuParser } from "../Factory/DanmakuParser/JsonDanmakuParser";
 
 /**
  * 控制器 ，统一管理整个弹幕系统
@@ -21,23 +24,50 @@ export class Controller {
     protected canvasStyle: CSSStyleDeclaration;
     /**
      * 舞台列表
-     */
+    */
     protected stageList: StageInterface[] = [];
+    /**
+     * 暂停状态
+     */
+    protected pauseStatus: boolean = true;
+    /**
+     * 时间戳
+     */
+    protected timeStamp: number = 0;
+    /**
+     * 播放的时间
+     */
+    protected time: number = 0;
+    /**
+     * 跳转状态
+     */
+    skipStatus: boolean = false;
+
+    protected danmakuFunction: { [type: string]: (send: (str: string[]) => void) => void } = {}
     constructor(containers: HTMLElement) {
         this.containers = containers
         //获取实时的style对象，当大小发生变化时，会更新自身
         this.canvasStyle = window.getComputedStyle(containers);
         //初始化容器
         this.initContainer()
-    }
+        let that = this;
+        (function animloop() {
 
+            if (!that.pauseStatus) {
+                that.refresh()
+            }
+            requestAnimationFrame(animloop);
+
+
+        })()
+    }
     /**
      * 获得容器尺寸
      */
     public getContainersSize(): SizeInterface {
         return {
-            width: parseInt(this.canvasStyle.width),
-            height: parseInt(this.canvasStyle.height)
+            width: new PxSize(parseInt(this.canvasStyle.width)),
+            height: new PxSize(parseInt(this.canvasStyle.height))
         }
     }
     /**
@@ -58,20 +88,33 @@ export class Controller {
      * 将舞台挂载到容器中
      */
     public mount() {
-        console.log(i18n.t("Start mount stage"));
+        console.info(i18n.t("Start mount stage"));
         //遍历每一个舞台
-        this.stageList.forEach((stage) => {
+        this.stageList.forEach((stage,key) => {
             //获取一个div
             let div = this.getDIV()
             //给舞台初始化渲染器
-            let render = RendererFactory.getRenderInstance("base");
+            let render = RendererFactory.getRenderInstance(stage.rendererType());
             //将div挂载到渲染器
             render.setCanvasContainer(div)
             //设置舞台渲染器
             stage.stageRenderer(render);
+            //设置舞台时间轴
+            let lineType = stage.timeLineType()
+            let timeline = TimeLineFactory.getTimeLine(lineType)
+            stage.timeLine(timeline)
+            //检察是否存在弹幕获取器
+            if (this.danmakuFunction[lineType]) {
+                //如果存在，就获取弹幕
+                    this.resetDanmaku(key)
+            } else {
+                console.warn(i18n.t("danmaku get function is null :" + lineType));
+            }
+            
             //更新渲染器内画布样式
             render.updateCanvasStyle(this.getCanvasStylByStage(stage))
         })
+       
     }
 
     /**
@@ -83,16 +126,17 @@ export class Controller {
             this.containers.classList.add("danmaku-containers-debug")
         }
         this.containers.classList.add("danmaku-containers")
+
     }
 
     /**
      * 重置尺寸
      */
-    public resize(){
+    public resize() {
         //重置舞台的尺寸
-        this.stageList.forEach((stage)=>{
+        this.stageList.forEach((stage) => {
             let render = stage.getRenderer()
-            if( render ){
+            if (render) {
                 render.updateCanvasStyle(this.getCanvasStylByStage(stage));
             }
         })
@@ -119,4 +163,82 @@ export class Controller {
         return { position: pos, color: color, size: size }
     }
 
+    refresh() {
+
+        this.time = Date.now() - this.timeStamp
+        //通知每个舞台刷新
+        this.stageList.forEach((stage) => {
+            // console.log(1)
+            stage.refresh(this.time)
+        })
+    }
+
+    /**
+     * 暂停
+     */
+    pause() {
+        if (!this.pauseStatus) {
+            this.pauseStatus = true;
+        }
+    }
+    /**
+     * 播放
+     */
+    start() {
+        if (this.pauseStatus) {
+            //同步时间
+            this.timeStamp = Date.now() - this.time;
+            this.pauseStatus = false;
+        }
+    }
+    /**
+     * 跳转
+     */
+    skip(time: number) {
+        if (this.pauseStatus) {
+            //如果是暂停状态
+            this.time = time;
+        } else {
+            //否则使用这个方法
+            this.timeStamp = Date.now() - time
+        }
+    }
+    /**
+     * 重置整个系统
+     */
+    reset() {
+        //清空所有舞台
+        this.stageList.forEach((stage) => {
+            stage.reset()
+        })
+        this.pauseStatus = true
+        this.timeStamp = 0
+        this.time = 0
+        this.skipStatus = false
+    }
+    getTime() {
+        return this.time
+    }
+    addGetDanmakuFunction(type: string, fun: (send: (str: string[]) => void) => void) {
+        this.danmakuFunction[type] = fun
+    }
+    resetDanmaku(type:number){
+        if(this.stageList[type]){
+            let stage = this.stageList[type]
+            stage.getTimeLine().reset();
+            let lineType = stage.timeLineType();
+            let fun = this.danmakuFunction[lineType]
+            if(!!fun){
+                fun((res:string[])=>{
+                    let parser = new JsonDanmakuParser();
+                    let timeline = stage.getTimeLine()
+                    res.forEach((danmakuStr:string)=>{
+                        parser.parser(danmakuStr).forEach((danmaku) => {
+                            timeline.addDanmaku(danmaku)
+                        });
+                    })
+                })
+            }
+        }
+    }
 }

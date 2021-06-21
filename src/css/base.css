@@ -3,11 +3,16 @@
 }
 .danmaku-containers  *{
     box-sizing: border-box;
+    /* perspective: 700px; */
+    transform-style: preserve-3d;
 }
 .danmaku-containers .stage{
     position: absolute;
+    overflow: hidden;
+    perspective:1000px;
+    transform-style: preserve-3d;
 }
 .danmaku-containers-debug *{
-    border: 1px solid black;
+    /* outline: 1px solid black; */
 }
 

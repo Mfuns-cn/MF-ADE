@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,12 +8,41 @@
     <title>Document</title>
     <link rel="stylesheet" href="./test.css">
 </head>
+
 <body>
-    <div id="body"></div>
+
+    <div class="box">
+        <div id="body"></div>
+        <button onclick="a.start()">继续</button>
+        <button onclick="a.pause()">暂停</button>
+        <button onclick="a.reset()">读取编辑器</button>
+        <span id="time">time</span>
+    </div>
+    <!-- <video src="./" id="body"></video> -->
 </body>
-<script src="../dist/bundle.js"></script>
+<script src="../lab/bundle.js"></script>
 <script>
-    var a = new MfunsDanMaku()
-    a.main({containers:document.getElementById("body")})
+    var time = document.getElementById("time")
+    var a = new MfunsDanMaku({
+        containers: document.getElementById("body"),
+        danmaku: (send) => {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "danmmaku.json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    send([xhr.responseText])
+                    a.start();
+                }
+            };
+            xhr.send()
+            
+        }
+    })
+
+    setInterval(() => {
+        time.innerHTML = a.time()
+
+    }, 100)
 </script>
+
 </html>

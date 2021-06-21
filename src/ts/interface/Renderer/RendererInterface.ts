@@ -1,3 +1,4 @@
+import { DanmakuItemInterface } from "../Danmaku/DanmakuItemInterface";
 import { canvasStyle } from "../Style/CanvasStyle";
 
 /**
@@ -15,4 +16,18 @@ export interface RendererInterface{
      */
     updateCanvasStyle(style:canvasStyle):boolean;
 
+    /**
+     * 渲染弹幕
+     */
+    addDanmaku(danmaku:DanmakuItemInterface):boolean
+
+    /**
+     * 刷新渲染器，会根据刷新率调用
+     */
+    refresh(time:number):boolean
+
+    /**
+     * 重置渲染器
+     */
+    reset():boolean
 }

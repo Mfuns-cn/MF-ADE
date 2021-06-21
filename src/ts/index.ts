@@ -2,25 +2,44 @@ import "../css/base.css";
 import { Controller } from './Controller/Controller';
 import { i18n } from "./i18n"
 import { InitConfigInterface } from "./interface/InitConfigInterface";
-import { BaseStage } from "./interface/Stage/BaseStage";
-class MfunsDanMaku {
-    main(config:InitConfigInterface) {
+import { TestStage } from "./interface/Stage/TestStage";
+export class MfunsDanMaku {
+
+    controller:Controller; 
+    constructor(config: InitConfigInterface) {
         //类型检查
         if (!config.containers) {
             throw ReferenceError(i18n.t("Containers is null"))
         }
-         let c =  new Controller(config.containers)
-         c.registStage(new BaseStage(),1)
-         c.mount()
-
-         //监听大小变化
-         window.addEventListener("resize",()=>{
-             c.resize()
-         })
+        this.controller = new Controller(config.containers)
+        this.controller.addGetDanmakuFunction("advance",config.danmaku)
+        this.controller.registStage(new TestStage(), 1)
+        this.controller.mount()
+        //监听大小变化
+        window.addEventListener("resize", () => {
+            this.controller.resize()
+        })
     }
+    pause(){
+        this.controller.pause()
+    }
+    start(){
+        this.controller.start()
+    }
+    skip(time:number){
+        this.controller.skip(time)
+    }
+    time(){
+        return this.controller.getTime()
+    }
+    reset(){
+        this.controller.resetDanmaku(1)
+        this.controller.reset()
+        
+    }
+
 }
 //添加进全局
 if (globalThis) {
     globalThis.MfunsDanMaku = MfunsDanMaku;
 }
-export default MfunsDanMaku;
