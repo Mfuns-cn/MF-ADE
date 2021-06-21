@@ -1,0 +1,636 @@
+#control {
+	position: absolute;
+	bottom: 0;
+	z-index: 9999;
+	width: 100%;
+	height:45px;
+	border: 1px solid #666;
+	background: #333;
+    
+}
+
+#control_mask {
+	width: 100%;
+	background: rgba(255, 255, 255, 0);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+}
+
+.wrap {
+	width: 100%;
+	height: 93%;
+	position: relative;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
+
+#currentTime,
+#total {
+	font-size: 13px;
+	margin-left: 5px;
+}
+
+#control span {
+	color: #fff;
+}
+
+.control_right {
+	width: 23%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	right: 2px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+#barrage {
+	width: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	margin: auto;
+	padding: 2px;
+	height: 75%;
+
+}
+
+#danmakuEditor {
+	width: 180px;
+	height: 150px;
+	background: #333;
+	position: absolute;
+	z-index: 99999;
+	border-radius: 4px;
+	display: none;
+}
+
+#danmaku_type {
+	width: 83%;
+	margin: 20px auto;
+	display: flex;
+	align-items: center;
+	border: 1px solid #fff;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+#danmaku_type p {
+	flex: 1;
+	height: 19px;
+	line-height: 19px;
+	text-align: center;
+	font-size: 13px;
+	border-right: 1px solid #fff;
+	color: #fff;
+}
+
+#danmaku_type .focus {
+	color: #000;
+	background: #f6f6f6;
+}
+
+#danmaku_type :last-child {
+	border: none;
+}
+
+#danmaku_color {
+	width: 85%;
+	height: 80px;
+	margin: 20px auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	cursor: pointer;
+}
+
+#danmaku_color i {
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+	background: #fff;
+	border-radius: 50%;
+	border: 2px solid #333;
+}
+
+#danmaku_color :nth-child(5n) {
+	margin-right: 0;
+}
+
+#danmaku_color .focus {
+	border: 2px solid #f5f5f5;
+}
+
+.input_box {
+	display: flex;
+	align-items: center;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.input_box input {
+	flex: 6;
+	height: 100%;
+	outline: none;
+	border: #fff;
+	border-right: none;
+	background-color: #555;
+	border-radius: 3px 0 0 3px;
+	padding-left: 40px;
+	color: #fff;
+}
+
+#barrage input::-webkit-input-placeholder {
+	color: #F5DEDE;
+}
+
+.input_box #danmaku_style {
+	position: absolute;
+	top: 50%;
+	left: 10px;
+	color: #fff;
+	text-align: center;
+	width: 15px;
+	height: 16px;
+	line-height: 16px;
+	margin-top: -8px;
+	border-bottom: 1px solid #fff;
+	cursor: pointer;
+}
+
+#danmaku_style:hover {
+	color: #7b7ff7;
+	border-color: #7b7ff7;
+}
+
+#emit {
+	flex: 1;
+	width: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	font-size: 10px;
+	color: #fff;
+	background: #7b7ff7;
+	border-radius: 0 3px 3px 0;
+	cursor: pointer;
+}
+
+.right_icon {
+	width: 32px;
+	height: 25px;
+	font-size: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+#list_danmaku i {
+	width: 25px;
+	height: 25px;
+	background: url(../icon/list.svg);
+	background-size: 100% 100%;
+}
+
+#danmaku {
+	width: 32px;
+	height: 21px;
+	background: #7b7ff7;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+#switch {
+	width: 18px;
+	height: 18px;
+	text-align: center;
+	line-height: 18px;
+	background: #fff;
+	font-size: 12px;
+	border-radius: 50%;
+	font-weight: 600;
+}
+
+.switch_open {
+	color: #7b7ff7;
+	margin-left: 12px;
+	animation: open 0.3s;
+}
+
+.switch_close {
+	color: #757575;
+	margin-left: 2px;
+	animation: close 0.3s;
+}
+
+#full i {
+	width: 90%;
+	height: 100%;
+	background-size: 100% 100%;
+}
+
+.fullsc {
+	background-image: url(../icon/fullscreen-fill.svg);
+}
+
+.exitfs {
+	background-image: url(../icon/Fullscreen-Exit.svg);
+}
+
+#troggle {
+	box-sizing: border-box;
+	width: 23px;
+	height: 18px;
+	border-radius: 3px;
+	border: 2px solid #fff;
+	position: relative;
+	cursor: pointer;
+}
+
+#troggle i {
+	position: absolute;
+	width: 70%;
+	height: 70%;
+	border-radius: 2px;
+	right: -5px;
+	bottom: -5px;
+	background: #fff;
+	/* border-bottom-right-radius: 2px; */
+}
+
+#player {
+	width: 30px;
+	height: 20px;
+	margin-left: 3px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+#play_box {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	z-index: 10000;
+}
+
+.neko {
+	position: relative;
+	width: 60px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 6px;
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.ear {
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: -8px;
+	border-bottom: 8px solid rgba(255, 255, 255, 0.8);
+}
+
+.ear_left {
+	left: 8px;
+	border-right: 8px solid transparent;
+}
+
+.ear_right {
+	right: 8px;
+	border-left: 8px solid transparent;
+}
+
+.foot {
+	width: 8px;
+	height: 4px;
+	background: rgba(255, 255, 255, 0.8);
+	position: absolute;
+	border-radius: 0 0 4px 4px;
+	bottom: -4px;
+}
+
+.foot_left {
+	left: 8px;
+}
+
+.foot_right {
+	right: 8px;
+}
+
+.button_play {
+	width: 5px;
+	height: 20px;
+	border-right: 4px solid #000;
+	border-left: 4px solid #000;
+}
+
+.button_pause {
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-left: 15px solid #000;
+	border-bottom: 10px solid transparent;
+	border-radius: 3px;
+}
+
+.icon_pause {
+	width: 0;
+	height: 0;
+	border-top: 8px solid transparent;
+	border-left: 12px solid white;
+	border-bottom: 8px solid transparent;
+	border-radius: 2px;
+}
+
+.icon_play {
+	width: 4px;
+	height: 14px;
+	border-right: 3px solid #fff;
+	border-left: 3px solid #fff;
+}
+
+
+.tip {
+	width: 100px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 15px;
+	background: #000;
+	color: #fff;
+	position: absolute;
+	border-radius: 4px;
+	left: 5px;
+	bottom: 10px;
+	display: none;
+	z-index: 999;
+}
+
+#wait_loading {
+	width: 80px;
+	height: 70px;
+	border-radius: 4px;
+	text-align: center;
+	font-weight: 600;
+	font-size: 15px;
+	background: rgba(255, 255, 255, 0.8);
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	margin: auto;
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 999;
+	cursor: default;
+}
+
+#wait_loading div {
+	width: 30px;
+	height: 30px;
+	background: url(../icon/loading.gif);
+	background-size: 100% 100%;
+}
+
+#voice {
+	width: 120px;
+	height: 60px;
+	border-radius: 4px;
+	line-height: 60px;
+	text-align: center;
+	font-weight: 600;
+	font-size: 18px;
+	background: rgba(255, 255, 255, 0.8);
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	margin: auto;
+	display: none;
+	z-index: 999;
+	cursor: default;
+}
+
+#danmakuList {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 40%;
+	height: 78%;
+	border-radius: 5px;
+	overflow: hidden;
+	padding: 0;
+	background: #333;
+	color: #ffffff;
+	z-index: 999999;
+	animation: expand 0.3s;
+	display: none;
+}
+
+#danmakuList div {
+	font-size: 13px;
+}
+#danmakuList_content{
+	width: 100%;
+	/* height: 200px; */
+	overflow-y: scroll;
+}
+#programList_content{
+	width: 100%;
+	overflow-y: scroll;
+}
+	
+#headOfList {
+	width: 100%;
+	background: #111;
+	position: sticky;
+	top: 0;
+	display: flex;
+}
+
+#headOfList :first-child {
+	width: 70%;
+	padding-left: 10px;
+}
+
+#headOfList :last-child {
+	width: 20%;
+	margin-left: 3%;
+}
+
+#headOfList .label {
+	height: 30px;
+	line-height: 30px;
+}
+#footOfList {
+	width: 100%;
+	height: 30px;
+	background: #111;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	display: flex;
+	cursor: pointer;
+}
+.close{
+	flex:1;
+	background: url(../icon/back.svg);
+	background-size: 100% 100%;
+}
+.foot_item{
+	flex:3;
+	background-color: #666;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.foot_item .goto{
+	width: 12px;
+	height: 12px;
+	background: url(../icon/right.svg);
+	background-size: 100% 100%;
+}
+#danmakuList .item {
+	height: 25px;
+	display: flex;
+	align-items: center;
+}
+
+#danmakuList .contentText {
+	width: 70%;
+	height: 25px;
+	padding-left: 10px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+#danmakuList .time {
+	width: 20%;
+	height: 25px;
+	margin-left: 10%;
+}
+
+
+
+
+
+.loader-box {
+	margin-top: -4px;
+	z-index: 999999;
+	width: 100%;
+	height: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.scroll {
+	width: 100%;
+	height: 2px;
+	background: #b8b8b8;
+	position: relative;
+}
+
+.bar {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #7b7ff7;
+	position: absolute;
+	top: -4px;
+	left: 0;
+	cursor: pointer;
+	z-index: 8;
+}
+.buffer{
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: #fff;
+	width: 0;
+	height: 2px;
+}
+.mask {
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: #369;
+	width: 0;
+	height: 2px;
+}
+
+
+
+.video {
+	width: 100%;
+	position: absolute;
+}
+
+.canvas {
+	position: absolute;
+	z-index: 99;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@keyframes close {
+	from {
+		margin-left: 12px;
+	}
+
+	to {
+		margin-left: 2px;
+	}
+}
+
+@keyframes open {
+	from {
+		margin-left: 2px;
+	}
+
+	to {
+		margin-left: 12px;
+	}
+}
+
+@keyframes expand{
+	from {
+		right: -40%;
+	}
+
+	to {
+		right: 0;
+	}
+}
+@keyframes retract{
+	from {
+		right: 0;
+	}
+
+	to {
+		right: -40%;
+	}
+}

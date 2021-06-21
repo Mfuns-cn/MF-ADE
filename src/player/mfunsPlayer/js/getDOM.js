@@ -1,0 +1,52 @@
+const Template = function() {
+ 	let $ = document.querySelector.bind(document)
+	let DOM = {
+ 		canvas : $('.canvas'),
+ 		video : $('.video'),
+ 		emit : $('#emit'),
+ 		full : $('#full'),
+		barrage : $('#barrage'),
+ 		content : $('.content'),
+		control_mask:$('#control_mask'),
+		control_right:$('.control_right'),
+ 		emitTop : $('#top'),
+ 		danmaku : $('#danmaku'),
+		fs_icon :$('#fs_icon'),
+		text: $('#text'),
+		color : $('#color'),
+		scroll:$('#scroll'),
+		bar:$('#bar'),
+		buffer:$('#buffer'),
+		mask:$('#mask'),
+		speed : $('#speed'),
+		switch_btn: $('#switch'),
+		range : $('#range'),
+ 		player : $('#swich_player'),
+ 		control : $('#control'),
+		wait_loading : $('#wait_loading'),
+ 		load : $('#load'),
+		list_btn:$('#list_danmaku'),
+ 		troggle : $('#troggle'),
+ 		play_btn : $('#play_button'),
+ 		play_box : $('#play_box'),
+ 		tip:$('#tip'),
+ 		currentTime : $('#currentTime'),
+ 		total : $('#total'),
+ 		danmakuList : $('#danmakuList'),
+		danmakuListContent : $('#danmakuList_content'),
+		headOfList : $('#headOfList'),
+		footOfList : $('#footOfList'),
+		closeList : $('#closeList'),
+		advancedDanmaku_btn : $('#advancedDanmaku_btn'),
+		danmakuEditor: $('#danmakuEditor'),
+		danmaku_style: $('#danmaku_style'),
+		danmaku_type: $('#danmaku_type'),
+		danmaku_color:$('#danmaku_color'),
+		voice:$('#voice'),
+		wrap : $('.wrap'),
+ 	}
+ 	return DOM
+    
+ }
+
+ export default Template

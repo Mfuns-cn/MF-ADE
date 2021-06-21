@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>播放器测试</title>
+        <link rel="stylesheet" href="./mfunsPlayer/css/index.css">
+	</head>
+	
+	<style  type="text/css" >
+		*{
+		 	margin: 0;
+		 	padding: 0;
+		 }
+		
+		 .functions {
+		 	width: 300px;
+		 	height: 370px;
+		 	border: 1px solid #000;
+		 	position: absolute;
+		 	top: 0;
+		 	left: 0;
+		 	overflow-y: scroll;
+		 }
+		.container {
+			border: 1px solid #666;
+			position: relative;
+		}
+		 .content {
+		 	width: 650px;
+		 	/* height: 431px; */
+		 	margin: 0 auto;
+		 }
+	</style>
+	<body>
+		<h1>Mfuns弹幕播放器测试版v2.0</h1>
+		<h4 style="color: red;">目前由于兼容性问题仅支持Edge，火狐，谷歌浏览器（部分浏览器可能会出现无法进入/退出全屏的情况）</h4>
+		
+		<div class="container">
+			<!-- <div class="functions">
+				<div style="width:100%;text-align: center;">功能介绍</div>
+				<h5>播放器相关:</h5>
+				<div>1.视频的播放/暂停(空白键)</div>
+				<div>2.进度条</div>
+				<div>3.进入/退出全屏</div>
+				<div>4.画中画</div>
+				<div>5.快进/快退(左方向键/右方向键)</div>
+				<div>6.音量控制(鼠标进入视频区域使用滚轮，或者使用上下方向键)</div>
+				<h5>弹幕相关:</h5>
+				<div>1.基本的弹幕展示功能</div>
+				<div>2.开启/关闭弹幕</div>
+				<div>3.发送弹幕(可编辑弹幕类型,颜色)</div>
+				<div>5.捕获单条弹幕</div>
+				<h5>弹幕列表相关:</h5>
+				<div>1.展示弹幕内容及时间</div>
+			</div> -->
+			
+			<div class="content"></div>
+		</div>
+    </body>
+	<script type="module">
+			import mfunsDanmakuPlayer from "./mfunsPlayer/js/index.js"
+			import {addFlv} from "./mfunsPlayer/js/MSE.js"
+			const container = document.querySelector('.content')
+			const requestURL = {
+				// video:"./static/video/mse.flv",
+				// videoType:"flv",
+				// video:"https://mliii.vqyt.cn/user_files/5857/publish/video/89225907_1618330561.mp4",
+				video:"./static/video/kimetsunoyaiba.mp4",
+				// video:"http://1251316161.vod2.myqcloud.com/007a649dvodcq1251316161/a82d27745285890806802785374/aalBDtfDp9MA.mp4",
+				videoType:"mp4",
+				danmaku:[
+					"static/danmaku/test3.json"
+				]
+			}
+			addFlv().then(function(){
+				let MDP = new mfunsDanmakuPlayer(container,requestURL)
+			}).catch(function(){
+				console.log('flvjs引入失败')
+			})
+			
+	</script>
+	<!-- <script src="mfunsPlayer/js/index.js" type="module" ></script>
+  <script type="text/javascript">
+	  setTimeout(()=>{
+		  console.log(window.mfunsPlayer)
+	  },200)
+  </script> -->
+ 	
+</html>
