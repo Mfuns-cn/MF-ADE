@@ -18,7 +18,7 @@ export abstract class CubicAnimations implements AnimationInterface {
     /**
      * 动画总时间
      */
-    duration: number = 1
+    duration: number = 1000
     //currentTime:number = 0
     getMatrix(time: number): false | number[] {
         if (this.isEnd(time)) return false
@@ -48,15 +48,8 @@ export abstract class CubicAnimations implements AnimationInterface {
     getProgress(time: number): number {
         //计算当前动画进度
         let progress: number = time / this.duration
-        // console.log(progress);
-
-        // console.log();
-        
         //计算出实际动画进度
-        
-        
         let a = this.getCubic().solve(progress)
-        // console.log(a);
         return a;
     }
     /**

@@ -25,7 +25,7 @@ export class JsonDanmakuParser implements DanmakuParserInterface {
         obj?.forEach((dan) => {
             
             let danmaku = DanmakuFactory.getDanmakuInstance(dan.type)
-            if(!dan?.animations){
+            if(!dan?.animations || dan?.animations === []){
                 dan.animations = [{type:"static"}]
             } 
             danmaku.setParams({
