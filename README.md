@@ -38,7 +38,8 @@ npm 方式：
 ### 基本使用
 导入弹幕模块，并进行实例化的操作
 ```js
-var danmaku = new MfunsDanMaku({
+// var danmaku = new MfunsDanMaku({  //从1.4.0版本开始 此名称已被废弃
+var danmaku = new MFADE({
     //挂载的容器，要求传入一个HTMLElement对象，详见“容器”
     containers: document.getElementById("danmaku"),
     //获取弹幕的接口，详见“弹幕接口”
