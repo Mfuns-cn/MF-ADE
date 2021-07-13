@@ -54,12 +54,12 @@ export class canvasRender {
  		}
 		
  		// this.y = orbital * parseInt(20 * Math.random() + 1)
-         this.y = (this.fontSize + 7)*(index % orbital)
- 		if (this.y < this.fontSize + 7) {
- 			this.y = this.fontSize + 7
+         this.y = (this.fontSize + 8)*(index % orbital)
+ 		if (this.y < this.fontSize + 8) {
+ 			this.y = this.fontSize + 8
  		}
- 		if (this.y > this.ctx.canvas.height - this.fontSize - 7) {
- 			this.y = this.ctx.canvas.height - this.fontSize - 7
+ 		if (this.y > this.ctx.canvas.height - this.fontSize - 8) {
+ 			this.y = this.ctx.canvas.height - this.fontSize - 8
  		}
  		if (this.type == 'top' || this.type == 'bottom') {
  			this.x = (this.ctx.canvas.width - this.width) / 2

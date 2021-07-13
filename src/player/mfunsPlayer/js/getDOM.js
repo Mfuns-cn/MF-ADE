@@ -1,4 +1,4 @@
-const Template = function() {
+const Template = function(newDom) {
  	let $ = document.querySelector.bind(document)
 	let DOM = {
  		canvas : $('.canvas'),
@@ -22,6 +22,7 @@ const Template = function() {
 		switch_btn: $('#switch'),
 		range : $('#range'),
  		player : $('#swich_player'),
+		player_box : $('#player'),
  		control : $('#control'),
 		wait_loading : $('#wait_loading'),
  		load : $('#load'),
@@ -38,6 +39,15 @@ const Template = function() {
 		footOfList : $('#footOfList'),
 		closeList : $('#closeList'),
 		advancedDanmaku_btn : $('#advancedDanmaku_btn'),
+		advancePre : $('.advanceDanmaku_pre_box'),
+		ade_mask : $('.advanceDanmakuEditor_mask'),
+		ade : $('.advanceDanmakuEditor'),
+		ade_footer : $('.editor_footer'),
+		ade_close:$('.exit_edit'),
+		ade_code:$('#danmaku_code'),
+		editor_clear:$('#editor_clear'),
+		editor_preview:$('#editor_preview'),
+		editor_emit:$('#editor_emit'),
 		danmakuEditor: $('#danmakuEditor'),
 		danmaku_style: $('#danmaku_style'),
 		danmaku_type: $('#danmaku_type'),
@@ -45,6 +55,7 @@ const Template = function() {
 		voice:$('#voice'),
 		wrap : $('.wrap'),
  	}
+	
  	return DOM
     
  }

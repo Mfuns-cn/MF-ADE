@@ -1,7 +1,7 @@
 export function addFlv() {
 	return new Promise((resolve, reject) => {
 		var secScript = document.createElement("script");
-		secScript.setAttribute("src", "./mfunsPlayer/js/util/flv.min.js");
+		secScript.setAttribute("src", "https://cdn.jsdelivr.net/npm/flv.js/dist/flv.min.js");
 		document.body.appendChild(secScript)
 		
 		function checkFlv() {

@@ -1,17 +1,16 @@
-import Template from "./getDOM.js"
 import {createBarrageList} from "./createBarrageList.js"
 import {formateTime} from './util/formateTime.js'
 import {debounce} from './util/debounce.js'
 import {thro} from './util/thro.js'
-import {defineReactive} from './util/defineReactive.js'	
+import {openEditor,closeEditor,createPreview,previewCallback,clearCallback,emitCallback} from './danmakuEditor.js'
 
-export function operate(canvasStage, tem ,BarrageData) {
+export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData) {
 	let trueLengthRate = (tem.scroll.clientWidth - tem.bar.clientWidth) / tem.scroll.clientWidth
 	var playTimer
 	var editTimer
-	var isEdit
+	var editor
+	var advancePreview 
 	var durationOffset = 0
-	var isControl = true
 	var isAdd
 	var isMinus
 	var bufferleft = 0
@@ -24,13 +23,29 @@ export function operate(canvasStage, tem ,BarrageData) {
 	var isShowList = false
 	var isInput = false
 	var listCreated = false
+	var isEdit = false
+	var isControl = true
 	
 	if(navigator.userAgent.indexOf('Firefox')>-1){
 		tem.troggle.style.display = 'none'
 	}
+    function loadBuff(){
+	   for(let i = 0 ; i< tem.video.buffered.length; i++){
+	   buffer = buffer<=tem.video.duration?tem.video.buffered.end(i) + tem.video.duration*0.025 : tem.video.duration 
+	    
+	    bufferleft = tem.scroll.clientWidth * (buffer / tem.video.duration) * trueLengthRate
+	    buff(bufferleft)
+	   }
+    }
    
 	//播放视频时加载弹幕
 	tem.video.addEventListener('timeupdate', function() {
+		advanceDanmakuStage.skip(parseInt(tem.video.currentTime*1000) )
+		if(advancePreview){
+			advancePreview.skip(parseInt(tem.video.currentTime*1000) )
+		}
+		
+		
 		let ct = parseInt(tem.video.currentTime)
 		tem.currentTime.innerText = formateTime(ct) + ' /'
 		if(isFullScreen()){
@@ -40,37 +55,47 @@ export function operate(canvasStage, tem ,BarrageData) {
 		}
 		barleft = tem.scroll.clientWidth * (tem.video.currentTime / tem.video.duration) * trueLengthRate
 		load(barleft)
-		tem.load.value = tem.video.currentTime
+		tem.wait_loading.style.display = 'none'
 		//加载缓冲条
-		for(let i = 0 ; i< tem.video.buffered.length; i++){
-		buffer = buffer<=tem.video.duration?tem.video.buffered.end(i) + tem.video.duration*0.025 : tem.video.duration 
-		 
-		 bufferleft = tem.scroll.clientWidth * (buffer / tem.video.duration) * trueLengthRate
-		 buff(bufferleft)
-		}
-		let len = tem.video.buffered.length - 1
+		loadBuff()
 	})
 	// tem.video.addEventListener('progress', function() {
 		
 	// })
 	tem.video.addEventListener('play', function() {
+		
 		canvasStage.isPaused = false
 		tem.player.className = "icon_play"
-		tem.play_btn.className = "button_play"
+		tem.play_box.className = "button_play"
+		tem.wait_loading.style.display = 'none'
 		playTimer = setTimeout(() => {
 			if (!tem.video.paused) {
 				tem.play_box.style.display = 'none'
 			}
 		}, 1000)
 		canvasStage.render()
+		
+		advanceDanmakuStage.start()
+		advanceDanmakuStage.skip(parseInt(tem.video.currentTime*1000) )
+		if(advancePreview){
+		advancePreview.start()
+		advancePreview.skip(parseInt(tem.video.currentTime*1000) )	
+		}
+		
 	})
 
 	//暂停视频时停止加载弹幕
 	tem.video.addEventListener('pause', function() {
 		canvasStage.isPaused = true
+		advanceDanmakuStage.pause()
+		if(advancePreview){
+			advancePreview.pause()
+		}
+		
 		tem.play_box.style.display = 'flex'
 		tem.player.className = "icon_pause"
-		tem.play_btn.className = "button_pause"
+		tem.play_box.className = "button_pause"
+		
 	})
 
 	//弹幕设置
@@ -182,23 +207,32 @@ export function operate(canvasStage, tem ,BarrageData) {
 			type,
 			userToken,
 		}
-		canvasStage.add(obj)
-		canvasStage.getNormal()
-		canvasStage.getTop()
-		canvasStage.getBottom()
-		canvasStage.init()
-		// tem.text.value = ''//清空输入框，减少弹幕刷屏
+		if(value){
+		  canvasStage.add(obj)
+		  canvasStage.getNormal()
+		  canvasStage.getTop()
+		  canvasStage.getBottom()
+		  canvasStage.init()
+		  // tem.text.value = ''//清空输入框，减少弹幕刷屏
+		}
+		
 	})
 	
 	//拖动进度条恢复弹幕
 	tem.video.addEventListener('seeking', function() {
 		tem.canvas.style.opacity = 0
 		tem.wait_loading.style.display = 'flex'
+		advanceDanmakuStage.skip(0)
+		
 	})
 	tem.video.addEventListener('seeked', function() {
-		tem.canvas.style.opacity = 1
-		tem.wait_loading.style.display = 'none'
+		if(!canvasStage.isclear){
+			tem.canvas.style.opacity = 1
+		}
 		
+		tem.wait_loading.style.display = 'none'
+		console.log(tem.video.currentTime*1000)
+		advanceDanmakuStage.skip(tem.video.currentTime*1000)
 		canvasStage.reset()
 	})
     tem.video.addEventListener('waiting', function() {
@@ -280,15 +314,39 @@ export function operate(canvasStage, tem ,BarrageData) {
 	}
    
 	function resetLoad() {
+		if(isFullScreen()){
+			trueLengthRate = (tem.scroll.clientWidth - tem.bar.clientWidth * 1.1) / tem.scroll.clientWidth
+		}else{
+			trueLengthRate = (tem.scroll.clientWidth - tem.bar.clientWidth) / tem.scroll.clientWidth
+		}
 		barleft = (tem.scroll.clientWidth * tem.video.currentTime / tem.video.duration) * trueLengthRate
 		load(barleft)
-		tem.load.value = tem.video.currentTime
 	}
 	function resizeCallback(){
-		tem.canvas.width = tem.video.clientWidth
-		tem.canvas.height = tem.video.clientHeight
+		tem.canvas.width = tem.content.clientWidth
+		tem.canvas.height = tem.content.clientHeight
+		tem.advance.style.width = tem.content.clientWidth + 'px'
+		tem.advance.style.height = tem.content.clientHeight + 'px'
+		tem.advancePre.style.width = tem.content.clientWidth + 'px'
+		tem.advancePre.style.height = tem.content.clientHeight + 'px'
+		tem.ade_mask.style.height = tem.video.clientHeight + 'px'
 		canvasStage.reset()
 		canvasStage.init()
+		resetLoad()
+		loadBuff()
+		advanceDanmakuStage.resize()
+		if(advancePreview){
+			advancePreview.resize()
+		}
+		
+		if(editor){
+			editor.resize()
+		}
+		if(isFullScreen()){
+			tem.content.style.alignItems = 'center'
+		}else{
+			tem.content.style.alignItems = ''
+		}
 		if(BarrageData.length<40){
 			tem.danmakuList.style.height = '50%'
 			tem.danmakuListContent.style.height = (tem.content.clientHeight * 0.5- 60) + 'px'
@@ -298,57 +356,55 @@ export function operate(canvasStage, tem ,BarrageData) {
 		tem.control_mask.style.width = tem.content.clientWidth + 'px'
 		tem.control_mask.style.height =  tem.content.clientHeight - tem.control.clientHeight + 'px'
 	}
+	let debounceFunc = debounce(1000, hideControl)
+	function hideControl() {
+		if (isFullScreen() && !isControl) {
+			tem.control.style.opacity = 0
+			tem.load.style.opacity = 0
+			tem.text.blur()
+			
+		}
+	}
+	tem.control.addEventListener('mouseleave', function() {
+		isControl = false
+	})
 	
+	tem.control.addEventListener('mouseenter', function() {
+		isControl = true
+	})
+	tem.load.addEventListener('mouseenter', function() {
+		isControl = true
+	})
+	tem.control_mask.addEventListener('mousemove', function() {
+		tem.control.style.opacity = 1
+		tem.load.style.opacity = 1
+		debounceFunc()
+	})
 	tem.full.addEventListener('click', function() {
 
 		if (isFullScreen()) {
 			exit()
 			 
 		} else {
-			let debounceFunc = debounce(1000, hideControl)
-			function hideControl() {
-				if (isFullScreen() && !isControl) {
-					tem.control.style.opacity = 0
-					tem.load.style.opacity = 0
-					tem.text.blur()
-					
-				}
-			}
-			tem.control.addEventListener('mouseleave', function() {
-				isControl = false
-			})
 			
-			tem.control.addEventListener('mouseenter', function() {
-				isControl = true
-			})
-			tem.load.addEventListener('mouseenter', function() {
-				isControl = true
-			})
-			tem.control_mask.addEventListener('mousemove', function() {
-				tem.control.style.opacity = 1
-				tem.load.style.opacity = 1
-				debounceFunc()
-			})
          setTimeout(()=>{
-		    resetLoad()
 			tem.content.style.display = 'flex'
 			canvasStage.reset()
 			canvasStage.init()
 			tem.danmakuList.style.width = '20%'
-			if(BarrageData.length<40){
-				tem.danmakuList.style.height = '50%'
-				tem.danmakuListContent.style.height = (tem.content.clientHeight * 0.5- 60) + 'px'
-			}else{
-				console.log('changed',tem.content.clientHeight)
-				tem.danmakuListContent.style.height = (tem.content.clientHeight * 0.78- 60) + 'px'
-			}
-			
 			tem.control.style.background = 'rgba(0, 0, 0, 0.5)'
 			tem.text.style.background = 'rgba(85, 85, 85, 0.5)'
 			tem.text.style.flex = 10
 			tem.barrage.style.width = '40%'
+			tem.ade_code.style.height = '90%'
+			tem.ade_footer.style.height = '5%'
 			tem.control_right.style.width = '15%'
 			tem.fs_icon.className = 'exitfs'
+			resetLoad()
+			loadBuff()
+			if(editor){
+				editor.resize()
+			}
 	     },200)
             fullsc(tem.content)
 		    window.addEventListener('resize', resizeCallback)
@@ -378,17 +434,29 @@ export function operate(canvasStage, tem ,BarrageData) {
 	}
 
 	function exit() {
-		resetLoad()
 		exitFullscreen()
 		window.removeEventListener('resize', resizeCallback)
 		canvasStage.reset()
 		canvasStage.init()
+		
+		resetLoad()
+		loadBuff()
+		tem.content.style.alignItems = ''
 		tem.fs_icon.className = 'fullsc'
-		tem.content.style.display = 'block'
 		tem.control.style.opacity = 1
 		tem.load.style.opacity = 1
-		tem.canvas.width = tem.video.clientWidth
-		tem.canvas.height = tem.video.clientHeight  - tem.mask.clientHeight
+		tem.canvas.width = tem.content.clientWidth
+		tem.canvas.height = tem.video.clientHeight 
+		tem.advance.style.width = tem.content.clientWidth + 'px'
+		tem.advance.style.height = tem.content.clientHeight + 'px'
+		tem.advancePre.style.width = tem.content.clientWidth + 'px'
+		tem.advancePre.style.height = tem.content.clientHeight + 'px'
+		tem.ade_mask.style.height = tem.video.clientHeight + 'px'
+		advanceDanmakuStage.resize()
+		if(advancePreview){
+			advancePreview.resize()
+		}
+		
 		tem.control.style.bottom = 0
 		tem.control.style.background = '#333'
 		tem.text.style.background = '#555'
@@ -397,9 +465,15 @@ export function operate(canvasStage, tem ,BarrageData) {
 		tem.barrage.style.width = '50%'
 		tem.danmakuList.style.width = '40%'
 		tem.danmakuList.style.height = '78%'
+		tem.ade_code.style.height = '78%'
+		tem.ade_footer.style.height = '13%'
 		tem.danmakuListContent.style.height = (tem.content.clientHeight * 0.78- 60) + 'px'
 		tem.control_mask.style.width = tem.content.clientWidth + 'px'
 		tem.control_mask.style.height =  tem.content.clientHeight - tem.control.clientHeight + 'px'
+		
+		if(editor){
+			editor.resize()
+		}
 	}
 
 	//关闭/开启弹幕
@@ -409,10 +483,12 @@ export function operate(canvasStage, tem ,BarrageData) {
 			tem.switch_btn.className = 'switch_close'
 			tem.danmaku.style.background = '#757575'
 			tem.canvas.style.opacity = 0
+			tem.advance.style.opacity = 0
 		} else {
 			tem.switch_btn.className = 'switch_open'
 			tem.danmaku.style.background = '#00A1D6'
 			tem.canvas.style.opacity = 1
+			tem.advance.style.opacity = 1
 			canvasStage.reset()
 		}
 
@@ -462,7 +538,7 @@ export function operate(canvasStage, tem ,BarrageData) {
 	})
 	
 	//播放、暂停视频
-	tem.player.addEventListener('click', handleClick)
+	tem.player_box.addEventListener('click', handleClick)
 	tem.control_mask.addEventListener('click', handleClick)
 
 	function handleClick() {
@@ -551,7 +627,7 @@ export function operate(canvasStage, tem ,BarrageData) {
 			});
 			tem.play_box.style.display = 'flex'
 			tem.player.className = "icon_pause"
-			tem.play_btn.className = "button_pause"
+			tem.play_box.className = "button_pause"
 			tem.video.pause()
 		}
 
@@ -561,9 +637,9 @@ export function operate(canvasStage, tem ,BarrageData) {
 		tem.play_btn.className = "button_pause"
 		tem.player.className = "icon_pause"
 	});
-	//拖动进度条
 	
-
+	
+//拖动进度条
 	function load(val) {
 		tem.mask.style.width = val + 'px';
 		tem.bar.style.left = val + 'px';
@@ -599,7 +675,6 @@ export function operate(canvasStage, tem ,BarrageData) {
 			tem.mask.style.width = barleft + 'px';
 			that.style.left = barleft + "px";
 			const rate = (barleft / (tem.load.offsetWidth - tem.bar.offsetWidth)).toFixed(8);
-			console.log(rate)
 			tem.video.currentTime = rate * tem.video.duration
 			// 防止选择内容--当拖动鼠标过快时候，弹起鼠标，bar也会移动，修复bug
 			window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
@@ -609,4 +684,58 @@ export function operate(canvasStage, tem ,BarrageData) {
 	document.onmouseup = function() {
 		document.onmousemove = null; //弹起鼠标不做任何操作
 	}
+	
+	
+	tem.advancedDanmaku_btn.onclick = ()=>{
+		isShowList = false
+		isInput = true 
+		openEditor()
+		
+		if(!editor){
+		editor = ace.edit("danmaku_code")
+		let theme = "twilight"
+        let language = "json"
+		editor.setTheme("ace/theme/" + theme);
+        editor.session.setMode("ace/mode/" + language);
+        editor.setFontSize(14);
+        editor.setOption("wrap", "free")
+		ace.require("ace/ext/language_tools");
+        editor.setOptions({
+        enableBasicAutocompletion: true,
+	    enableSnippets: true,
+		enableLiveAutocompletion: true
+	  })
+	  editor.setValue("[\n{}\n]")
+	  editor.gotoLine(2);
+	  createPreview().then((tem)=>{
+	    advancePreview  = new MfunsDanMaku({
+		containers: tem.advancePre,
+		danmaku: send => {
+			send([editor.getValue()])
+		}
+	  })
+	})
+	
+	
+	}
+	tem.editor_preview.onclick = ()=>{
+		closeEditor()
+		advancePreview.reset()
+		advancePreview.start()
+		tem.video.play()
+	}
+	tem.editor_clear.onclick = ()=>{
+		editor.setValue("")
+	}
+		
+		
+	}
+	tem.ade_close.onclick = ()=>{
+		isInput = false
+		closeEditor()
+	}
+	
+	let previewCreated = false
+	
+	
 }

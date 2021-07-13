@@ -1,10 +1,14 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/ts/index.ts',
+  entry: {
+    mfunsAdvanceDanmaku:'./src/ts/index.ts',
+    mfunsPlayer:'./src/player/mfunsPlayer/js/index.js'
+  },
   output: {
     path: path.resolve(__dirname, 'lib'),
-    filename: 'bundle.js',
+    filename:'[name].js',
+    publicPath:'lib/'
   },
   devtool: 'source-map',
   resolve: {
@@ -21,7 +25,15 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 89192,
+              name: 'img/[name].[hash:8].[ext]'
+            }
+          }
+        ]
       },
       {
         test: /\.js$/,

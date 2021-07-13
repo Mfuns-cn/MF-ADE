@@ -16,10 +16,11 @@ export class MfunsDanMaku {
         this.controller.registStage(new TestStage(), 1)
         this.controller.mount()
         //监听大小变化
-        window.addEventListener("resize", () => {
-            this.controller.resize()
-        })
+        // window.addEventListener("resize", () => {
+        //     this.controller.resize()
+        // })
     }
+	
     pause(){
         this.controller.pause()
     }
@@ -32,10 +33,12 @@ export class MfunsDanMaku {
     time(){
         return this.controller.getTime()
     }
+	resize(){
+		this.controller.resize()
+	}
     reset(){
         this.controller.resetDanmaku(1)
         this.controller.reset()
-        
     }
 
 }

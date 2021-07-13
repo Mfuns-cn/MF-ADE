@@ -149,7 +149,7 @@
 }
 
 #barrage input::-webkit-input-placeholder {
-	color: #F5DEDE;
+	color: #fff;
 }
 
 .input_box #danmaku_style {
@@ -284,70 +284,23 @@
 	position: absolute;
 	bottom: 10px;
 	right: 10px;
+	width: 60px;
+	height: 50px;
+	cursor: pointer;
 	z-index: 10000;
 }
 
-.neko {
-	position: relative;
-	width: 60px;
-	height: 40px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 6px;
-	cursor: pointer;
-	background: rgba(255, 255, 255, 0.8);
-}
 
-.ear {
-	width: 0;
-	height: 0;
-	position: absolute;
-	top: -8px;
-	border-bottom: 8px solid rgba(255, 255, 255, 0.8);
-}
 
-.ear_left {
-	left: 8px;
-	border-right: 8px solid transparent;
-}
-
-.ear_right {
-	right: 8px;
-	border-left: 8px solid transparent;
-}
-
-.foot {
-	width: 8px;
-	height: 4px;
-	background: rgba(255, 255, 255, 0.8);
-	position: absolute;
-	border-radius: 0 0 4px 4px;
-	bottom: -4px;
-}
-
-.foot_left {
-	left: 8px;
-}
-
-.foot_right {
-	right: 8px;
-}
 
 .button_play {
-	width: 5px;
-	height: 20px;
-	border-right: 4px solid #000;
-	border-left: 4px solid #000;
+	background: url(../icon/play.png);
+	background-size: 100% 100%;
 }
 
 .button_pause {
-	width: 0;
-	height: 0;
-	border-top: 10px solid transparent;
-	border-left: 15px solid #000;
-	border-bottom: 10px solid transparent;
-	border-radius: 3px;
+	background: url(../icon/pause.png);
+	background-size: 100% 100%;
 }
 
 .icon_pause {
@@ -436,14 +389,16 @@
 	right: 0;
 	width: 40%;
 	height: 78%;
-	border-radius: 5px;
+	border-radius:0 0 0 5px;
 	overflow: hidden;
 	padding: 0;
 	background: #333;
 	color: #ffffff;
-	z-index: 999999;
+	z-index: 9997;
 	animation: expand 0.3s;
 	display: none;
+	border-left:1px solid #555 ;
+	border-bottom:1px solid #555 ;
 }
 
 #danmakuList div {
@@ -556,8 +511,8 @@
 .bar {
 	width: 10px;
 	height: 10px;
-	border-radius: 50%;
-	background: #7b7ff7;
+	background: url(../icon/control.png);
+	background-size: 100% 100%;
 	position: absolute;
 	top: -4px;
 	left: 0;
@@ -595,7 +550,106 @@
 	justify-content: center;
 	align-items: center;
 }
-
+.advanceDanmaku_box{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+.advanceDanmaku_pre_box{
+	z-index: 1000;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+	
+.advanceDanmakuEditor_mask{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9998;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.8);
+	display: none;
+	
+}
+.advanceDanmakuEditor{
+	width: 80%;
+	height: 80%;
+	margin: 3% auto;
+	background: #333;
+	border-radius: 2px;
+	position: relative;
+	padding: 2%;
+	border:1px solid #555;
+	animation: down 0.35s;
+}
+.danmuku_link{
+	height: 30px;
+	margin:2% 0 0 3%;
+}
+.danmuku_link a{
+	color: #7B7FF7;
+}
+.exit_edit{
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	line-height: 25px;
+	top: 0;
+	right: 0;
+	font-size: 20px;
+	cursor: pointer;
+	color: #fff;
+}
+.exit_edit:hover{
+	color: red;
+}
+.editor_title{
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 3%;
+	font-weight: 600;
+	color: #fff;
+}
+.danmaku_code{
+	width: 94%;
+	height: 78%;
+	border: 1px solid #000;
+	margin: 0 auto;
+}
+.editor_footer{
+	width: 150px;
+	height: 13%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: absolute;
+	bottom: 2%;
+	right:5%;
+}
+.editor_btn{
+	width: 27%;
+	height: 60%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
+	color: #fff;
+	border-radius: 3px;
+	cursor: pointer;
+}
+#editor_clear{
+  background: #EB2626;	
+}
+#editor_preview{
+  background: #74D064;
+}
+#editor_emit{
+ background: #7B7FF7;
+}
 @keyframes close {
 	from {
 		margin-left: 12px;
@@ -632,5 +686,27 @@
 
 	to {
 		right: -40%;
+	}
+}
+
+@keyframes down{
+	from{
+		margin-top: -5%;
+		opacity: 0;
+	}
+	to{
+		margin-top: 3%;
+		opacity: 1;
+	}
+}
+
+@keyframes up{
+	from{
+		margin-top: 3%;
+		opacity: 1;
+	}
+	to{
+		margin-top: -5%;
+		opacity: 0;
 	}
 }

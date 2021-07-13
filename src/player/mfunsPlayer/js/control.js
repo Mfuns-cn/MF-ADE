@@ -1,5 +1,4 @@
 import {getDanmakuData} from "./request.js"
-import {createBarrageList} from "./createBarrageList.js"
 import {createControl} from "./createControl.js"
 import {initVideo,getVideoTime} from "./video.js"
 import Template from "./getDOM.js"
@@ -9,17 +8,10 @@ import {initMSE} from "./MSE.js"
 export function init(el,url){
 	//初始化播放器控件及样式
 	createControl(el)
-	var head = document.getElementsByTagName('head')[0];
-	var link = document.createElement('link');
-	link.href = './mfunsPlayer/css/index.css';
-	link.rel = 'stylesheet';
-	link.type = 'text/css';
-	head.appendChild(link);
 	
 	let tem = Template()
 	let BarrageData = []
 	let stageList = []
-	
 	//获取视频链接
 	
 	
@@ -40,30 +32,24 @@ export function init(el,url){
 		initVideo(url.video,tem)
 		getVideoTime(tem)
 		el.appendChild(video)
-	  
+		
 	}
 	
 	
 	//获取弹幕数据
-	if(url.danmaku.length){
-		for(let i = 0;i < url.danmaku.length; i++){
-	    getDanmakuData(url.danmaku[i],"GET").then(function(res){
+	    getDanmakuData(url.danmaku,"GET").then(function(res){
 		//创建弹幕池
-		 BarrageData.push(res.data)
-		 if(i === url.danmaku.length -1){
-			 createCanvas()
-		 }
+		 BarrageData = res.data
+		 createCanvas()
 	   }).catch(function(err){
 		console.error(err)
 	   })
-	}
 	
-	}
+	
 	
 	
 	
 	function createCanvas(){
-		BarrageData = BarrageData.flat(Infinity)
 	//创建视频弹幕列表
 	
 	//初始化canvas
@@ -72,14 +58,46 @@ export function init(el,url){
 	tem.canvas = canvas
 	tem.canvas.width = el.clientWidth
 	el.appendChild(canvas)
+	//初始化高级弹幕容器
+	let advance = document.createElement("div");
+	advance.setAttribute("class", "advanceDanmaku_box")
+	tem.advance = advance
+	tem.advance.style.width = el.clientWidth + 'px'
 	
+	el.appendChild(advance)
 	
 	//新建舞台
-	let canvasDanmakuStage = new canvasStage(tem, {BarrageData})
+	
+	
+	let advanceDanmakuStage = new MfunsDanMaku({
+	    containers: tem.advance,
+	    danmaku: send => {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", url.advanceDanmaku);
+			xhr.onreadystatechange = function () {
+			    if (xhr.readyState == 4 && xhr.status == 200) {
+					
+			        send([xhr.responseText])
+			    }else{
+					// console.log('error')
+				}
+			};
+			xhr.send()
+	        // /*
+	        // 获取弹幕,调用回调函数，将弹幕数组传进去
+	        // */
+	        // send(["json....","json...."])
+	    }
+	})
+	let canvasDanmakuStage = new canvasStage(tem,advanceDanmakuStage, {BarrageData})
 	stageList.push(canvasDanmakuStage)
+	stageList.push(advanceDanmakuStage)
+	
 	
 	//使用(注册)舞台
-	operate(canvasDanmakuStage,tem,BarrageData)		
+	operate(canvasDanmakuStage,advanceDanmakuStage,tem,BarrageData)	
+		
+	
 	}
 	
 	}

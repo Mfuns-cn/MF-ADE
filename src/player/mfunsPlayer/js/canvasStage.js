@@ -2,7 +2,7 @@ import {canvasRender} from "./canvasRender.js"
 import {PriorityQueue} from "./util/priorityQueue.js"
 
 export class canvasStage {
-			constructor(tem, options = {}) {
+			constructor(tem,advanceDanmakuStage, options = {}) {
 				if (!tem) return
 				let playTimer
 				let play_btn = tem.play_btn
@@ -70,12 +70,22 @@ export class canvasStage {
 					if(videoInited){
 						return
 					}
+					const videoRate = this.clientHeight / this.clientWidth
+					if(videoRate >= 3/4){
+						
+						this.style.width = "75%"
+					}else{
+						
+					}
 					tem.wait_loading.style.display = 'none'
 					tem.control_mask.style.height = tem.video.clientHeight + 'px'
 					const offsetHeight = tem.control.clientHeight + tem.video.clientHeight
 					tem.content.style.height = offsetHeight + 'px'
 					tem.load.style.bottom = offsetHeight - 2 + 'px'
 					tem.canvas.height = tem.video.clientHeight  - tem.mask.clientHeight
+					tem.advance.style.height = tem.video.clientHeight  - tem.mask.clientHeight + 'px'
+					tem.ade_mask.style.height = tem.video.clientHeight  - tem.mask.clientHeight + 'px'
+					advanceDanmakuStage.resize()
 					//取出顶部弹幕				
 				   that.getTop()
 				   //取出底部弹幕
@@ -144,7 +154,7 @@ export class canvasStage {
 			init(){
 				let top = this.normalbarrage[0]
 				let k = 1
-				let orbital = parseInt(this.canvas.height / 31)
+				let orbital = parseInt(this.canvas.height / 33) 
 				for (let i = 0; i < this.normalbarrage.length; i++) {
 					this.normalbarrage[i].rank = 1
 				    
