@@ -1,4 +1,4 @@
-import { DanmakuItemInterface } from "src/ts/interface/Danmaku/DanmakuItemInterface";
+import { DanmakuItemInterface } from "src/ts/core/Danmaku/DanmakuItemInterface";
 
 /**
  * 弹幕解析器，通常传入字符串

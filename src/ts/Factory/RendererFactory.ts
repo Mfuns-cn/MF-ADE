@@ -3,9 +3,9 @@
  */
 
 import { i18n } from "src/ts/i18n";
-import { BaseRenderer } from "src/ts/interface/Renderer/BaseRenderer";
-import { RendererInterface } from "src/ts/interface/Renderer/RendererInterface";
-import { CSS3Renderer } from "../interface/Renderer/CSS3Renderer/CSS3Renderer";
+import { BaseRenderer } from "src/ts/core/Renderer/BaseRenderer";
+import { RendererInterface } from "src/ts/core/Renderer/RendererInterface";
+import { CSS3Renderer } from "../core/Renderer/CSS3Renderer/CSS3Renderer";
 
 export class RendererFactory{
     static rendererList = {

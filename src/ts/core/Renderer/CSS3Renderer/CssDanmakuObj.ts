@@ -1,5 +1,5 @@
 import { UnitTools } from "src/ts/util/UnitTools";
-import { AnimationInterface } from "../../Danmaku/Animation/AnimationInterface";
+import { AnimationInterface } from "../../Animation/Base/AnimationInterface";
 import { DanmakuItemInterface } from "../../Danmaku/DanmakuItemInterface";
 import { DanmakuStyle } from "../../Style/DanmakuStyle";
 
@@ -47,8 +47,6 @@ export class DanmakuTool {
     static createDiv(content: string): HTMLElement {
         let div = document.createElement("div");
         div.style.position = "absolute"
-        div.style.top = "0px"
-        div.style.left = "0px"
         div.innerText = content
         return div
     }

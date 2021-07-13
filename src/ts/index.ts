@@ -1,9 +1,9 @@
 import "../css/base.css";
 import { Controller } from './Controller/Controller';
 import { i18n } from "./i18n"
-import { InitConfigInterface } from "./interface/InitConfigInterface";
-import { TestStage } from "./interface/Stage/TestStage";
-export class MfunsDanMaku {
+import { InitConfigInterface } from "./core/InitConfigInterface";
+import { TestStage } from "./core/Stage/TestStage";
+export  class MFADE {
 
     controller:Controller; 
     constructor(config: InitConfigInterface) {
@@ -42,7 +42,10 @@ export class MfunsDanMaku {
     }
 
 }
+
 //添加进全局
-if (globalThis) {
-    globalThis.MfunsDanMaku = MfunsDanMaku;
+if (typeof globalThis !== "undefined") {
+    globalThis.MFADE = MFADE;
+}else{
+    window["MFADE"] = MFADE;
 }

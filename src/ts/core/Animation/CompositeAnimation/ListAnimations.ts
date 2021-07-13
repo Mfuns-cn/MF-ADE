@@ -1,8 +1,8 @@
 import { AnimationFactory } from "src/ts/Factory/AnimationFactory";
 import { DanmakuStyle } from "../../Style/DanmakuStyle";
-import { AnimationInterface } from "./AnimationInterface";
-import { CubicAnimations } from "./CubicAnimations";
-import { Matrix } from "./Matrix";
+import { AnimationInterface } from "../Base/AnimationInterface";
+import { CubicAnimations } from "../Base/CubicAnimations";
+import { Matrix } from "../Base/Matrix";
 /**
  * 动画列表组，所有动画按顺序播放
  */

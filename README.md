@@ -1,8 +1,31 @@
 # MFuns 高级弹幕引擎 
 
-MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎 
+MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎
 
-当前版本: `1.1.1 Beta` ，更新日期：`2021/6/19`
+## 特性
+经支持以下弹幕效果:
+ - 贝塞尔曲线
+ - 静止放置
+ - 3d 移动
+ - 3d 旋转
+ - 缩放
+ - 并行动画
+ - 串行动画
+ - 重复动画
+ - 透明度动画
+ - 图片弹幕
+ - 滤镜
+ - 渐变
+ - 大部分 CSS 属性
+
+更多的效果还在不断的添加和完善中
+
+如果使用过程中存在 bug ,欢迎提交 issue 反馈
+
+当前版本: `1.4.0 Beta` ，更新日期：`2021/7/13`
+## 弹幕实验室
+弹幕实验室目前已经搭建完成 地址: [https://lab.meogirl.ml](https://lab.meogirl.ml)
+
 ## 使用文档
 
 ### 下载 & 安装
@@ -15,7 +38,8 @@ npm 方式：
 ### 基本使用
 导入弹幕模块，并进行实例化的操作
 ```js
-var danmaku = new MfunsDanMaku({
+// var danmaku = new MfunsDanMaku({  //从1.4.0版本开始 此名称已被废弃
+var danmaku = new MFADE({
     //挂载的容器，要求传入一个HTMLElement对象，详见“容器”
     containers: document.getElementById("danmaku"),
     //获取弹幕的接口，详见“弹幕接口”
@@ -65,19 +89,7 @@ containers 容器接受一个html元素,但并不会对元素的大小和位置�
 - [弹幕文档](https://meogirl.ml/2021/06/11/danmaku/Mfuns%E5%BC%B9%E5%B9%95%E6%89%8B%E5%86%8C/)
 - [弹幕实验室](https://lab.meogirl.ml)
 
-## 目前已实现
- - 贝塞尔曲线
- - 静止放置
- - 3d移动
- - 3d旋转
- - 缩放
- - 并行动画
- - 串行动画
- - 重复动画
- - 透明度动画
- - 图片弹幕
- - 滤镜
- - 渐变
+
 ## 未实现清单
  - 路径动画 offset-path
  - svg 属性变换动画

@@ -1,5 +1,5 @@
 import { DanmakuStyle } from "../../Style/DanmakuStyle";
-import { OriginAnimations } from "./OriginAnimations";
+import { OriginAnimations } from "../Base/OriginAnimations";
 
 /**
  * 旋转父类
