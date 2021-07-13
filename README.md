@@ -22,7 +22,7 @@ MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎
 
 如果使用过程中存在 bug ,欢迎提交 issue 反馈
 
-当前版本: `1.3.3 Beta` ，更新日期：`2021/7/13`
+当前版本: `1.4.0 Beta` ，更新日期：`2021/7/13`
 ## 弹幕实验室
 弹幕实验室目前已经搭建完成 地址: [https://lab.meogirl.ml](https://lab.meogirl.ml)
 
