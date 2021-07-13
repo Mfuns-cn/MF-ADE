@@ -1,11 +1,11 @@
 
-import { SizeInterface } from "../interface/Style/SizeInterface";
-import { StageInterface } from "../interface/Stage/StageInterface";
+import { SizeInterface } from "../core/Style/SizeInterface";
+import { StageInterface } from "../core/Stage/StageInterface";
 import { Context } from "../Context/Context";
 import { i18n } from "../i18n";
-import { canvasStyle } from "../interface/Style/CanvasStyle";
+import { canvasStyle } from "../core/Style/CanvasStyle";
 import { RendererFactory } from "src/ts/Factory/RendererFactory";
-import { PxSize } from "../interface/Style/Unit/PxSize";
+import { PxSize } from "../core/Style/Unit/PxSize";
 import { TimeLineFactory } from "../Factory/TimeLineFactort";
 import { JsonDanmakuParser } from "../Factory/DanmakuParser/JsonDanmakuParser";
 

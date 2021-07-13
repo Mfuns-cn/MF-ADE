@@ -1,5 +1,5 @@
 import { DanmakuStyle } from "../../Style/DanmakuStyle";
-import { CubicAnimations } from "./CubicAnimations";
+import { CubicAnimations } from "../Base/CubicAnimations";
 
 export class TranslateAnimation extends CubicAnimations {
 

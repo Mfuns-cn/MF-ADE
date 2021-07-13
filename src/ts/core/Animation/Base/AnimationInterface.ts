@@ -1,5 +1,11 @@
 import { DanmakuStyle } from "../../Style/DanmakuStyle";
 
+/**
+ * 动画接口
+ *
+ * @export
+ * @interface AnimationInterface
+ */
 export interface AnimationInterface{
     /**
      * 获取变换矩阵 false 表示完成或无

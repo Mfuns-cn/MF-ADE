@@ -1,5 +1,5 @@
-import { BaseDanmaku } from "src/ts/interface/Danmaku/BaseDanmaku";
-import { DanmakuItemInterface } from "src/ts/interface/Danmaku/DanmakuItemInterface";
+import { BaseDanmaku } from "src/ts/core/Danmaku/BaseDanmaku";
+import { DanmakuItemInterface } from "src/ts/core/Danmaku/DanmakuItemInterface";
 
 export class DanmakuFactory{
     static list = {

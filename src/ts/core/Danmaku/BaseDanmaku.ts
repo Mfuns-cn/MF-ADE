@@ -1,7 +1,7 @@
 import { DanmakuStyle } from "../Style/DanmakuStyle";
-import { AnimationInterface } from "./Animation/AnimationInterface";
-import StaticAnimation from "./Animation/StaticAnimation";
+import { AnimationInterface } from "../Animation/Base/AnimationInterface";
 import { DanmakuItemInterface } from "./DanmakuItemInterface";
+import { StaticAnimation } from "../Animation/TransformsAnimations/StaticAnimation";
 
 /**
  * 基础弹幕类型

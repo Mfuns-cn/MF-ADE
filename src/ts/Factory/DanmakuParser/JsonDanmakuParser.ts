@@ -1,5 +1,5 @@
 import { i18n } from "src/ts/i18n";
-import { DanmakuItemInterface } from "src/ts/interface/Danmaku/DanmakuItemInterface";
+import { DanmakuItemInterface } from "src/ts/core/Danmaku/DanmakuItemInterface";
 import { AnimationFactory } from "../AnimationFactory";
 import { DanmakuFactory } from "./DanmakuFactory";
 import { DanmakuParserInterface } from "./DanmakuParserInterface";

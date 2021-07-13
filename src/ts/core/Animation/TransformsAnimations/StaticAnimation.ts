@@ -1,10 +1,10 @@
 import { DanmakuStyle } from "../../Style/DanmakuStyle";
-import { AnimationInterface } from "./AnimationInterface";
+import { AnimationInterface } from "../Base/AnimationInterface";
 
 /**
  * 静止动画 仅仅悬停在某一个位置一定时间
  */
-export default class StaticAnimation implements AnimationInterface {
+export class StaticAnimation implements AnimationInterface {
     getDuration(): number {
         return this.duration;
     }

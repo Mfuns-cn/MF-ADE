@@ -3,6 +3,11 @@ import { Matrix } from "./Matrix";
 
 /**
  * 可改变动画中心点的动画
+ *
+ * @export
+ * @abstract
+ * @class OriginAnimations
+ * @extends {CubicAnimations}
  */
 export abstract class OriginAnimations extends CubicAnimations {
     origin:number[] = [0,0,0]

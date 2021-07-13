@@ -1,6 +1,13 @@
 import { DanmakuStyle } from "../../Style/DanmakuStyle";
-import { CubicAnimations } from "./CubicAnimations";
+import { CubicAnimations } from "../Base/CubicAnimations";
 
+/**
+ * 透明度动画
+ *
+ * @export
+ * @class OpacityAnimations
+ * @extends {CubicAnimations}
+ */
 export class OpacityAnimations extends CubicAnimations{
     opacity:[number,number] = [0,1]
     setParams(param?: { [idx: string]: any; }):boolean{
@@ -9,8 +16,6 @@ export class OpacityAnimations extends CubicAnimations{
         return true
     }
     getCubicStyle(progress: number, _time: number): false | DanmakuStyle {
-        // console.log(this.getProgressValue(this.opacity[0],this.opacity[1],progress));
-        
         return {
             opacity:this.getProgressValue(this.opacity[0],this.opacity[1],progress)
         }

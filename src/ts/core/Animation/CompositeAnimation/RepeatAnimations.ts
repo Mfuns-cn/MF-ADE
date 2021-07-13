@@ -1,8 +1,8 @@
 import { AnimationFactory } from "src/ts/Factory/AnimationFactory";
 import { DanmakuStyle } from "../../Style/DanmakuStyle";
-import { AnimationInterface } from "./AnimationInterface";
-import { CubicAnimations } from "./CubicAnimations";
-import StaticAnimation from "./StaticAnimation";
+import { AnimationInterface } from "../Base/AnimationInterface";
+import { CubicAnimations } from "../Base/CubicAnimations";
+import { StaticAnimation } from "../TransformsAnimations/StaticAnimation";
 
 export class RepeatAnimations extends CubicAnimations{
     /**

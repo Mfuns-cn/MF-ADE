@@ -1,5 +1,5 @@
 import { DanmakuStyle } from "../Style/DanmakuStyle";
-import { AnimationInterface } from "./Animation/AnimationInterface";
+import { AnimationInterface } from "../Animation/Base/AnimationInterface";
 
 /**
  * 单个弹幕接口

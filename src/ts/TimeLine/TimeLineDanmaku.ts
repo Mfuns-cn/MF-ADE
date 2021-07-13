@@ -1,4 +1,4 @@
-import { DanmakuItemInterface } from "../interface/Danmaku/DanmakuItemInterface";
+import { DanmakuItemInterface } from "../core/Danmaku/DanmakuItemInterface";
 
 export interface TimeLineDanmaku{
     /**

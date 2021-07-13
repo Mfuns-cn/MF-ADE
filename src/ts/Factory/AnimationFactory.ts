@@ -1,14 +1,14 @@
-import { AnimationInterface } from "../interface/Danmaku/Animation/AnimationInterface";
-import { GroupAnimations } from "../interface/Danmaku/Animation/GroupAnimations";
-import { ListAnimations } from "../interface/Danmaku/Animation/ListAnimations";
-import { OpacityAnimations } from "../interface/Danmaku/Animation/OpacityAnimations";
-import { RepeatAnimations } from "../interface/Danmaku/Animation/RepeatAnimations";
-import { RotationXAnimation } from "../interface/Danmaku/Animation/RotationXAnimation";
-import { RotationYAnimation } from "../interface/Danmaku/Animation/RotationYAnimation";
-import { RotationZAnimation } from "../interface/Danmaku/Animation/RotationZAnimation";
-import { ScaleAnimations } from "../interface/Danmaku/Animation/ScaleAnimations";
-import StaticAnimation from "../interface/Danmaku/Animation/StaticAnimation";
-import { TranslateAnimation } from "../interface/Danmaku/Animation/TranslateAnimation";
+import { AnimationInterface } from "../core/Animation/Base/AnimationInterface";
+import { GroupAnimations } from "../core/Animation/CompositeAnimation/GroupAnimations";
+import { ListAnimations } from "../core/Animation/CompositeAnimation/ListAnimations";
+import { OpacityAnimations } from "../core/Animation/styleAnimations/OpacityAnimations";
+import { RepeatAnimations } from "../core/Animation/CompositeAnimation/RepeatAnimations";
+import { ScaleAnimations } from "../core/Animation/TransformsAnimations/ScaleAnimations";
+import { TranslateAnimation } from "../core/Animation/TransformsAnimations/TranslateAnimation";
+import { RotationXAnimation } from "../core/Animation/TransformsAnimations/RotationXAnimation";
+import { RotationYAnimation } from "../core/Animation/TransformsAnimations/RotationYAnimation";
+import { RotationZAnimation } from "../core/Animation/TransformsAnimations/RotationZAnimation";
+import { StaticAnimation } from "../core/Animation/TransformsAnimations/StaticAnimation";
 
 export class AnimationFactory {
     static animationList = {
