@@ -22,7 +22,7 @@ export function createControl(el){
 	  <div class="editor_title">mfuns高级弹幕编辑器</div>
 	  <div class="danmaku_code" id="danmaku_code"></div>
 	  <div class="danmuku_link"><a href="https://meogirl.ml/2021/06/11/danmaku/Mfuns%E5%BC%B9%E5%B9%95%E6%89%8B%E5%86%8C/"
-	   target="_blank">mufuns高级弹幕手册</a></div>
+	   target="_blank">mfuns高级弹幕手册</a></div>
 	  <div class="editor_footer">
 	     <div class="editor_btn" id="editor_clear">清除</div>
 		 <div class="editor_btn" id="editor_preview">预览</div>
@@ -46,9 +46,9 @@ export function createControl(el){
 		
 		<div id="danmakuEditor">
 			<div id="danmaku_type">
-				<p id="top">顶部</p>
-				<p id="normal" class="focus">滚动</p>
-				<p id="bottom">底部</p>
+				<div id="top">顶部</div>
+				<div id="normal" class="focus">滚动</div>
+				<div id="bottom">底部</div>
 			</div>
 			<div id="danmaku_color"></div>
 		</div>
@@ -64,7 +64,7 @@ export function createControl(el){
 				
 			  </div>
 			</div>	
-			<div class="wrap">
+			<div id="wrap">
 				<div id="player"><div class="icon_pause" id="swich_player"></div></div>
 				
 				<span id="currentTime"></span>

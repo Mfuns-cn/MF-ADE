@@ -10,7 +10,7 @@ export function openEditor() {
 }
 
 export function closeEditor() {
-	// tem.video.play()
+	tem.video.play()
 	tem.ade.style.animation = 'up 0.35s'
 	setTimeout(() => {
 		tem.ade_mask.style.display = 'none'

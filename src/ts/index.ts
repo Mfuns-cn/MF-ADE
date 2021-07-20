@@ -5,6 +5,7 @@ import { InitConfigInterface } from "./core/InitConfigInterface";
 import { TestStage } from "./core/Stage/TestStage";
 export  class MFADE {
 
+    
     controller:Controller; 
     constructor(config: InitConfigInterface) {
         //类型检查

@@ -5,7 +5,7 @@ import Template from "./getDOM.js"
 import {canvasStage} from "./canvasStage.js"
 import {operate} from "./DOMoperation.js"
 import {initMSE} from "./MSE.js"
-export function init(el,url){
+export function init(el,url,callback){
 	//初始化播放器控件及样式
 	createControl(el)
 	
@@ -17,8 +17,7 @@ export function init(el,url){
 	
 	if(url.videoType === "flv"){
 		let video = document.createElement("video");
-		video.setAttribute("class", "video")
-		video.setAttribute("id", "videoElement")
+		video.setAttribute("class", "mfuns_video")
 		tem.video = video
 		getVideoTime(tem)
 		el.appendChild(video)
@@ -27,7 +26,7 @@ export function init(el,url){
 	}else{
 		//初始化video
 		let video = document.createElement("video");
-		video.setAttribute("class", "video")
+		video.setAttribute("class", "mfuns_video")
 		tem.video = video
 		initVideo(url.video,tem)
 		getVideoTime(tem)
@@ -54,7 +53,7 @@ export function init(el,url){
 	
 	//初始化canvas
 	let canvas = document.createElement("canvas");
-	canvas.setAttribute("class", "canvas")
+	canvas.setAttribute("class", "mfuns_canvas")
 	tem.canvas = canvas
 	tem.canvas.width = el.clientWidth
 	el.appendChild(canvas)
@@ -69,7 +68,7 @@ export function init(el,url){
 	//新建舞台
 	
 	
-	let advanceDanmakuStage = new MfunsDanMaku({
+	let advanceDanmakuStage = new MFADE({
 	    containers: tem.advance,
 	    danmaku: send => {
 			var xhr = new XMLHttpRequest();
@@ -89,13 +88,14 @@ export function init(el,url){
 	        // send(["json....","json...."])
 	    }
 	})
+	console.log(advanceDanmakuStage)
 	let canvasDanmakuStage = new canvasStage(tem,advanceDanmakuStage, {BarrageData})
 	stageList.push(canvasDanmakuStage)
 	stageList.push(advanceDanmakuStage)
 	
 	
 	//使用(注册)舞台
-	operate(canvasDanmakuStage,advanceDanmakuStage,tem,BarrageData)	
+	operate(canvasDanmakuStage,advanceDanmakuStage,tem,BarrageData,callback)	
 		
 	
 	}

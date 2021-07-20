@@ -37,26 +37,23 @@ export class canvasStage {
 				
 				//分析弹幕样式数据
 				this.BarrageData.forEach(el =>{
-						let option = el.style.split(",")
-						let time = option[0]
-						let color = '#' + Number(option[3]).toString(16)
-						let type
-						switch(Number(option[1])){
-							case 1:
-							case 2:
-							case 3:
+					  let type
+						switch(el[1]){
+							case 0:
 							type = 'normal'
 							break
-							case 4:
-							type = 'bottom'
-							break
-							case 5:
+							case 1:
 							type = 'top'
 							break
+							case 2:
+							type = 'bottom'
+							break
+							
 						}
-						el.time = parseFloat(time)
-						el.color = color
+						el.time = el[0]
+						el.color = '#' + el[2].toString(16)
 						el.type = type
+						el.value = el[4]
 						
 				})
 				this.BarrageData = this.BarrageData.sort((a,b)=>{

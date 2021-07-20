@@ -1,8 +1,8 @@
 const Template = function(newDom) {
  	let $ = document.querySelector.bind(document)
 	let DOM = {
- 		canvas : $('.canvas'),
- 		video : $('.video'),
+ 		canvas : $('.mfuns_canvas'),
+ 		video : $('.mfuns_video'),
  		emit : $('#emit'),
  		full : $('#full'),
 		barrage : $('#barrage'),
@@ -53,7 +53,7 @@ const Template = function(newDom) {
 		danmaku_type: $('#danmaku_type'),
 		danmaku_color:$('#danmaku_color'),
 		voice:$('#voice'),
-		wrap : $('.wrap'),
+		wrap : $('#wrap'),
  	}
 	
  	return DOM

@@ -1,3 +1,0 @@
-interface global {
-    window: any;
-}

@@ -2,10 +2,10 @@ import {init} from "./control.js"
 import {addFlv} from "./MSE.js"
 import '../css/index.css'
 
- class mfunsPlayer{
-	constructor(el,url) {
+class mfunsPlayer{
+	constructor(el,url,callback) {
 		addFlv().then(function(){
-           init(el,url) 
+           init(el,url,callback) 
 		   el.style.background = "#000"
 	       el.style.position = 'relative'
 		   el.style.display = 'flex'

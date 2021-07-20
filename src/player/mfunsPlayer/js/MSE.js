@@ -21,7 +21,6 @@ export function addFlv() {
 }
 
 export function initMSE(video, url) {
-
 	if (flvjs.isSupported()) {
 		var flvPlayer = flvjs.createPlayer({
 			type: 'flv',

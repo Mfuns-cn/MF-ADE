@@ -4,7 +4,7 @@ import {debounce} from './util/debounce.js'
 import {thro} from './util/thro.js'
 import {openEditor,closeEditor,createPreview,previewCallback,clearCallback,emitCallback} from './danmakuEditor.js'
 
-export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData) {
+export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callback) {
 	let trueLengthRate = (tem.scroll.clientWidth - tem.bar.clientWidth) / tem.scroll.clientWidth
 	var playTimer
 	var editTimer
@@ -25,14 +25,17 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData) {
 	var listCreated = false
 	var isEdit = false
 	var isControl = true
-	
-	if(navigator.userAgent.indexOf('Firefox')>-1){
+	var isFireFox = navigator.userAgent.indexOf('Firefox')>-1
+	if(isFireFox){
 		tem.troggle.style.display = 'none'
 	}
     function loadBuff(){
 	   for(let i = 0 ; i< tem.video.buffered.length; i++){
-	   buffer = buffer<=tem.video.duration?tem.video.buffered.end(i) + tem.video.duration*0.025 : tem.video.duration 
-	    
+	    buffer = tem.video.buffered.end(i) + tem.video.duration*0.025 
+	    if(buffer>=tem.video.duration){
+			buffer = tem.video.duration*1.025
+		}
+		
 	    bufferleft = tem.scroll.clientWidth * (buffer / tem.video.duration) * trueLengthRate
 	    buff(bufferleft)
 	   }
@@ -167,7 +170,8 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData) {
 		tem.danmaku_color.appendChild(item)
 	}
 	tem.danmaku_color.addEventListener('click',function(event){
-		event = event || window.event		var target = event.target || event.srcElement
+		event = event || window.event
+		var target = event.target || event.srcElement
 		const colorIndex = Number(target.id[5]) 
 		if(typeof(colorIndex) === 'number' && tem.danmaku_color.children[colorIndex].className == "focus"){
 			tem.danmaku_color.children[colorIndex].className = ""
@@ -208,6 +212,7 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData) {
 			userToken,
 		}
 		if(value){
+		  callback.checkLogin()
 		  canvasStage.add(obj)
 		  canvasStage.getNormal()
 		  canvasStage.getTop()
@@ -231,7 +236,6 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData) {
 		}
 		
 		tem.wait_loading.style.display = 'none'
-		console.log(tem.video.currentTime*1000)
 		advanceDanmakuStage.skip(tem.video.currentTime*1000)
 		canvasStage.reset()
 	})
@@ -515,24 +519,35 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData) {
 			   tem.voice.style.display = 'none'
 	}
 	function controlVoice(e){
+		        e = e || event;
+			    e.preventDefault()
 				tem.voice.style.display = 'block'
 			    voiceDebounceFunc()
 				if(e.wheelDelta > 0 || e.detail < 0){
 					     handleIncrease()
 				    }else{
 						 handleDecrease()
-				    }
+				}
 				
 	}
+	
 	let handleIncrease = thro(increaseVoice,100)
 	let handleDecrease = thro(decreaseVoice,100)
 	let voiceDebounceFunc = debounce(1000,hideVoice)	
 	
 	tem.control_mask.addEventListener('mouseenter', function(){
+		// document.body.style.top = -(document.documentElement.scrollTop || document.body.scrollTop) + 'px'
+	 //    document.body.style.position = 'fixed'
+	 //    document.body.style.width = '100%'
 		tem.control_mask.addEventListener('mousewheel',controlVoice)
 		tem.control_mask.addEventListener('DOMMouseScroll',controlVoice)
 	})
 	tem.control_mask.addEventListener('mouseleave', function(){
+		// document.body.style.position = ''
+	 //    document.documentElement.scrollTop = Math.abs(parseInt(document.body.style.top))
+	 //    document.body.scrollTop = Math.abs(parseInt(document.body.style.top))
+	 //    document.body.style.top = ""
+
 		tem.control_mask.removeEventListener('mousewheel',controlVoice)
 		tem.control_mask.removeEventListener('DOMMouseScroll',controlVoice)
 	})
@@ -708,7 +723,7 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData) {
 	  editor.setValue("[\n{}\n]")
 	  editor.gotoLine(2);
 	  createPreview().then((tem)=>{
-	    advancePreview  = new MfunsDanMaku({
+	    advancePreview  = new MFADE({
 		containers: tem.advancePre,
 		danmaku: send => {
 			send([editor.getValue()])
