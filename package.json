@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode=production && tsc",
-    "watch": "webpack --watch --mode=development"
+    "watch": "webpack --watch --mode=development",
+    "lint:fix": "tslint -c tslint.json 'src/**/*.ts' --fix"
   },
   "author": "",
   "license": "ISC",
