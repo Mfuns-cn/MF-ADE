@@ -3,7 +3,7 @@ import zhCn from "./zh-cn";
 /**
  * i18n 国际化函数
  */
-export class i18n {
+export class I18n {
     private static tranTxt = {
         "zh-cn": zhCn
     }
@@ -17,7 +17,7 @@ export class i18n {
      * @returns 翻译结果
      */
     public static t(str: string): string {
-        //检查字符串是否存在
+        // 检查字符串是否存在
         if (this.tranTxt[this.language] && this.tranTxt[this.language][str]) {
             return this.tranTxt[this.language][str];
         }

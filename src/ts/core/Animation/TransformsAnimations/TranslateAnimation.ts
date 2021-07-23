@@ -3,18 +3,18 @@ import { CubicAnimations } from "../Base/CubicAnimations";
 
 export class TranslateAnimation extends CubicAnimations {
 
-    path: { x1: number, y1: number, z1: number, x2: number, y2: number, z2: number }
+    public path: { x1: number, y1: number, z1: number, x2: number, y2: number, z2: number }
         =
         { x1: 0, y1: 0, x2: 0, y2: 0, z1: 0, z2: 0 }
-    setParams(param: { [idx: string]: any; }): boolean {
-        if (!super.setParams(param)) return false;
+    public setParams(param: { [idx: string]: any; }): boolean {
+        if (!super.setParams(param)) { return false; }
         this.path = Object.assign(this.path,param?.path)
         return true
     }
-    getCubicStyle(): false | DanmakuStyle {
+    public getCubicStyle(): false | DanmakuStyle {
         return false;
     }
-    getMatrixForCubic(progress: number): false | number[] {
+    public getMatrixForCubic(progress: number): false | number[] {
         // console.log(this.path);
         // console.log(progress);
 

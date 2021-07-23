@@ -4,7 +4,7 @@ import { SizeInterface } from "./SizeInterface";
 /**
  * 画布样式集合
  */
-export interface canvasStyle{
+export interface CanvasStyle{
     size:SizeInterface,
     color:Color,
     position:PositionInterface

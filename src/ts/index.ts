@@ -1,50 +1,51 @@
 import "../css/base.css";
 import { Controller } from './Controller/Controller';
-import { i18n } from "./i18n"
+import { I18n } from "./i18n"
 import { InitConfigInterface } from "./core/InitConfigInterface";
 import { TestStage } from "./core/Stage/TestStage";
 export  class MFADE {
 
-    
-    controller:Controller; 
+
+    public controller:Controller;
     constructor(config: InitConfigInterface) {
-        //类型检查
+        // 类型检查
         if (!config.containers) {
-            throw ReferenceError(i18n.t("Containers is null"))
+            throw ReferenceError(I18n.t("Containers is null"))
         }
         this.controller = new Controller(config.containers)
         this.controller.addGetDanmakuFunction("advance",config.danmaku)
         this.controller.registStage(new TestStage(), 1)
         this.controller.mount()
-        //监听大小变化
-        // window.addEventListener("resize", () => {
-        //     this.controller.resize()
-        // })
+        // 监听大小变化
+        window.addEventListener("resize", () => {
+            this.controller.resize()
+        })
+
     }
-	
-    pause(){
+
+    public pause(){
         this.controller.pause()
     }
-    start(){
+    public start(){
         this.controller.start()
     }
-    skip(time:number){
+    public skip(time:number){
         this.controller.skip(time)
     }
-    time(){
+    public time(){
         return this.controller.getTime()
     }
-	resize(){
+	   public resize(){
 		this.controller.resize()
 	}
-    reset(){
+    public reset(){
         this.controller.resetDanmaku(1)
         this.controller.reset()
     }
 
 }
 
-//添加进全局
+// 添加进全局
 if (typeof globalThis !== "undefined") {
     globalThis.MFADE = MFADE;
 }else{

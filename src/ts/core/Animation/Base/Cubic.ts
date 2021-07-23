@@ -2,13 +2,13 @@
  * 贝塞尔相关工具函数
  */
 export class Cubic {
-    px3: number
-    px2: number
-    px1: number
-    py3: number
-    py2: number
-    py1: number
-    epsilon: number
+    public px3: number
+    public px2: number
+    public px1: number
+    public py3: number
+    public py2: number
+    public py1: number
+    public epsilon: number
     constructor (a: number, b: number, c: number, d: number) {
       this.px3 = 3 * a
       this.px2 = 3 * (c - a) - this.px3
@@ -18,19 +18,19 @@ export class Cubic {
       this.py1 = 1 - this.py3 - this.py2
       this.epsilon = 1e-7      // 目标精度
     }
-  
-    getX(t: number) {
+
+    public getX(t: number) {
       return ((this.px1 * t + this.px2) * t + this.px3) * t
     }
-  
-    getY(t: number) {
-      return ((this.py1 * t + this.py2) * t + this.py3) * t    
+
+    public getY(t: number) {
+      return ((this.py1 * t + this.py2) * t + this.py3) * t
     }
-  
-    solve(x: number) {
+
+    public solve(x: number) {
       if (x === 0 || x === 1) {             // 对 0 和 1 两个特殊 t 不做计算
         return this.getY(x)
-      } 
+      }
       let t = x
       for (let i = 0; i < 8; i++) {         // 进行 8 次迭代
         let g = this.getX(t) - x
@@ -46,4 +46,3 @@ export class Cubic {
       return this.getY(t)                   // 对得到的近似 t 求 y
     }
   }
-  

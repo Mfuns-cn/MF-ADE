@@ -7,13 +7,13 @@ import { Matrix } from "../Base/Matrix";
  * 动画列表组，所有动画按顺序播放
  */
 export class ListAnimations extends CubicAnimations {
-    animations: AnimationInterface[] = []
+    public animations: AnimationInterface[] = []
     /**
      * 每个动画结束的累计矩阵
      */
-    cumulativeMatrix: number[][] = []
-    cumulativeTime: number[] = []
-    setParams(param: { [idx: string]: any; }): boolean {
+    public cumulativeMatrix: number[][] = []
+    public cumulativeTime: number[] = []
+    public setParams(param: { [idx: string]: any; }): boolean {
         super.setParams(param);
         this.animations = AnimationFactory.getAnimationsList(param?.animations || [])
 
@@ -25,11 +25,11 @@ export class ListAnimations extends CubicAnimations {
             let dur = val.getDuration()
 
 
-            //自增1，因为0的结束帧的1的开头
+            // 自增1，因为0的结束帧的1的开头
             key++
-            //计算出每个动画结束后的矩阵叠加,传入持续时间以获得最后一帧动画
+            // 计算出每个动画结束后的矩阵叠加,传入持续时间以获得最后一帧动画
             let matrix = val.getMatrix(dur) || Matrix.getNullMatrix();
-            //叠加
+            // 叠加
             this.cumulativeMatrix[key] =
                 Matrix.mult(matrix, this.cumulativeMatrix[key - 1])
 
@@ -37,13 +37,13 @@ export class ListAnimations extends CubicAnimations {
             this.cumulativeTime[key] = duration
 
         })
-        
+
         if (this.duration < duration) { this.duration = duration; }
 
         return true;
     }
 
-    getCubicStyle(_progress: number, time: number): false | DanmakuStyle {
+    public getCubicStyle(_progress: number, time: number): false | DanmakuStyle {
         let curAnimation = this.getCurAnimation(time)
 
         if (curAnimation) {
@@ -52,7 +52,7 @@ export class ListAnimations extends CubicAnimations {
         return false
     }
 
-    getMatrixForCubic(_progress: number, time: number): false | number[] {
+    public getMatrixForCubic(_progress: number, time: number): false | number[] {
 
 
         let curAnimation = this.getCurAnimation(time)

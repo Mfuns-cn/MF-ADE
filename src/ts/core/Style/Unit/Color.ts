@@ -5,17 +5,17 @@ import { UnitInterface } from "./UnitInterface"
  */
 
 export class Color implements UnitInterface {
-    r: number
-    g: number
-    b: number
-    a: number
+    public r: number
+    public g: number
+    public b: number
+    public a: number
     constructor(r:number, g:number, b:number, a:number) {
         this.r = r
         this.g = g
         this.b = b
         this.a = a
     }
-    string(): string {
+    public string(): string {
         return "rgba(" + this.r + "," + this.g + "," + this.b + "," + this.a + ")"
     }
     /**
@@ -36,12 +36,12 @@ export class Color implements UnitInterface {
      * @param color 颜色名称
      * @returns 
      */
-    static getColor(color:string):Color{
+    public static getColor(color:string):Color{
         if(this.color[color]){
             return new this(...this.color[color])
         }else{
             return new this(...this.color["black"])
         }
-        
+
     }
 }

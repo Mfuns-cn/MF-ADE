@@ -5,21 +5,21 @@ import { canvasStyle } from "../Style/CanvasStyle";
 import { RendererInterface } from "./RendererInterface";
 
 export class BaseRenderer implements RendererInterface {
-    reset(): boolean {
+    public reset(): boolean {
         throw new Error("Method not implemented.");
     }
-    addDanmaku(_danmaku: DanmakuItemInterface): boolean {
+    public addDanmaku(_danmaku: DanmakuItemInterface): boolean {
         return false;
     }
-    refresh(): boolean {
+    public refresh(): boolean {
         return false
     }
     protected canvas?: HTMLElement
-    setCanvasContainer(canvas: HTMLElement): boolean {
+    public setCanvasContainer(canvas: HTMLElement): boolean {
         this.canvas = canvas
         return true
     }
-    updateCanvasStyle(style: canvasStyle): boolean {
+    public updateCanvasStyle(style: canvasStyle): boolean {
         if (this.canvas) {
             this.canvas.style.width = style.size.width.string();
             this.canvas.style.height = style.size.height.string();

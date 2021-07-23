@@ -7,6 +7,9 @@ Animations 动画类型
 - TransformsAnimations 2d/3d变换动画类型
   
 Danmaku 弹幕类型
+
 Renderer 渲染器
+
 Stage 舞台
+
 Style 样式，单位大小接口

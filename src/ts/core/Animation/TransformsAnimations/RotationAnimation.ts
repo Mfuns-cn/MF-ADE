@@ -6,13 +6,13 @@ import { OriginAnimations } from "../Base/OriginAnimations";
  */
 export abstract class RotationAnimation extends OriginAnimations {
 
-    angle:{start:number,end:number} = {start:0,end:360}
-    setParams(param: { [idx: string]: any; }): boolean {
-        if (!super.setParams(param)) return false;
+    public angle:{start:number,end:number} = {start:0,end:360}
+    public setParams(param: { [idx: string]: any; }): boolean {
+        if (!super.setParams(param)) { return false; }
         this.angle = Object.assign(this.angle,param?.angle)
         return true
     }
-    getCubicStyle(_progress: number): false | DanmakuStyle {
+    public getCubicStyle(_progress: number): false | DanmakuStyle {
         return false;
     }
     /**

@@ -10,10 +10,10 @@ export class Border implements UnitInterface{
         this.color = color
         this.style = style
     }
-    width:number
-    style:string
-    color:Color
-    string(): string {
-        return "" + this.width + "px " + this.style + " " + this.color.string 
+    public width:number
+    public style:string
+    public color:Color
+    public string(): string {
+        return "" + this.width + "px " + this.style + " " + this.color.string
     }
 }

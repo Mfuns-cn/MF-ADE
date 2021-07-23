@@ -11,33 +11,33 @@ import { RotationZAnimation } from "../core/Animation/TransformsAnimations/Rotat
 import { StaticAnimation } from "../core/Animation/TransformsAnimations/StaticAnimation";
 
 export class AnimationFactory {
-    static animationList = {
-        "static":StaticAnimation,//静态定位
-        "translate":TranslateAnimation,//平移
+    public static animationList = {
+        "static":StaticAnimation,// 静态定位
+        "translate":TranslateAnimation,// 平移
         "rotateX":RotationXAnimation,// x轴旋转
-        "rotateY":RotationYAnimation,//y轴旋转
-        "rotateZ":RotationZAnimation,//z轴旋转
-        "scale":ScaleAnimations,//缩放
-        "list":ListAnimations,//动画列表
-        "group":GroupAnimations,//动画组
-        "repeat":RepeatAnimations,//重复动画
+        "rotateY":RotationYAnimation,// y轴旋转
+        "rotateZ":RotationZAnimation,// z轴旋转
+        "scale":ScaleAnimations,// 缩放
+        "list":ListAnimations,// 动画列表
+        "group":GroupAnimations,// 动画组
+        "repeat":RepeatAnimations,// 重复动画
         "opacity":OpacityAnimations
     }
 
-    static getAnimations(type:string,params):AnimationInterface | false{
+    public static getAnimations(type:string,params):AnimationInterface | false{
         if(this.animationList[type]){
             // console.log(params);
             let ani = new this.animationList[type]()
             // console.log(ani);
-            
+
             ani.setParams(params)
             return ani;
         }
         return false;
     }
-    static getAnimationsList(list:{key: { [idx: string]: any; }}[]):AnimationInterface[]{
+    public static getAnimationsList(list:{key: { [idx: string]: any; }}[]):AnimationInterface[]{
         let animationList:AnimationInterface[] = []
-        
+
         list?.forEach((val)=>{
             let ani =  this.getAnimations(val["type"],val)
             if(ani){

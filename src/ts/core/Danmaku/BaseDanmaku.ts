@@ -7,56 +7,54 @@ import { StaticAnimation } from "../Animation/TransformsAnimations/StaticAnimati
  * 基础弹幕类型
  */
 export class BaseDanmaku implements DanmakuItemInterface {
+  public style: DanmakuStyle = {};
+  public start: number = 0;
+  public animation?: AnimationInterface;
+  public content: string = "";
+  public child: DanmakuItemInterface[] = [];
+  /**
+   * 设置参数
+   * @param param
+   * @returns
+   */
+  public setParams(param: { [idx: string]: any }): boolean {
+    // 设置文字样式
+    try {
+      // 设置开始时间
+      if (param?.start) {
+        this.start = param?.start;
+      }
+      if (param?.animation) {
+        this.animation = param?.animation || new StaticAnimation();}
+      if (param?.child) { this.child = param.child; }
+      if (param?.style) { this.style = param?.style; }
+      if (param?.content) { this.content = param?.content;}
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
 
-
-    style:DanmakuStyle = {}
-    start:number = 0;
-    animation?:AnimationInterface
-    content:string = ""
-    child:DanmakuItemInterface[] = []
-    /**
-     * 设置参数
-     * @param param 
-     * @returns 
-     */
-    setParams(param: { [idx: string]: any; }): boolean {
-        //设置文字样式
-        try{
-            //设置开始时间
-            param?.start &&　(this.start = param?.start)
-            param?.animation && (this.animation =  param?.animation ||  new StaticAnimation())
-            param?.child && (this.child = param.child)
-            param?.style && (this.style = param?.style)
-            param?.content && (this.content = param?.content)
-
-            
-        }catch(e){
-            console.warn(e);
-            return false;
-        }
-       
-        return true
+    return true;
+  }
+  public getType(): string {
+    return "base";
+  }
+  public getContent(): string {
+    return this.content;
+  }
+  public getChild(): DanmakuItemInterface[] {
+    return this.child;
+  }
+  public getAnimation(): AnimationInterface {
+    if (!this.animation) {
+      this.animation = new StaticAnimation();
     }
-    getType(): string {
-        return "base"
-    }
-    getContent(): string {
-        return this.content
-    }
-    getChild(): DanmakuItemInterface[] {
-        return this.child
-    }
-    getAnimation(): AnimationInterface {
-        if(!this.animation){
-            this.animation = new StaticAnimation()
-        }
-        return this.animation
-    }
-    getStyle(): DanmakuStyle {
-        return this.style
-    }
-    startTime(): number {
-        return this.start
-    }
+    return this.animation;
+  }
+  public getStyle(): DanmakuStyle {
+    return this.style;
+  }
+  public startTime(): number {
+    return this.start;
+  }
 }
-

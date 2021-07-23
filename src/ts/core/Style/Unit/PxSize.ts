@@ -1,11 +1,11 @@
 import { UnitInterface } from "./UnitInterface";
 
 export class PxSize implements UnitInterface{
-    length:number
+    public length:number
     constructor(length:number){
         this.length = length;
     }
-    string(): string {
+    public string(): string {
         return this.length +"px";
     }
 

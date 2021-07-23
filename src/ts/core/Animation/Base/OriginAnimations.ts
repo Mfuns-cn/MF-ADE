@@ -10,22 +10,22 @@ import { Matrix } from "./Matrix";
  * @extends {CubicAnimations}
  */
 export abstract class OriginAnimations extends CubicAnimations {
-    origin:number[] = [0,0,0]
-    setParams(param: { [idx: string]: any; }): boolean {
-        if (!super.setParams(param)) return false;
+    public origin:number[] = [0,0,0]
+    public setParams(param: { [idx: string]: any; }): boolean {
+        if (!super.setParams(param)) { return false; }
         this.origin =  param?.origin || this.origin
         return true
     }
-    getMatrixForCubic(progress: number): number[] | false{
+    public getMatrixForCubic(progress: number): number[] | false{
         let arr = this.getMatrixForOrigin(progress)
-        if(!arr) return false
+        if(!arr) { return false }
         arr = Matrix.mult([
             1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
             -this.origin[0], -this.origin[1], -this.origin[2], 1
 
-        ],arr)
+        ],                arr)
         return Matrix.mult(arr,[
             1, 0, 0, 0,
             0, 1, 0, 0,
@@ -38,5 +38,5 @@ export abstract class OriginAnimations extends CubicAnimations {
      * 获取用于计算原坐标点的矩阵
      * @param progress 
      */
-    abstract getMatrixForOrigin(progress: number): number[] | false
+    public abstract getMatrixForOrigin(progress: number): number[] | false
 }

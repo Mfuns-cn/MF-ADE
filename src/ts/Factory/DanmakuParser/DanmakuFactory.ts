@@ -1,11 +1,14 @@
 import { BaseDanmaku } from "src/ts/core/Danmaku/BaseDanmaku";
 import { DanmakuItemInterface } from "src/ts/core/Danmaku/DanmakuItemInterface";
 
+/**
+ * 弹幕解析器工厂
+ */
 export class DanmakuFactory{
-    static list = {
+    public static list = {
         "text":BaseDanmaku
     }
-    static getDanmakuInstance(type:string):DanmakuItemInterface{
+    public static getDanmakuInstance(type:string):DanmakuItemInterface{
         if(!this.list[type]){
             type = "text"
         }

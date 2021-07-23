@@ -24,7 +24,6 @@
             }
         ],
         "no-empty-interface": true, 
-        "no-parameter-reassignment": true,
         "prefer-for-of": true,
     
         "await-promise": true,
@@ -77,10 +76,6 @@
         ],
         "encoding": true, 
         "import-spacing": true,
-        "interface-name": [
-            true,
-            "always-prefix"
-        ], 
         "jsdoc-format": true, 
         "new-parens": true, 
         "no-trailing-whitespace": [ 
