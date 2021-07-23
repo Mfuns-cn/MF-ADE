@@ -15,7 +15,13 @@ export class DanmakuEvent {
   protected static buildPrefix(eventname: DanmakuEventType): string {
     return this.prefix + eventname;
   }
-  public static register<T>(eventname: DanmakuEventType, callback: (data: T) => void) {
+  /**
+   * 监听弹幕事件
+   * @param eventname 
+   * @param callback 
+   */
+  public static listener<T>(eventname: DanmakuEventType, callback: (data: T) => void) {
+    // 封装浏览器提供的事件监听器
     window.addEventListener(this.buildPrefix(eventname), (data: any) => {
       callback(data.detail);
     });

@@ -16,5 +16,13 @@ export enum DanmakuEventType {
    */
   DANMAKU_LOAD_START = "DANMAKU_LOAD_START",
 
-  DANMAKU_LOAD_DONE = "DANMAKU_LOAD_DONE"
+  /**
+   * 弹幕加载完成
+   */
+  DANMAKU_LOAD_DONE = "DANMAKU_LOAD_DONE",
+
+  /**
+   * 弹幕舞台重置
+   */
+  DANMAKU_STAGE_RESET = "DANMAKU_STAGE_RESET"
 }

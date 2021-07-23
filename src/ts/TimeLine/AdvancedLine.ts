@@ -2,6 +2,9 @@ import { DanmakuItemInterface } from "../core/Danmaku/DanmakuItemInterface";
 import { TimeLineDanmaku } from "./TimeLineDanmaku";
 import { TimeLineInterface } from "./TimeLineInterface";
 
+/**
+ * 高级弹幕时间轴
+ */
 export class AdvancedLine implements TimeLineInterface {
 
 
@@ -55,8 +58,9 @@ export class AdvancedLine implements TimeLineInterface {
 
         let arr: TimeLineDanmaku[] = [];
         let skip = false;
-        if (this.lastTime <= time && time - this.lastTime < 5) {
-            // 正常播放情况,遍历期间的所有内容
+        // 当两次时间超过200ms，表示发生了跳转
+        if (this.lastTime <= time && time - this.lastTime < 20) {
+            // 正常播放情况,遍历期间的所有内容 
             // console.log(this.lastTime);
 
             for (let a = this.lastTime; a < time; a++) {

@@ -7,6 +7,8 @@ import { RendererFactory } from "src/ts/Factory/RendererFactory";
 import { PxSize } from "../core/Style/Unit/PxSize";
 import { TimeLineFactory } from "../Factory/TimeLineFactort";
 import { JsonDanmakuParser } from "../Factory/DanmakuParser/JsonDanmakuParser";
+import { DanmakuEvent } from "../Event/DanmakuEvent";
+import { DanmakuEventType } from "../Event/DanmakuEventType";
 
 /**
  * 控制器 ，统一管理整个弹幕系统
@@ -137,6 +139,7 @@ export class Controller {
       }
     });
   }
+
   /**
    * 创建div容器
    */
@@ -176,6 +179,7 @@ export class Controller {
       this.pauseStatus = true;
     }
   }
+
   /**
    * 播放
    */
@@ -186,6 +190,7 @@ export class Controller {
       this.pauseStatus = false;
     }
   }
+
   /**
    * 跳转
    */
@@ -198,6 +203,7 @@ export class Controller {
       this.timeStamp = Date.now() - time;
     }
   }
+
   /**
    * 重置整个系统
    */
@@ -206,37 +212,69 @@ export class Controller {
     this.stageList.forEach((stage) => {
       stage.reset();
     });
+    // 触发弹幕舞台重置事件
+    DanmakuEvent.dispatch(DanmakuEventType.DANMAKU_STAGE_RESET,{});
+
     this.pauseStatus = true;
     this.timeStamp = 0;
     this.time = 0;
     this.skipStatus = false;
   }
-  public getTime() {
+
+  /**
+   * 获取弹幕当前时间
+   * @returns number
+   */
+  public getTime(): number {
     return this.time;
   }
+
+  /**
+   * 添加弹幕获取器
+   * @param type
+   * @param fun
+   */
   public addGetDanmakuFunction(
     type: string,
     fun: (send: (str: string[]) => void) => void
   ) {
     this.danmakuFunction[type] = fun;
   }
+
+  /**
+   * 重置弹幕接口
+   */
   public resetDanmaku(type: number) {
-    if (this.stageList[type]) {
-      let stage = this.stageList[type];
-      stage.getTimeLine().reset();
-      let lineType = stage.timeLineType();
-      let fun = this.danmakuFunction[lineType];
-      if (!!fun) {
-        fun((res: string[]) => {
-          let parser = new JsonDanmakuParser();
-          let timeline = stage.getTimeLine();
-          res.forEach((danmakuStr: string) => {
-            parser.parser(danmakuStr).forEach((danmaku) => {
-              timeline.addDanmaku(danmaku);
-            });
-          });
-        });
-      }
+    // 判断舞台列表是否存在
+    if (!this.stageList[type]) {
+      return;
     }
+
+    // 弹幕开始加载事件
+    DanmakuEvent.dispatch(DanmakuEventType.DANMAKU_LOAD_START, {});
+    // 获取当前舞台
+    let stage = this.stageList[type];
+    // 获取弹幕时间轴
+    let timeline = stage.getTimeLine();
+    // 重置时间轴
+    timeline.reset();
+    // 根据时间轴类型找到对应的弹幕获取器
+    let fun = this.danmakuFunction[stage.timeLineType()];
+    // 判断弹幕获取器是否存在
+    if (!fun) {
+      return;
+    }
+    fun((res: string[]) => {
+      // 解析弹幕文本
+      let parser = new JsonDanmakuParser();
+      res.forEach((danmakuStr: string) => {
+        // 遍历添加进时间轴
+        parser
+          .parser(danmakuStr)
+          .forEach((danmaku) => timeline.addDanmaku(danmaku));
+        // 弹幕加载完成事件
+        DanmakuEvent.dispatch(DanmakuEventType.DANMAKU_LOAD_DONE, {});
+      });
+    });
   }
 }

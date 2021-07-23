@@ -1,5 +1,5 @@
 import { DanmakuItemInterface } from "../Danmaku/DanmakuItemInterface";
-import { canvasStyle } from "../Style/CanvasStyle";
+import { CanvasStyle } from "../Style/CanvasStyle";
 
 /**
  * 渲染器接口
@@ -14,7 +14,7 @@ export interface RendererInterface{
      * 更新画布样式
      * @param style 
      */
-    updateCanvasStyle(style:canvasStyle):boolean;
+    updateCanvasStyle(style:CanvasStyle):boolean;
 
     /**
      * 渲染弹幕

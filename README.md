@@ -3,6 +3,7 @@
 MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎
 
 ## 特性
+
 经支持以下弹幕效果:
  - 贝塞尔曲线
  - 静止放置
@@ -22,13 +23,15 @@ MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎
 
 如果使用过程中存在 bug ,欢迎提交 issue 反馈
 
-当前版本: `1.4.0 Beta` ，更新日期：`2021/7/13`
+当前版本: `1.5.0 Beta` ，更新日期：`2021/7/23`
 ## 弹幕实验室
+
 弹幕实验室目前已经搭建完成 地址: [https://lab.meogirl.ml](https://lab.meogirl.ml)
 
 ## 使用文档
 
 ### 下载 & 安装
+
 下载lib/bundle.js文件
 使用script标记导入到html中
 
@@ -36,6 +39,7 @@ npm 方式：
 无，以后再说
 
 ### 基本使用
+
 导入弹幕模块，并进行实例化的操作
 ```js
 // var danmaku = new MfunsDanMaku({  //从1.4.0版本开始 此名称已被废弃
@@ -51,11 +55,14 @@ var danmaku = new MFADE({
     }
 })
 ```
+
 ### 容器
+
 containers 容器接受一个html元素,但并不会对元素的大小和位置进行设置，所以需要在外部完成对元素进行大小以及位置的设置
 
 
 ### 弹幕接口
+
 由于弹幕引擎为了更好的可扩展性，内部并无任何网络请求的实现，
 所以需要在这里进行相应的操作，获取弹幕当获取弹幕完成，调用 `send(string[])` 回调函数，由于弹幕可能有很多条，所以回调函数接受一个json字符串数组
 
@@ -63,9 +70,11 @@ containers 容器接受一个html元素,但并不会对元素的大小和位置�
 ### 弹幕引擎的控制方法
 
 #### pause()
+
 暂停弹幕
 
 #### start()
+
 开始播放
 >注意：如果获取弹幕进行使用网络进行异步请求，当网络缓慢时，弹幕极有可能没有加载完成，如果此时调用播放，那么弹幕将不会被加载
 
@@ -75,14 +84,63 @@ containers 容器接受一个html元素,但并不会对元素的大小和位置�
 
 
 #### time():number
+
 获取弹幕引擎的内部时间，返回一个单位为毫秒的数字
 
 
 #### reset()
+
 重置弹幕引擎
 >该操作会重新调用初始化传入的`danmaku`接口，如果接口中存在网络请求，当网络请求缓慢，可能会发生一些意想不到的BUG
 
 >如果不希望重新获取弹幕，请使用 `skip(0)` 进行跳转
+
+#### resize()
+
+重新计算弹幕容器尺寸
+
+一般情况下，浏览器窗口大小变化时，会自动更新尺寸
+
+但是也存在一些边缘情况导致舞台尺寸无法正常更新，请调用此函数
+
+#### listenerEvent(event: DanmakuEventType, callback: (data:any) => void)
+
+> `1.5.0` 更新
+监听弹幕事件
+
+- event 事件类型
+
+目前已有的事件类型
+
+``` js
+/**
+ * 弹幕字符串无效
+ */
+DANMAKU_JSON_INVALID = "DANMAKU_JSON_INVALID",
+
+/**
+ * 单条弹幕格式错误
+ */
+DANMAKU_FORMAT_ERROR = "DANMAKU_FORMAT_ERROR",
+
+/**
+ * 弹幕开始加载
+ */
+DANMAKU_LOAD_START = "DANMAKU_LOAD_START",
+
+/**
+ * 弹幕加载完成
+ */
+DANMAKU_LOAD_DONE = "DANMAKU_LOAD_DONE",
+
+/**
+ * 弹幕舞台重置
+ */
+DANMAKU_STAGE_RESET = "DANMAKU_STAGE_RESET"
+```
+
+- callback 回调函数
+
 
 ## 相关链接
 

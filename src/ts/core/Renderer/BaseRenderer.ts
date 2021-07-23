@@ -1,7 +1,7 @@
 
 
 import { DanmakuItemInterface } from "../Danmaku/DanmakuItemInterface";
-import { canvasStyle } from "../Style/CanvasStyle";
+import { CanvasStyle } from "../Style/CanvasStyle";
 import { RendererInterface } from "./RendererInterface";
 
 export class BaseRenderer implements RendererInterface {
@@ -19,7 +19,7 @@ export class BaseRenderer implements RendererInterface {
         this.canvas = canvas
         return true
     }
-    public updateCanvasStyle(style: canvasStyle): boolean {
+    public updateCanvasStyle(style: CanvasStyle): boolean {
         if (this.canvas) {
             this.canvas.style.width = style.size.width.string();
             this.canvas.style.height = style.size.height.string();
