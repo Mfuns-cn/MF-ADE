@@ -45,6 +45,8 @@ export abstract class BaseStage implements StageInterface {
     if (!this.renderer) {
       return false;
     }
+    // console.log(time);
+
     let list: { skip: boolean; DanmakuList: TimeLineDanmaku[] };
     list = this.timeLineObj?.getDanmakuList(time) || {
       skip: false,

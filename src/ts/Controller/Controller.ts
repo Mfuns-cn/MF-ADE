@@ -269,9 +269,9 @@ export class Controller {
       let parser = new JsonDanmakuParser();
       res.forEach((danmakuStr: string) => {
         // 遍历添加进时间轴
-        parser
-          .parser(danmakuStr)
-          .forEach((danmaku) => timeline.addDanmaku(danmaku));
+        parser.parser(danmakuStr).forEach((danmaku) => {
+          timeline.addDanmaku(danmaku);
+        });
         // 弹幕加载完成事件
         DanmakuEvent.dispatch(DanmakuEventType.DANMAKU_LOAD_DONE, {});
       });

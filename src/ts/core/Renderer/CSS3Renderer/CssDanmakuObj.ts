@@ -88,6 +88,7 @@ export class DanmakuTool {
     abstime: number,
     parentTime: number = 0
   ) {
+    //console.log(danmaku);
     danmaku.forEach((dan, key) => {
       // 更新弹幕样式
       let time =
@@ -105,10 +106,11 @@ export class DanmakuTool {
       if (max) {
         dan.element.style.transform = UnitTools.Matrix3dString(max);
       }
-
+      //console.log(dan);
       // 如果都不存在，则表示动画已经完成，销毁元素
       // 如果是子元素的情况，有可能存在弹幕未开始的情况
       if (!(sty || max)) {
+        //console.log(dan);
         if (dan.element.parentElement) {
           // 从父元素删除节点
           dan.element.parentElement.removeChild(dan.element);
