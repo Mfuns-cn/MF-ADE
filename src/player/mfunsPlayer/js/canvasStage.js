@@ -22,10 +22,13 @@ export class canvasStage {
 			    
 				let defaultoptions = { //默认弹幕样式	
 					speed: 3,
-					color: '#fff',
+					color: '#ffffff',
 					fontSize: 24,
 					type: 'normal',
 					BarrageData: []
+				}
+				if(tem.content.clientWidth <550 ){
+					defaultoptions.fontSize = 16
 				}
 				Object.assign(this, defaultoptions, options) //对象合并 将属性全部挂载在实例this上
 
@@ -48,11 +51,11 @@ export class canvasStage {
 							case 2:
 							type = 'bottom'
 							break
-							
 						}
 						el.time = el[0]
 						el.color = '#' + el[2].toString(16)
 						el.type = type
+						el.userToken = el[3]
 						el.value = el[4]
 						
 				})
@@ -67,13 +70,20 @@ export class canvasStage {
 					if(videoInited){
 						return
 					}
+					tem.tip.style.display = 'none'
+					tem.tip.style.display = 'block'
+					tem.tip.innerHTML = "视频加载完成"
+					setTimeout(()=>{
+						tem.tip.style.display = 'none'
+					},1800)
 					const videoRate = this.clientHeight / this.clientWidth
-					if(videoRate >= 3/4){
-						
+					if(videoRate > 0.57 && videoRate <1){
 						this.style.width = "75%"
-					}else{
-						
+					}else if(videoRate > 1){
+							tem.content.style.height = (tem.content.clientWidth*3/4) + 'px'
+					   	   this.style.height = '85%'
 					}
+					
 					tem.wait_loading.style.display = 'none'
 					tem.control_mask.style.height = tem.video.clientHeight + 'px'
 					const offsetHeight = tem.control.clientHeight + tem.video.clientHeight

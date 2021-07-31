@@ -3,6 +3,7 @@ export class canvasRender {
  		this.value = obj.value
  		this.time = obj.time
 		this.token = obj.userToken
+		this.toEmit = obj.toEmit
  		this.obj = obj
  		this.ctx = ctx
  		this.normalend = false
@@ -89,9 +90,10 @@ export class canvasRender {
  				}
  			}
  		} else {
-			if(this.token){
+			if(this.toEmit){
 				this.renderBorder()
 			}
+			
  			this.renderFont()
  		}
 
@@ -111,7 +113,7 @@ export class canvasRender {
  	renderFont() {
  		this.ctx.context.font = this.fontSize + 'px 微软雅黑'
  		this.ctx.context.fillStyle = this.color
-		this.ctx.context.strokeStyle = '#000';
+		this.ctx.context.strokeStyle = 'rgba(0,0,0,0.4)';
 		this.ctx.context.strokeText(this.value, this.x, this.y)
 		
  		this.ctx.context.fillText(this.value, this.x, this.y)

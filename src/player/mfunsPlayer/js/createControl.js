@@ -21,12 +21,13 @@ export function createControl(el){
 	  <div class="exit_edit">x</div>
 	  <div class="editor_title">mfuns高级弹幕编辑器</div>
 	  <div class="danmaku_code" id="danmaku_code"></div>
-	  <div class="danmuku_link"><a href="https://meogirl.ml/2021/06/11/danmaku/Mfuns%E5%BC%B9%E5%B9%95%E6%89%8B%E5%86%8C/"
-	   target="_blank">mfuns高级弹幕手册</a></div>
+	  
 	  <div class="editor_footer">
-	     <div class="editor_btn" id="editor_clear">清除</div>
+	  <div class="editor_btn" id="editor_clear">清除</div>
 		 <div class="editor_btn" id="editor_preview">预览</div>
 		 <div class="editor_btn" id="editor_emit">发送</div>
+	  <a href="https://meogirl.ml/2021/06/11/danmaku/Mfuns%E5%BC%B9%E5%B9%95%E6%89%8B%E5%86%8C/"target="_blank">mfuns高级弹幕手册</a>
+		 
 	  </div>
 	</div>
 	</div>

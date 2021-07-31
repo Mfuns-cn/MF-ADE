@@ -31,8 +31,7 @@ MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎
 ## 使用文档
 
 ### 下载 & 安装
-
-下载lib/bundle.js文件
+下载lib/mfunsAdvanceDanmaku.js文件
 使用script标记导入到html中
 
 npm 方式：
@@ -154,3 +153,60 @@ DANMAKU_STAGE_RESET = "DANMAKU_STAGE_RESET"
  - 内容遮罩
  - 滤镜和渐变动画
 
+
+
+
+# mfunsPlayer弹幕播放器
+  M站自研的弹幕播放器，没啥优点，能用就行 Ծ‸Ծ
+
+### 功能
+- 视频的暂停/播放（快捷键 space）
+- 进度条控制视频跳转
+- 全屏/退出全屏
+- 弹幕开关
+- 弹幕列表
+- 发送弹幕
+- 编辑弹幕/高级弹幕
+- 鼠标滚轮控制音量（快捷键 ↑ ↓）
+- 快进快退（快捷键 ← →）
+- 画中画
+
+### 使用方法
+- 下载lib/mfunsPlayer.js文件
+- 使用script标记导入到html中
+
+- 如果需要编辑高级弹幕，请自行用script标签引入ace.js
+cdn引入地址:
+>编辑器：[http://cdn.bootcss.com/ace/1.4.9/ace.js](http://cdn.bootcss.com/ace/1.4.9/ace.js)
+
+>语言工具：[http://cdn.bootcss.com/ace/1.4.9/ext-language_tools.js](http://cdn.bootcss.com/ace/1.4.9/ext-language_tools.js)
+### 初始化弹幕播放器
+```js
+           //播放器的容器
+            const container = document.querySelector('.content')
+           // 请求路径
+			const requestURL = { 
+                //视频链接（必传）
+				video:"https://mliii.vqyt.cn/user_files/6666/publish/video/90281914_1621234555.mp4",
+                //视频类型（不传默认为mp4格式，目前可拓展flv格式）
+				videoType:"mp4",
+				//预览图（选传）
+				posterImg:"https://mliii.vqyt.cn/user_files/3749/video-img/52085062_1627544296.jpeg",
+                //弹幕接口（必传）
+				danmaku:"static/danmaku/mfuns.json",
+                //高级弹幕接口（选传）
+				advanceDanmaku:"static/danmaku/danmaku1.json",
+			}
+           // 回调函数
+            const callback = {
+				checkLogin, //检测用户登录(必传)
+				emitDanmaku //发送弹幕(必传)
+			}
+			function emitDanmaku(danmaku,type){
+				console.log('发送弹幕',danmaku,type)
+			}
+            function checkLogin(){
+				console.log('检测用户登录')
+			}
+	//初始化播放器		
+	let MP = new mfunsPlayer(container,requestURL,callback)

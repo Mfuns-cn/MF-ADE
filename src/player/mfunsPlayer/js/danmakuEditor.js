@@ -1,6 +1,6 @@
 import Template from "./getDOM.js"
 let tem
-export function openEditor() {
+export function openEditor(){
 	tem = Template()
 	tem.danmakuList.style.animation = 'retract 0.3s'
 	tem.danmakuList.style.display = 'none'
@@ -9,17 +9,14 @@ export function openEditor() {
 	tem.ade.style.animation = 'down 0.35s'
 }
 
-export function closeEditor() {
+export function closeEditor(){
 	tem.video.play()
 	tem.ade.style.animation = 'up 0.35s'
 	setTimeout(() => {
 		tem.ade_mask.style.display = 'none'
-
 	}, 350)
-
-
 }
-export function createPreview() {
+export function createPreview(){
 	return new Promise((resolve, reject) => {
 	
 	tem.advancePre.style.width = tem.content.clientWidth + 'px'

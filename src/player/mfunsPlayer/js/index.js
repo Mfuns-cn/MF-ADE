@@ -1,21 +1,21 @@
 import {init} from "./control.js"
-import {addFlv} from "./MSE.js"
-import '../css/index.css'
-
-class mfunsPlayer{
+import {addHls} from "./MSE.js"
+// import '../css/index.css'
+import './ace/ace.js'
+import './util/flv.js'
+ export default class mfunsPlayer{
 	constructor(el,url,callback) {
-		addFlv().then(function(){
-           init(el,url,callback) 
+           
 		   el.style.background = "#000"
+		     el.style.minWidth = "400px"
 	       el.style.position = 'relative'
 		   el.style.display = 'flex'
-		   el.style.minWidth = "500px"
 		   el.style.justifyContent = 'center'
 		   el.style.overflow = 'hidden'
-		}).catch(function(err){
-          console.error(err)
-		})
-		   
+		   addHls().then(res=>{
+			   console.log('hls引入成功')
+			   init(el,url,callback) 
+		   })
 	}
 }
 

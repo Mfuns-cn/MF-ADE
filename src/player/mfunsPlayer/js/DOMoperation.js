@@ -3,7 +3,6 @@ import {formateTime} from './util/formateTime.js'
 import {debounce} from './util/debounce.js'
 import {thro} from './util/thro.js'
 import {openEditor,closeEditor,createPreview,previewCallback,clearCallback,emitCallback} from './danmakuEditor.js'
-
 export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callback) {
 	let trueLengthRate = (tem.scroll.clientWidth - tem.bar.clientWidth) / tem.scroll.clientWidth
 	var playTimer
@@ -18,17 +17,23 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 	var barleft = 0
 	var voiceOffset = 0
 	var firstScrollHeight = 0
-	var danmakuColor = '#fff'
+	var danmakuColor = '#ffffff'
 	var danmakuType = 'normal'
+	var videoCanPlay = false
 	var isShowList = false
 	var isInput = false
 	var listCreated = false
 	var isEdit = false
 	var isControl = true
 	var isFireFox = navigator.userAgent.indexOf('Firefox')>-1
+	//自适应及兼容
 	if(isFireFox){
 		tem.troggle.style.display = 'none'
 	}
+	if(tem.content.clientWidth <550 ){
+		tem.control.style.display = 'none'
+	}
+	// 进度条加载
     function loadBuff(){
 	   for(let i = 0 ; i< tem.video.buffered.length; i++){
 	    buffer = tem.video.buffered.end(i) + tem.video.duration*0.025 
@@ -40,10 +45,27 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 	    buff(bufferleft)
 	   }
     }
-   
+	tem.video.addEventListener('loadedmetadata',function(){
+		tem.tip.style.display = 'block'
+	    tem.tip.innerHTML = "正在获取视频信息...."
+	})
+   tem.video.addEventListener('progress',function(){
+	   if(!videoCanPlay){
+		   tem.tip.style.display = 'block'
+	        tem.tip.innerHTML = "正在获取视频内容...."
+	   }else{
+		   tem.load.style.display = "block"
+		   tem.tip.style.display = 'none'
+	   }
+	   
+   })
+  
 	//播放视频时加载弹幕
 	tem.video.addEventListener('timeupdate', function() {
-		advanceDanmakuStage.skip(parseInt(tem.video.currentTime*1000) )
+		advanceDanmakuStage.listenerEvent( "DANMAKU_STAGE_RESET", () => {})
+        tem.control_mask.style.backgroundImage = 'none'
+
+
 		if(advancePreview){
 			advancePreview.skip(parseInt(tem.video.currentTime*1000) )
 		}
@@ -62,11 +84,9 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 		//加载缓冲条
 		loadBuff()
 	})
-	// tem.video.addEventListener('progress', function() {
-		
-	// })
+	
 	tem.video.addEventListener('play', function() {
-		
+		videoCanPlay = true
 		canvasStage.isPaused = false
 		tem.player.className = "icon_play"
 		tem.play_box.className = "button_play"
@@ -203,21 +223,41 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 		let time = tem.video.currentTime
 		let color = danmakuColor
 		let type = danmakuType
-		let userToken = '17950ae873b722-0cb0708dca5e81-d7e1739-144000-17950ae873cddc'
-		let obj = {
-			value,
+		let danmakuObj = {
 			time,
-			color,
 			type,
-			userToken,
+			color,
+			value,
+			toEmit:true
 		}
-		if(value){
-		  callback.checkLogin()
-		  canvasStage.add(obj)
+		if(value.trim()){
+		  if(callback.checkLogin) callback.checkLogin()
+		  else  console.warn('出于安全考虑，请尽快向播放器实例对象提供检测用户登录的回调函数')
+		  
+		  canvasStage.add(danmakuObj)
 		  canvasStage.getNormal()
 		  canvasStage.getTop()
 		  canvasStage.getBottom()
 		  canvasStage.init()
+		  
+		  let type
+		 switch(danmakuType){
+		 	case 'normal':
+		 	type = 0
+		 	break
+		 	case 'top':
+		 	type = 1
+		 	break
+		 	case 'bottom':
+		 	type = 2
+		 	break
+		 }
+		 
+		  color = parseInt(danmakuColor.slice(1),16)
+		  //扁平化处理
+		  danmakuObj = [time,type,color,'0',value]
+		  if(callback.emitDanmaku) callback.emitDanmaku(danmakuObj,type)
+		  else console.error('未提供发送弹幕的回调函数，弹幕发送失败')
 		  // tem.text.value = ''//清空输入框，减少弹幕刷屏
 		}
 		
@@ -226,21 +266,25 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 	//拖动进度条恢复弹幕
 	tem.video.addEventListener('seeking', function() {
 		tem.canvas.style.opacity = 0
+		tem.advance.style.opacity = 0
 		tem.wait_loading.style.display = 'flex'
-		advanceDanmakuStage.skip(0)
-		
+		advanceDanmakuStage.listenerEvent( "DANMAKU_STAGE_RESET", () => {})
+		advanceDanmakuStage.pause()
 	})
 	tem.video.addEventListener('seeked', function() {
 		if(!canvasStage.isclear){
 			tem.canvas.style.opacity = 1
+			tem.advance.style.opacity = 1
 		}
-		
+		advanceDanmakuStage.start()
 		tem.wait_loading.style.display = 'none'
 		advanceDanmakuStage.skip(tem.video.currentTime*1000)
 		canvasStage.reset()
 	})
     tem.video.addEventListener('waiting', function() {
     	tem.wait_loading.style.display = 'flex'
+		advanceDanmakuStage.pause()
+		advanceDanmakuStage.listenerEvent( "DANMAKU_STAGE_RESET", () => {})
     })
 	
 	//展开/收起弹幕列表
@@ -329,6 +373,7 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 	function resizeCallback(){
 		tem.canvas.width = tem.content.clientWidth
 		tem.canvas.height = tem.content.clientHeight
+		tem.barrage.style.display = 'block'
 		tem.advance.style.width = tem.content.clientWidth + 'px'
 		tem.advance.style.height = tem.content.clientHeight + 'px'
 		tem.advancePre.style.width = tem.content.clientWidth + 'px'
@@ -342,7 +387,6 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 		if(advancePreview){
 			advancePreview.resize()
 		}
-		
 		if(editor){
 			editor.resize()
 		}
@@ -395,6 +439,7 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 			tem.content.style.display = 'flex'
 			canvasStage.reset()
 			canvasStage.init()
+			
 			tem.danmakuList.style.width = '20%'
 			tem.control.style.background = 'rgba(0, 0, 0, 0.5)'
 			tem.text.style.background = 'rgba(85, 85, 85, 0.5)'
@@ -536,18 +581,10 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 	let voiceDebounceFunc = debounce(1000,hideVoice)	
 	
 	tem.control_mask.addEventListener('mouseenter', function(){
-		// document.body.style.top = -(document.documentElement.scrollTop || document.body.scrollTop) + 'px'
-	 //    document.body.style.position = 'fixed'
-	 //    document.body.style.width = '100%'
 		tem.control_mask.addEventListener('mousewheel',controlVoice)
 		tem.control_mask.addEventListener('DOMMouseScroll',controlVoice)
 	})
 	tem.control_mask.addEventListener('mouseleave', function(){
-		// document.body.style.position = ''
-	 //    document.documentElement.scrollTop = Math.abs(parseInt(document.body.style.top))
-	 //    document.body.scrollTop = Math.abs(parseInt(document.body.style.top))
-	 //    document.body.style.top = ""
-
 		tem.control_mask.removeEventListener('mousewheel',controlVoice)
 		tem.control_mask.removeEventListener('DOMMouseScroll',controlVoice)
 	})
@@ -654,7 +691,7 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 	});
 	
 	
-//拖动进度条
+
 	function load(val) {
 		tem.mask.style.width = val + 'px';
 		tem.bar.style.left = val + 'px';
@@ -664,6 +701,7 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 	function buff(val){
 		tem.buffer.style.width = val + 'px'
 	}
+//拖动进度条	
 	tem.load.onmousedown = function(event) {
 		var event = event || window.event;
 		var leftVal = event.clientX - this.offsetLeft;
@@ -672,7 +710,6 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 		const rate = (barleft / (tem.load.offsetWidth - tem.bar.offsetWidth)).toFixed(8)
 		tem.video.currentTime = rate * tem.video.duration
 	}
-
 	tem.bar.onmousedown = function(event) {
 		var event = event || window.event;
 		var leftVal = event.clientX - this.offsetLeft;
@@ -680,7 +717,6 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 		document.onmousemove = function(event) {
 			var event = event || window.event;
 			barleft = event.clientX - leftVal;
-
 			// 越界判断
 			if (barleft < 0) {
 				barleft = 0;
@@ -694,57 +730,58 @@ export function operate(canvasStage, advanceDanmakuStage,tem ,BarrageData,callba
 			// 防止选择内容--当拖动鼠标过快时候，弹起鼠标，bar也会移动，修复bug
 			window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
 		}
-
 	}
 	document.onmouseup = function() {
 		document.onmousemove = null; //弹起鼠标不做任何操作
 	}
 	
-	
+	//初始化高级弹幕编辑器
 	tem.advancedDanmaku_btn.onclick = ()=>{
 		isShowList = false
 		isInput = true 
 		openEditor()
 		
 		if(!editor){
-		editor = ace.edit("danmaku_code")
-		let theme = "twilight"
-        let language = "json"
-		editor.setTheme("ace/theme/" + theme);
-        editor.session.setMode("ace/mode/" + language);
-        editor.setFontSize(14);
-        editor.setOption("wrap", "free")
+		editor = ace.edit("danmaku_code")	
+		ace.config.set('basePath', 'mfunsPlayer/js/ace')
 		ace.require("ace/ext/language_tools");
+		editor.setTheme("ace/theme/twilight");
+        editor.session.setMode("ace/mode/json");
+		
+        editor.setFontSize(14);
+		
         editor.setOptions({
-        enableBasicAutocompletion: true,
-	    enableSnippets: true,
-		enableLiveAutocompletion: true
-	  })
-	  editor.setValue("[\n{}\n]")
-	  editor.gotoLine(2);
-	  createPreview().then((tem)=>{
-	    advancePreview  = new MFADE({
-		containers: tem.advancePre,
-		danmaku: send => {
-			send([editor.getValue()])
+			enableBasicAutocompletion: true,
+			enableSnippets: true,
+			enableLiveAutocompletion: true
+		 })
+		 editor.setValue("[\n{}\n]")
+		 editor.gotoLine(2);
+		 createPreview().then((tem)=>{
+			advancePreview  = new MFADE({
+			containers: tem.advancePre,
+			danmaku: send => {
+				send([editor.getValue()])
+			}
+		  })
+		})
 		}
-	  })
-	})
-	
-	
 	}
+	//预览高级弹幕
 	tem.editor_preview.onclick = ()=>{
 		closeEditor()
 		advancePreview.reset()
 		advancePreview.start()
 		tem.video.play()
 	}
+	//清除高级弹幕代码
 	tem.editor_clear.onclick = ()=>{
 		editor.setValue("")
 	}
-		
-		
-	}
+	//发送高级弹幕
+	tem.editor_emit.onclick = ()=>{
+	  callback.emitDanmaku(editor.getValue(),30)	
+	}	
 	tem.ade_close.onclick = ()=>{
 		isInput = false
 		closeEditor()

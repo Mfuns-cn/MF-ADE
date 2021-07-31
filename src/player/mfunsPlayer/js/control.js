@@ -4,7 +4,7 @@ import {initVideo,getVideoTime} from "./video.js"
 import Template from "./getDOM.js"
 import {canvasStage} from "./canvasStage.js"
 import {operate} from "./DOMoperation.js"
-import {initMSE} from "./MSE.js"
+import {initFlv,initHls} from "./MSE.js"
 export function init(el,url,callback){
 	//初始化播放器控件及样式
 	createControl(el)
@@ -12,25 +12,23 @@ export function init(el,url,callback){
 	let tem = Template()
 	let BarrageData = []
 	let stageList = []
+	
+	
 	//获取视频链接
 	
-	
+	let video = document.createElement("video");
+		video.setAttribute("class", "mfuns_video")
+		tem.control_mask.style.backgroundImage  =`url(${url.posterImg})` 
+		tem.video = video
+		getVideoTime(tem)
+		el.appendChild(video)
 	if(url.videoType === "flv"){
-		let video = document.createElement("video");
-		video.setAttribute("class", "mfuns_video")
-		tem.video = video
-		getVideoTime(tem)
-		el.appendChild(video)
-		initMSE(tem.video,url.video)
-		
-	}else{
-		//初始化video
-		let video = document.createElement("video");
-		video.setAttribute("class", "mfuns_video")
-		tem.video = video
-		initVideo(url.video,tem)
-		getVideoTime(tem)
-		el.appendChild(video)
+		initFlv(tem.video,url.video)
+	}else if(url.videoType === "m3u8" || url.videoType === "hls"){
+		initHls(tem.video,url.video)
+	}
+	else {
+		tem.video.src = url.video
 		
 	}
 	
@@ -75,8 +73,8 @@ export function init(el,url,callback){
 			xhr.open("GET", url.advanceDanmaku);
 			xhr.onreadystatechange = function () {
 			    if (xhr.readyState == 4 && xhr.status == 200) {
-					
-			        send([xhr.responseText])
+				    let {data} = JSON.parse(xhr.responseText)
+			        send(data)
 			    }else{
 					// console.log('error')
 				}
@@ -88,11 +86,10 @@ export function init(el,url,callback){
 	        // send(["json....","json...."])
 	    }
 	})
-	console.log(advanceDanmakuStage)
+	
 	let canvasDanmakuStage = new canvasStage(tem,advanceDanmakuStage, {BarrageData})
 	stageList.push(canvasDanmakuStage)
 	stageList.push(advanceDanmakuStage)
-	
 	
 	//使用(注册)舞台
 	operate(canvasDanmakuStage,advanceDanmakuStage,tem,BarrageData,callback)	
