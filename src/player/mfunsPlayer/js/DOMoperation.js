@@ -53,21 +53,20 @@ export function operate(
       buff(bufferleft);
     }
   }
-  tem.video.addEventListener("loadedmetadata", function () {
+  tem.video.addEventListener("loadstart", function (e) {
     tem.tip.style.display = "block";
-    tem.tip.innerHTML = "正在获取视频信息....";
-    if (tem.video.duration) {
-      tem.tip.style.display = "none";
-    }
+    console.log("开始加载视频");
+    tem.tip.innerHTML = "开始加载视频....";
   });
-  tem.video.addEventListener("progress", function () {
-    if (!videoCanPlay) {
-      tem.tip.style.display = "block";
-      tem.tip.innerHTML = "正在获取视频内容....";
-    } else {
-      tem.load.style.display = "block";
-      tem.tip.style.display = "none";
-    }
+
+  tem.video.addEventListener("loadedmetadata", function (e) {
+    console.log("视频的元数据已加载");
+    tem.tip.innerHTML = "正在获取视频信息....";
+  });
+
+  //loadeddata：视频下载监听。当当前帧的数据已加载，但没有足够的数据来播放指定音频/视频的下一帧时触发
+  tem.video.addEventListener("loadeddata", function (e) {
+    console.log("提示当前帧的数据是可用的");
   });
 
   //播放视频时加载弹幕

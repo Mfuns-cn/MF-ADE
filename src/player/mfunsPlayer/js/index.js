@@ -5,7 +5,6 @@ import "../css/index.css";
 // import './util/flv.js'
 class mfunsPlayer {
   constructor(el, url, callback) {
-    addAcejs();
     el.style.background = "#000";
     el.style.minWidth = "400px";
     el.style.position = "relative";
@@ -13,6 +12,7 @@ class mfunsPlayer {
     el.style.justifyContent = "center";
     el.style.overflow = "hidden";
     init(el, url, callback);
+    addAcejs();
   }
 }
 

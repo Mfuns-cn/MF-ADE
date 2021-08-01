@@ -88,8 +88,6 @@ export function init(el, url, callback) {
     let canvasDanmakuStage = new canvasStage(tem, advanceDanmakuStage, {
       BarrageData,
     });
-    stageList.push(canvasDanmakuStage);
-    stageList.push(advanceDanmakuStage);
 
     //使用(注册)舞台
     operate(
