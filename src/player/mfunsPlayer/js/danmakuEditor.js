@@ -3,12 +3,12 @@ let tem;
 export function addAcejs() {
   return new Promise((resolve, reject) => {
     var acejs = document.createElement("script");
-    acejs.setAttribute("src", "http://cdn.bootcss.com/ace/1.4.9/ace.js");
+    acejs.setAttribute("src", "https://cdn.bootcss.com/ace/1.4.9/ace.js");
     document.body.appendChild(acejs);
     var lan_tool = document.createElement("script");
     lan_tool.setAttribute(
       "src",
-      "http://cdn.bootcss.com/ace/1.4.9/ext-language_tools.js"
+      "https://cdn.bootcss.com/ace/1.4.9/ext-language_tools.js"
     );
     document.body.appendChild(lan_tool);
     // function checkAce() {
