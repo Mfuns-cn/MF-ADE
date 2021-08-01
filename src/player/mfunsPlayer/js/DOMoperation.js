@@ -248,6 +248,13 @@ export function operate(
     isInput = false;
   };
   //发送弹幕
+  function tip(msg) {
+    tem.tip.style.display = "block";
+    tem.tip.innerHTML = msg;
+    setTimeout(() => {
+      tem.tip.style.display = "none";
+    }, 1500);
+  }
   tem.emit.addEventListener("click", function () {
     let value = tem.text.value; //文本内容
     let time = tem.video.currentTime;
@@ -289,9 +296,17 @@ export function operate(
       color = parseInt(danmakuColor.slice(1), 16);
       //扁平化处理
       danmakuObj = [time, type, color, "0", value];
-      if (callback.emitDanmaku) callback.emitDanmaku(danmakuObj, type);
-      else console.error("未提供发送弹幕的回调函数，弹幕发送失败");
-      // tem.text.value = ''//清空输入框，减少弹幕刷屏
+      const emit = callback.emitDanmaku;
+      if (emit) {
+        emit(danmakuObj, type)
+          .then((res) => {
+            tip("弹幕发送成功！");
+          })
+          .catch((err) => {
+            tip("弹幕发送失败！" + err.message);
+          });
+      } else console.error("未提供发送弹幕的回调函数，弹幕发送失败");
+      tem.text.value = ""; //清空输入框，减少弹幕刷屏
     }
   });
 
@@ -821,7 +836,21 @@ export function operate(
   };
   //发送高级弹幕
   tem.editor_emit.onclick = () => {
-    callback.emitDanmaku(editor.getValue(), 30);
+    const emit = callback.emitDanmaku;
+    if (emit) {
+      emit(danmakuObj, type)
+        .then((res) => {
+          if (editorOpen) closeEditor(tem);
+          tip("弹幕发送成功！");
+          advancePreview.reset();
+          advancePreview.start();
+          tem.video.play();
+        })
+        .catch((err) => {
+          closeEditor();
+          tip("弹幕发送失败！" + err.message);
+        });
+    } else console.error("未提供发送弹幕的回调函数，弹幕发送失败");
   };
   tem.ade_close.onclick = () => {
     isInput = false;
