@@ -7,6 +7,7 @@ import { canvasStage } from "./canvasStage.js";
 import { operate } from "./DOMoperation.js";
 export function init(el, url, callback) {
   //初始化播放器控件及样式
+
   createControl(el);
 
   let tem = Template();

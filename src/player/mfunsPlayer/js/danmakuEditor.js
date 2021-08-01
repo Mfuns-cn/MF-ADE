@@ -40,27 +40,3 @@ export function closeEditor() {
     tem.ade_mask.style.display = "none";
   }, 350);
 }
-export function createPreview() {
-  return new Promise((resolve, reject) => {
-    tem.advancePre.style.width = tem.content.clientWidth + "px";
-    tem.advancePre.style.height = tem.video.clientHeight + "px";
-    if (tem.advancePre) {
-      resolve(tem);
-    } else {
-      reject();
-    }
-  });
-}
-
-export function previewCallback(code) {
-  let advanceDanmakuPreview;
-  if (!advanceDanmakuPreview) {
-    advanceDanmakuPreview = new MfunsDanMaku({
-      containers: tem.advancePre,
-      danmaku: (send) => {
-        send([code]);
-      },
-    });
-  }
-  return advanceDanmakuPreview;
-}

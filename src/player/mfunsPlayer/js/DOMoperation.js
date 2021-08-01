@@ -2,7 +2,7 @@ import { createBarrageList } from "./createBarrageList.js";
 import { formateTime } from "./util/formateTime.js";
 import { debounce } from "./util/debounce.js";
 import { thro } from "./util/thro.js";
-import { openEditor, closeEditor, createPreview } from "./danmakuEditor.js";
+import { openEditor, closeEditor } from "./danmakuEditor.js";
 export function operate(
   canvasStage,
   advanceDanmakuStage,
@@ -813,13 +813,14 @@ export function operate(
       });
       editor.setValue("[\n{}\n]");
       editor.gotoLine(2);
-      createPreview().then((tem) => {
-        advancePreview = new MFADE({
-          containers: tem.advancePre,
-          danmaku: (send) => {
-            send([editor.getValue()]);
-          },
-        });
+      tem.advancePre.style.width = tem.content.clientWidth + "px";
+      tem.advancePre.style.height = tem.video.clientHeight + "px";
+
+      advancePreview = new MFADE({
+        containers: tem.advancePre,
+        danmaku: (send) => {
+          send([editor.getValue()]);
+        },
       });
     }
   };
@@ -838,9 +839,9 @@ export function operate(
   tem.editor_emit.onclick = () => {
     const emit = callback.emitDanmaku;
     if (emit) {
-      emit(danmakuObj, type)
+      emit(editor.getValue(), 30)
         .then((res) => {
-          if (editorOpen) closeEditor(tem);
+          closeEditor(tem);
           tip("弹幕发送成功！");
           advancePreview.reset();
           advancePreview.start();
