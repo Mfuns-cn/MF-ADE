@@ -1,6 +1,5 @@
-export function createControl(el){
-	
-	el.innerHTML = `
+export function createControl(el) {
+  el.innerHTML = `
 	<div id="danmakuList" class="list">
 			<div id="headOfList">
 			    <div class="label">弹幕内容</div>
@@ -74,7 +73,7 @@ export function createControl(el){
 				
 				<div id="barrage">
 					<div class="input_box">
-						<input type="text" placeholder="喵御宅Mfuns,发射(。゜ω゜)ノ!" id="text" />
+						<input type="text" autocompleted="new-password"  placeholder="喵御宅Mfuns,发射(。゜ω゜)ノ!" id="text" />
 						<div id="danmaku_style">A</div>
 						<div id="emit">发送</div>
 					</div>
@@ -100,8 +99,5 @@ export function createControl(el){
 		</div>
 	</div>
 	
-	`
-	
-	
-	
+	`;
 }
