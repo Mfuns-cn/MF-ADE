@@ -34,6 +34,7 @@ export abstract class CubicAnimations implements AnimationInterface {
     public setParams(param?: { [idx: string]: any; }): boolean {
         this.cubic = param?.cubic ? param?.cubic : this.cubic
         this.duration = param?.duration ? param?.duration : this.duration
+        // console.log(param?.duration);
         return true
     }
     public getDuration(): number {

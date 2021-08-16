@@ -16,7 +16,8 @@ export class RepeatAnimations extends CubicAnimations{
     /**
      * 单个动画时间
      */
-    public animationTime:number
+    public animationTime:number;
+    public duration:number = 0;
     public getCubicStyle(_progress: number, time: number): false | DanmakuStyle {
         return this.animation.getStyle(this.getCurTime(time))
     }

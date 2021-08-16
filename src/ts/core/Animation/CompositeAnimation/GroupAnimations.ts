@@ -16,6 +16,7 @@ export class GroupAnimations extends CubicAnimations {
      * 每个动画结束的累计矩阵
      */
     public cumulativeMatrix: number[][] = []
+    public duration:number = 0;
     public setParams(param: { [idx: string]: any; }): boolean {
         super.setParams(param);
 

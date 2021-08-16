@@ -13,6 +13,7 @@ export class ListAnimations extends CubicAnimations {
      */
     public cumulativeMatrix: number[][] = []
     public cumulativeTime: number[] = []
+    public duration:number = 0;
     public setParams(param: { [idx: string]: any; }): boolean {
         super.setParams(param);
         this.animations = AnimationFactory.getAnimationsList(param?.animations || [])
