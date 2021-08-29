@@ -1,15 +1,21 @@
-import { I18n } from "../../i18n";
-import { DanmakuItemInterface } from "../../core/Danmaku/DanmakuItemInterface";
-import { AnimationFactory } from "../AnimationFactory";
-import { DanmakuFactory } from "./DanmakuFactory";
-import { DanmakuParserInterface } from "./DanmakuParserInterface";
-import { DanmakuEvent } from "../../Event/DanmakuEvent";
-import { DanmakuEventType } from "../../Event/DanmakuEventType";
+import { I18n } from "../../../i18n";
+import { DanmakuItemInterface } from "../../../core/Danmaku/DanmakuItemInterface";
+import { AnimationFactory } from "../../AnimationFactory";
+import { DanmakuFactory } from "../DanmakuFactory";
+import { DanmakuParserInterface } from "../DanmakuParserInterface";
+import { DanmakuEvent } from "../../../Event/DanmakuEvent";
+import { DanmakuEventType } from "../../../Event/DanmakuEventType";
+import { PreprocessPipe } from "./PreprocessPipe";
 
 /**
  * JSON 格式弹幕解析器
  */
 export class JsonDanmakuParser implements DanmakuParserInterface {
+  /**
+   * 弹幕tag列表
+   */
+  protected tagList: any[] = [];
+
   public parser(content: string): DanmakuItemInterface[] {
     try {
       let json: any[] = JSON.parse(content);
@@ -33,28 +39,16 @@ export class JsonDanmakuParser implements DanmakuParserInterface {
    */
   public getDanmaku(obj?: any[]): DanmakuItemInterface[] {
     let list: DanmakuItemInterface[] = [];
-
+    let preprocessPipe = new PreprocessPipe();
     /**
      * 遍历弹幕列表
      */
-    obj?.forEach((dan, index) => {
-      /**
-       * 检测弹幕类型是否正确
-       */
-      if (typeof dan !== "object") {
-        console.warn(
-          `${I18n.t("Unknown danmaku format")} :  ${dan}  index: + ${index}`
-        );
-        // 触发弹幕类型错误事件
-        DanmakuEvent.dispatch(DanmakuEventType.DANMAKU_FORMAT_ERROR, {
-          content: dan,
-          index,
-        });
-      } else {
+    obj?.forEach((json, index) => {
+      // 经过管道处理
+      let dan = preprocessPipe.process(json, index);
+      if (dan) {
+        // 封装 弹幕对象
         let danmaku = DanmakuFactory.getDanmakuInstance(dan.type);
-        if (!dan?.animations || dan?.animations === []) {
-          dan.animations = [{ type: "static" }];
-        }
         danmaku.setParams({
           start: dan?.start,
           content: dan?.content,
@@ -64,7 +58,6 @@ export class JsonDanmakuParser implements DanmakuParserInterface {
           }), // 将列表组成一个list
           child: this.getDanmaku(dan.childs),
         });
-
         list.push(danmaku);
       }
     });

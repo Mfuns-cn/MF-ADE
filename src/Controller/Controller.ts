@@ -5,7 +5,7 @@ import { I18n } from "../i18n";
 import { CanvasStyle } from "../core/Style/CanvasStyle";
 import { PxSize } from "../core/Style/Unit/PxSize";
 import { TimeLineFactory } from "../Factory/TimeLineFactort";
-import { JsonDanmakuParser } from "../Factory/DanmakuParser/JsonDanmakuParser";
+import { JsonDanmakuParser } from "../Factory/DanmakuParser/jsonDanmaku/JsonDanmakuParser";
 import { DanmakuEvent } from "../Event/DanmakuEvent";
 import { DanmakuEventType } from "../Event/DanmakuEventType";
 import { RendererFactory } from "../Factory/RendererFactory";
@@ -259,15 +259,15 @@ export class Controller {
     // 重置时间轴
     timeline.reset();
     // 根据时间轴类型找到对应的弹幕获取器
-    let fun = this.danmakuFunction[stage.timeLineType()];
+    let danmakuGetter = this.danmakuFunction[stage.timeLineType()];
     // 判断弹幕获取器是否存在
-    if (!fun) {
+    if (!danmakuGetter) {
       return;
     }
-    fun((res: string[]) => {
+    danmakuGetter((res: string[]) => {
       // 解析弹幕文本
-      let parser = new JsonDanmakuParser();
       res.forEach((danmakuStr: string) => {
+        let parser = new JsonDanmakuParser();
         // 遍历添加进时间轴
         parser.parser(danmakuStr).forEach((danmaku) => {
           timeline.addDanmaku(danmaku);

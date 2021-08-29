@@ -1,0 +1,14 @@
+[
+  {
+    "content": "1233",
+    "id": "test",
+    "style": {
+      "color": "red"
+    }
+  },
+  {
+    "extends": "test",
+    "start": 900,
+    "content": "1233333"
+  }
+]

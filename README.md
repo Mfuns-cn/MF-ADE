@@ -24,7 +24,7 @@ MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎
 
 如果使用过程中存在 bug ,欢迎提交 issue 反馈
 
-当前版本: `1.5.6 Beta` ，更新日期：`2021/8/29`
+当前版本: `1.6.0 Beta` ，更新日期：`2021/8/29`
 
 ## 弹幕实验室
 

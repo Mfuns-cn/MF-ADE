@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./test.css">
-</head>
+    <link rel="stylesheet" href="./test.css" />
+  </head>
 
-<body>
-
+  <body>
     <div class="box">
-        <div id="body"></div>
-        <button onclick="a.start()">继续</button>
-        <button onclick="a.pause()">暂停</button>
-        <button onclick="a.reset()">读取编辑器</button>
-        <span id="time">time</span>
+      <div id="body"></div>
+      <button onclick="a.start()">继续</button>
+      <button onclick="a.pause()">暂停</button>
+      <button onclick="a.reset()">读取编辑器</button>
+      <span id="time">time</span>
     </div>
-</body>
-<script src="../lib/mfunsAdvanceDanmaku.js"></script>
-<script>
-    var time = document.getElementById("time")
+  </body>
+  <script src="../lib/mfunsAdvanceDanmaku.js"></script>
+  <script>
+    var time = document.getElementById("time");
     var a = new MFADE({
-        containers: document.getElementById("body"),
-        danmaku: (send) => {
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "danmmaku.json");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    send([xhr.responseText])
-                    a.start();
-                }
-            };
-            xhr.send()
-        }
-    })
+      containers: document.getElementById("body"),
+      danmaku: (send) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "test.json");
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            send([xhr.responseText]);
+            a.start();
+          }
+        };
+        xhr.send();
+      },
+    });
 
     setInterval(() => {
-        time.innerHTML = a.time()
-
-    }, 100)
-</script>
-
+      time.innerHTML = a.time();
+    }, 100);
+  </script>
 </html>
