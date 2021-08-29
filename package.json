@@ -1,8 +1,9 @@
 {
   "name": "mf-ade",
-  "version": "1.5.3",
+  "version": "1.5.6",
   "description": "基于TS的高级弹幕引擎",
-  "main": "src/ts/index.js",
+  "main": "dist/index.js",
+  "types": "src/ts/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode=production && tsc",
@@ -23,8 +24,5 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.51.1",
     "webpack-cli": "^4.8.0"
-  },
-  "dependencies": {
-    "flv.js": "^1.6.1"
   }
 }

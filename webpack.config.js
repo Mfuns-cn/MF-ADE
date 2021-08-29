@@ -1,55 +1,54 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
   entry: {
-    mfunsAdvanceDanmaku:'./src/ts/index.ts',
-    mfunsPlayer:'./src/player/mfunsPlayer/js/index.js'
+    mfunsAdvanceDanmaku: "./src/index.ts",
   },
   output: {
-    path: path.resolve(__dirname, 'lib'),
-    filename:'[name].js',
-    publicPath:'lib/'
+    path: path.resolve(__dirname, "lib"),
+    filename: "[name].js",
+    publicPath: "lib/",
   },
-  devtool: 'source-map',
+  devtool: "source-map",
   resolve: {
-    extensions: ['.js', '.ts', '.vue', '.json'],
+    extensions: [".js", ".ts", ".vue", ".json"],
     alias: {
-      "src": path.join(__dirname, "./src") // 这样@符号就表示项目根目录中src这一层路径
-    }
- },
+      src: path.join(__dirname, "./src"), // 这样@符号就表示项目根目录中src这一层路径
+    },
+  },
   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
               limit: 89192,
-              name: 'img/[name].[hash:8].[ext]'
-            }
-          }
-        ]
+              name: "img/[name].[hash:8].[ext]",
+            },
+          },
+        ],
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
       },
       {
         test: /\.tsx?$/,
         use: [
           {
-            loader: 'ts-loader',
+            loader: "ts-loader",
             options: {
               transpileOnly: true,
             },
           },
         ],
-      }
+      },
     ],
   },
 };
