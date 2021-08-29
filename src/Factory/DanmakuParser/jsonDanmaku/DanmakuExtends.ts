@@ -17,10 +17,12 @@ export class DanamkuExtends implements JsonPreprocessInterface {
         return json;
       }
       // 获取父级弹幕
-      let parent = this.copy(this.idList[json.extends]);
 
+      let parent = this.idList[json.extends];
+      if (parent) {
+        danmaku = deepMerge(this.copy(parent), json);
+      }
       // 合并
-      danmaku = deepMerge(parent, json);
     }
 
     // 标记弹幕id
