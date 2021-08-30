@@ -1,6 +1,6 @@
 {
   "name": "mf-ade",
-  "version": "1.6.0",
+  "version": "1.6.2",
   "description": "基于TS的高级弹幕引擎",
   "main": "dist/index.js",
   "types": "src/ts/index.ts",

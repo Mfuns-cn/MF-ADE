@@ -19,16 +19,16 @@ MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎
 - 滤镜
 - 渐变
 - 大部分 CSS 属性
-
+- 模板继承
 更多的效果还在不断的添加和完善中
 
 如果使用过程中存在 bug ,欢迎提交 issue 反馈
 
-当前版本: `1.6.1 Beta` ，更新日期：`2021/8/29`
+当前版本: `1.6.2 Beta` ，更新日期：`2021/8/30`
 
 ## 弹幕实验室
 
-弹幕实验室目前已经搭建完成 地址: [https://lab.meogirl.ml](https://lab.meogirl.ml)
+弹幕实验室目前已经搭建完成 地址: [https://labv2.meogirl.ml](https://labv2.meogirl.ml)
 
 ## 使用文档
 

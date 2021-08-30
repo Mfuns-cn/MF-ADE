@@ -1,14 +1,85 @@
 [
   {
-    "content": "1233",
-    "id": "test",
     "style": {
-      "color": "red"
+      "width": "100%",
+      "height": "100%",
+      "background-color": "#5cffe8"
+    },
+    "animations": [
+      {
+        "type": "static",
+        "duration": 16000
+      }
+    ]
+  },
+  {
+    "id": "white-center",
+    "content": "Miku",
+    "style": {
+      "width": "100%",
+      "text-align": "center",
+      "font-size": "350px",
+      "color": "#fff",
+      "top": "200px",
+      "font-weight": "900"
+    },
+    "animations": [
+      {
+        "type": "static",
+        "duration": 16000
+      }
+    ]
+  },
+  {
+    "extends": "white-center",
+    "content": "- Anamanaguchi -",
+    "style": {
+      "font-size": "200px",
+      "top": "550px",
+      "font-weight": "600"
     }
   },
   {
-    "extends": "test",
-    "start": 900,
-    "content": "1233333"
+    "id": "ground",
+    "style": {
+      "width": "1300px",
+      "height": "1300px",
+      "border-radius": "1000px",
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0,
+      "margin": "auto",
+      "border": "20px dashed #fff"
+    },
+    "animations": [
+      {
+        "type": "repeat",
+        "repeat": "4",
+        "animations": [
+          {
+            "duration": 4000,
+            "type": "rotateZ",
+            "angle": {
+              "end": "180"
+            }
+          },
+          {
+            "duration": 4000,
+            "type": "rotateY",
+            "angle": {
+              "end": "180"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "extends": "ground",
+    "style": {
+      "width": "900px",
+      "height": "900px"
+    }
   }
 ]
