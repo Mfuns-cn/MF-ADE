@@ -20,19 +20,27 @@ export class DanamkuExtends implements JsonPreprocessInterface {
 
       let parent = this.idList[json.extends];
       if (parent) {
+        // 合并
         danmaku = deepMerge(this.copy(parent), json);
       }
-      // 合并
     }
 
     // 标记弹幕id
     if (json?.id) {
-      // 如果项目存在id则加入到列表
-      this.idList[danmaku.id] = this.copy(danmaku);
+      this.save(json.id, danmaku);
     }
+    // 存储_LAST_变量
+    this.save("_LAST_", danmaku);
     return danmaku;
   }
   protected copy(json: any) {
     return JSON.parse(JSON.stringify(json));
+  }
+  protected save(name: string, danmaku: any) {
+    // 如果项目存在id则加入到列表
+    let copy = this.copy(danmaku);
+    // 去掉id属性
+    delete copy.id;
+    this.idList[name] = copy;
   }
 }

@@ -6,6 +6,7 @@ import { DanmakuParserInterface } from "../DanmakuParserInterface";
 import { DanmakuEvent } from "../../../Event/DanmakuEvent";
 import { DanmakuEventType } from "../../../Event/DanmakuEventType";
 import { PreprocessPipe } from "./PreprocessPipe";
+import { PostprocessPipe } from "./PostprocessPipe";
 
 /**
  * JSON 格式弹幕解析器
@@ -40,11 +41,12 @@ export class JsonDanmakuParser implements DanmakuParserInterface {
   public getDanmaku(obj?: any[]): DanmakuItemInterface[] {
     let list: DanmakuItemInterface[] = [];
     let preprocessPipe = new PreprocessPipe();
+    let postprocessPipe = new PostprocessPipe();
     /**
      * 遍历弹幕列表
      */
     obj?.forEach((json, index) => {
-      // 经过管道处理
+      // 经过前置管道处理
       let dan = preprocessPipe.process(json, index);
       if (dan) {
         // 封装 弹幕对象
@@ -58,7 +60,13 @@ export class JsonDanmakuParser implements DanmakuParserInterface {
           }), // 将列表组成一个list
           child: this.getDanmaku(dan.childs),
         });
-        list.push(danmaku);
+        // 后置管道处理
+        // console.log(danmaku, dan);
+
+        let danmaku2 = postprocessPipe.process(danmaku, json);
+        if (danmaku2) {
+          list.push(danmaku);
+        }
       }
     });
     return list;

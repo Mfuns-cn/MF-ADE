@@ -1,5 +1,6 @@
 import { DanmakuDefaultAttr } from "./DanmakuDefaultAttr";
 import { DanamkuExtends } from "./DanmakuExtends";
+import { DanmakuPosition } from "./DanmakuPosititon";
 import { DanmakuValidate } from "./DanmakuValidate";
 import { JsonPreprocessInterface } from "./JsonPreprocessInterface";
 
@@ -10,6 +11,7 @@ export class PreprocessPipe implements JsonPreprocessInterface {
   protected list: JsonPreprocessInterface[] = [
     new DanmakuValidate(), // 弹幕格式验证
     new DanamkuExtends(), // 弹幕继承模块
+    new DanmakuPosition(), // 弹幕xyz属性语法糖
     new DanmakuDefaultAttr(), // 弹幕默认属性设置
   ];
   public process(json: any, index: number) {

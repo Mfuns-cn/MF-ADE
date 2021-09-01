@@ -46,14 +46,14 @@ export class RepeatAnimations extends CubicAnimations {
       this.animation = new StaticAnimation();
     }
 
-    console.log(this.animation);
+    // console.log(this.animation);
 
     this.repeat = param?.repeat || this.repeat;
     this.animationTime = this.animation.getDuration();
     // 覆盖父级存活时间
     // 计算方式 单个弹幕时间 X 弹幕重复次数
     this.duration = this.animationTime * this.repeat;
-    console.log(this.duration);
+    // console.log(this.duration);
 
     return true;
   }

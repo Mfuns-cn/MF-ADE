@@ -88,7 +88,7 @@ export class Controller {
    * 将舞台挂载到容器中
    */
   public mount() {
-    console.info(I18n.t("Start mount stage"));
+    // console.info(I18n.t("Start mount stage"));
     // 遍历每一个舞台
     this.stageList.forEach((stage, key) => {
       // 获取一个div
