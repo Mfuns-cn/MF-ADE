@@ -6,6 +6,7 @@ export interface InitConfigInterface {
   /**
    * 渲染的容器
    */
-  containers: HTMLElement;
-  danmaku: () => string;
+  containers?: HTMLElement;
+  codeDanmaku?: () => string;
+  model7Danmaku?: () => string;
 }

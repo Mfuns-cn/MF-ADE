@@ -43,6 +43,7 @@ export class GroupAnimations extends CubicAnimations {
     let noneStyle = true;
     for (const animation of this.animations) {
       let style2 = animation.getStyle(time);
+
       if (style2) {
         noneStyle = false;
         style = deepMerge(style, style2);

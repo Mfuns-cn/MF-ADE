@@ -5,10 +5,10 @@ import { I18n } from "../i18n";
 import { CanvasStyle } from "../core/Style/CanvasStyle";
 import { PxSize } from "../core/Style/Unit/PxSize";
 import { TimeLineFactory } from "../Factory/TimeLineFactort";
-import { JsonDanmakuParser } from "../Factory/DanmakuParser/jsonDanmaku/JsonDanmakuParser";
 import { DanmakuEvent } from "../Event/DanmakuEvent";
 import { DanmakuEventType } from "../Event/DanmakuEventType";
 import { RendererFactory } from "../Factory/RendererFactory";
+import { DanmakuParserFactory } from "../Factory/DanmakuParser/DanmakuParserFactory";
 
 /**
  * 控制器 ，统一管理整个弹幕系统
@@ -44,9 +44,13 @@ export class Controller {
    */
   public skipStatus: boolean = false;
 
+  /**
+   * 弹幕获取器函数列表
+   */
   protected danmakuFunction: {
     [type: string]: (send: (str: string[]) => void) => void;
   } = {};
+
   constructor(containers: HTMLElement) {
     this.containers = containers;
     // 获取实时的style对象，当大小发生变化时，会更新自身
@@ -104,11 +108,12 @@ export class Controller {
       let timeline = TimeLineFactory.getTimeLine(lineType);
       stage.timeLine(timeline);
       // 检察是否存在弹幕获取器
-      if (this.danmakuFunction[lineType]) {
+      let attachedType = stage.attachedType();
+      if (this.danmakuFunction[attachedType]) {
         // 如果存在，就获取弹幕
         this.resetDanmaku(key);
       } else {
-        console.warn(I18n.t("danmaku get function is null :" + lineType));
+        console.warn(I18n.t("danmaku get function is null :" + attachedType));
       }
 
       // 更新渲染器内画布样式
@@ -231,8 +236,8 @@ export class Controller {
 
   /**
    * 添加弹幕获取器
-   * @param type
-   * @param fun
+   * @param type 舞台的附属类型
+   * @param fun 回调函数
    */
   public addGetDanmakuFunction(
     type: string,
@@ -259,7 +264,7 @@ export class Controller {
     // 重置时间轴
     timeline.reset();
     // 根据时间轴类型找到对应的弹幕获取器
-    let danmakuGetter = this.danmakuFunction[stage.timeLineType()];
+    let danmakuGetter = this.danmakuFunction[stage.attachedType()];
     // 判断弹幕获取器是否存在
     if (!danmakuGetter) {
       return;
@@ -267,9 +272,11 @@ export class Controller {
     danmakuGetter((res: string[]) => {
       // 解析弹幕文本
       res.forEach((danmakuStr: string) => {
-        let parser = new JsonDanmakuParser();
+        let parser = DanmakuParserFactory.getInstance(stage.attachedType());
+        // let parser = new CodeDanmakuParser();
         // 遍历添加进时间轴
         parser.parser(danmakuStr).forEach((danmaku) => {
+          console.log(danmaku.getAnimation());
           timeline.addDanmaku(danmaku);
         });
         // 弹幕加载完成事件

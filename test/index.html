@@ -22,7 +22,7 @@
     var time = document.getElementById("time");
     var a = new MFADE({
       containers: document.getElementById("body"),
-      danmaku: (send) => {
+      model7Danmaku: (send) => {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "test.json");
         xhr.onreadystatechange = function () {

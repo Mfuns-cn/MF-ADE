@@ -56,9 +56,13 @@ export interface StageInterface {
   rendererType(): string;
 
   /**
-   * 期望的时间轴类型
+   * 期望的弹幕时间轴类型
    */
   timeLineType(): string;
+  /**
+   * 期望的附属组件类型
+   */
+  attachedType(): string;
   /**
    * 重置
    */

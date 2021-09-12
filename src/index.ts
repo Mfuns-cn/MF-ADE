@@ -1,10 +1,11 @@
 import "../css/base.css";
 import { Controller } from "./Controller/Controller";
 import { I18n } from "./i18n";
-import { InitConfigInterface } from "./core/InitConfigInterface";
-import { TestStage } from "./core/Stage/TestStage";
+import { InitConfigInterface } from "./InitConfigInterface";
 import { DanmakuEvent } from "./Event/DanmakuEvent";
 import { DanmakuEventType } from "./Event/DanmakuEventType";
+import { CodeDanmakuStage } from "./core/Stage/CodeDanmakuStage";
+import { Model7Stage } from "./core/Stage/Model7Stage";
 export class MFADE {
   public controller: Controller;
   constructor(config: InitConfigInterface) {
@@ -13,8 +14,18 @@ export class MFADE {
       throw ReferenceError(I18n.t("Containers is null"));
     }
     this.controller = new Controller(config.containers);
-    this.controller.addGetDanmakuFunction("advance", config.danmaku);
-    this.controller.registStage(new TestStage(), 1);
+    // json代码弹幕
+    if (config.codeDanmaku) {
+      this.controller.addGetDanmakuFunction("code", config.codeDanmaku);
+      this.controller.registStage(new CodeDanmakuStage(), 1);
+    }
+
+    // model7 弹幕
+    if (config.model7Danmaku) {
+      this.controller.addGetDanmakuFunction("model7", config.model7Danmaku);
+      this.controller.registStage(new Model7Stage(), 2);
+    }
+    // 挂载
     this.controller.mount();
     // 监听大小变化
     window.addEventListener("resize", () => {
@@ -62,10 +73,10 @@ export class MFADE {
   }
   /**
    * 添加事件监听
-   * @param event 
-   * @param callback 
+   * @param event
+   * @param callback
    */
-  public listenerEvent(event: DanmakuEventType, callback: (data:any) => void) {
+  public listenerEvent(event: DanmakuEventType, callback: (data: any) => void) {
     DanmakuEvent.listener(event, callback);
   }
 }

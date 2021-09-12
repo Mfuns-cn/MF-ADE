@@ -11,7 +11,7 @@ import { PostprocessPipe } from "./PostprocessPipe";
 /**
  * JSON 格式弹幕解析器
  */
-export class JsonDanmakuParser implements DanmakuParserInterface {
+export class CodeDanmakuParser implements DanmakuParserInterface {
   /**
    * 弹幕tag列表
    */

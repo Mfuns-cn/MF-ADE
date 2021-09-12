@@ -64,13 +64,9 @@ export abstract class BaseStage implements StageInterface {
     this.renderer.refresh(time);
     return true;
   }
-  public rendererType(): string {
-    return "css3";
-  }
-  public timeLineType(): string {
-    return "advance";
-  }
-
+  public abstract rendererType(): string;
+  public abstract attachedType(): string;
+  public abstract timeLineType(): string;
   public reset(): boolean {
     this?.renderer?.reset();
     return true;

@@ -1,1 +1,25 @@
-[]
+[
+  {
+    "content": "111111",
+    "size": 250,
+    "color": "#0000ff",
+    "blod": 900,
+    "shadow": true,
+    "stroke": 10,
+    "strokeColor": "#550000",
+    "font": "宋体",
+    "zIndex": 3,
+    "linear": 0,
+    "animations": [
+      {
+        "x": 100,
+        "y": 100
+      },
+      {
+        "x": 200,
+        "y": 800,
+        "scale": 0.8
+      }
+    ]
+  }
+]

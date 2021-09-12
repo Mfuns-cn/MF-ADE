@@ -52,6 +52,7 @@ export class ListAnimations extends CubicAnimations {
     let curAnimation = this.getCurAnimation(time);
 
     if (curAnimation) {
+      time = time - this.cumulativeTime[curAnimation.key];
       return curAnimation.animation.getStyle(time);
     }
     return false;

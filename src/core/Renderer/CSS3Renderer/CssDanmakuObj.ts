@@ -99,6 +99,7 @@ export class DanmakuTool {
       let sty;
       let max;
       sty = dan.animation.getStyle(time);
+      // console.log(sty);
       if (sty) {
         this.setStyle(dan.element, sty);
       }
