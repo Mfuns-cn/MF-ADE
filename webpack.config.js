@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    mfunsAdvanceDanmaku: "./src/index.ts",
+    mfunsAdvancedDanmaku: "./src/index.ts",
   },
   output: {
     path: path.resolve(__dirname, "lib"),

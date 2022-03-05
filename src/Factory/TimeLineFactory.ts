@@ -3,8 +3,8 @@ import { TimeLineInterface } from "../TimeLine/TimeLineInterface";
 
 export class TimeLineFactory{
     public static list = {
-        "defult":AdvancedLine,
-        "advance":AdvancedLine
+        "default":AdvancedLine,
+        "advanced":AdvancedLine
     }
     public static getTimeLine(type:string):TimeLineInterface{
         if(!this.list[type]){

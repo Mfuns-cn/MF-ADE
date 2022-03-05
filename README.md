@@ -20,7 +20,7 @@ MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎
 - 渐变
 - 大部分 CSS 属性
 - 模板继承
-- model7+ 弹幕
+- mode7+ 弹幕
   更多的效果还在不断的添加和完善中
 
 如果使用过程中存在 bug ,欢迎提交 issue 反馈
@@ -35,7 +35,7 @@ MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎
 
 ### 下载 & 安装
 
-下载 lib/mfunsAdvanceDanmaku.js 文件
+下载 lib/mfunsAdvancedDanmaku.js 文件
 使用 script 标记导入到 html 中
 
 npm 方式：
@@ -75,8 +75,8 @@ var danmaku = new MFADE({
   codeDanmaku: (send) => {
     send(["json....", "json...."]);
   },
-  // 1.8.0 版 model7+ 弹幕
-  model7Danmaku: (send) => {
+  // 1.8.0 版 mode7+ 弹幕
+  mode7Danmaku: (send) => {
     send(["json....", "json...."]);
   },
 });
@@ -91,10 +91,10 @@ containers 容器接受一个 html 元素,但并不会对元素的大小和位�
 由于弹幕引擎为了更好的可扩展性，内部并无任何网络请求的实现，
 所以需要在这里进行相应的操作，获取弹幕当获取弹幕完成，调用 `send(string[])` 回调函数，由于弹幕可能有很多条，所以回调函数接受一个 json 字符串数组
 
-1.8.0 之后新增model7+  弹幕接口被拆分成两个
+1.8.0 之后新增mode7+  弹幕接口被拆分成两个
 
 - `codeDanmaku:(send)=>void`:  原`danmaku:(send)=>void` 接口更名
-- `model7Danmaku:(send)=>void`: model7+ 弹幕接口
+- `mode7Danmaku:(send)=>void`: mode7+ 弹幕接口
 
 
 ### 弹幕引擎的控制方法
@@ -167,7 +167,7 @@ containers 容器接受一个 html 元素,但并不会对元素的大小和位�
 
 - callback 回调函数
 
-## model7+ 接收弹幕格式
+## mode7+ 接收弹幕格式
 
 ```json
 [

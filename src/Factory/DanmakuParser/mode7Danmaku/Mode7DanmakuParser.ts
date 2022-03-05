@@ -6,7 +6,7 @@ import { I18n } from "../../../i18n";
 import { DanmakuFactory } from "../DanmakuFactory";
 import { DanmakuParserInterface } from "../DanmakuParserInterface";
 
-export class Model7DanmakuParser implements DanmakuParserInterface {
+export class Mode7DanmakuParser implements DanmakuParserInterface {
   /**
    * m7 弹幕解析器
    * 弹幕格式示例
