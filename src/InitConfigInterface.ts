@@ -8,5 +8,5 @@ export interface InitConfigInterface {
    */
   containers?: HTMLElement;
   codeDanmaku?: () => string;
-  model7Danmaku?: () => string;
+  mode7Danmaku?: () => string;
 }

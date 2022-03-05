@@ -5,7 +5,7 @@ import { BaseStage } from "./BaseStage";
  */
 export class CodeDanmakuStage extends BaseStage {
   public timeLineType(): string {
-    return "advance";
+    return "advanced";
   }
   public rendererType(): string {
     return "css3";

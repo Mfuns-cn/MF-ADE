@@ -4,7 +4,7 @@ import { Context } from "../Context/Context";
 import { I18n } from "../i18n";
 import { CanvasStyle } from "../core/Style/CanvasStyle";
 import { PxSize } from "../core/Style/Unit/PxSize";
-import { TimeLineFactory } from "../Factory/TimeLineFactort";
+import { TimeLineFactory } from "../Factory/TimeLineFactory";
 import { DanmakuEvent } from "../Event/DanmakuEvent";
 import { DanmakuEventType } from "../Event/DanmakuEventType";
 import { RendererFactory } from "../Factory/RendererFactory";

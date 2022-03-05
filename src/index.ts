@@ -5,7 +5,7 @@ import { InitConfigInterface } from "./InitConfigInterface";
 import { DanmakuEvent } from "./Event/DanmakuEvent";
 import { DanmakuEventType } from "./Event/DanmakuEventType";
 import { CodeDanmakuStage } from "./core/Stage/CodeDanmakuStage";
-import { Model7Stage } from "./core/Stage/Model7Stage";
+import { Mode7Stage } from "./core/Stage/Mode7Stage";
 export class MFADE {
   public controller: Controller;
   constructor(config: InitConfigInterface) {
@@ -20,10 +20,10 @@ export class MFADE {
       this.controller.registStage(new CodeDanmakuStage(), 1);
     }
 
-    // model7 弹幕
-    if (config.model7Danmaku) {
-      this.controller.addGetDanmakuFunction("model7", config.model7Danmaku);
-      this.controller.registStage(new Model7Stage(), 2);
+    // mode7 弹幕
+    if (config.mode7Danmaku) {
+      this.controller.addGetDanmakuFunction("mode7", config.mode7Danmaku);
+      this.controller.registStage(new Mode7Stage(), 2);
     }
     // 挂载
     this.controller.mount();

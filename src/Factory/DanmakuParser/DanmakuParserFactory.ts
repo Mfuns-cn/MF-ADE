@@ -1,6 +1,6 @@
 import { CodeDanmakuParser } from "./codeDanmaku/CodeDanmakuParser";
 import { DanmakuParserInterface } from "./DanmakuParserInterface";
-import { Model7DanmakuParser } from "./model7Danmaku/Mode7DanmakuParser";
+import { Mode7DanmakuParser } from "./mode7Danmaku/Mode7DanmakuParser";
 
 /**
  * 弹幕解析器简单工厂
@@ -8,7 +8,7 @@ import { Model7DanmakuParser } from "./model7Danmaku/Mode7DanmakuParser";
 export class DanmakuParserFactory {
   protected static parser = {
     code: CodeDanmakuParser,
-    model7: Model7DanmakuParser,
+    mode7: Mode7DanmakuParser,
   };
   public static getInstance(type: string): DanmakuParserInterface {
     let instance = this.parser[type];

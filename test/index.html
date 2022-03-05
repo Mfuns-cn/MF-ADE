@@ -17,12 +17,12 @@
       <span id="time">time</span>
     </div>
   </body>
-  <script src="../lib/mfunsAdvanceDanmaku.js"></script>
+  <script src="../lib/mfunsAdvancedDanmaku.js"></script>
   <script>
     var time = document.getElementById("time");
     var a = new MFADE({
       containers: document.getElementById("body"),
-      model7Danmaku: (send) => {
+      mode7Danmaku: (send) => {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "test.json");
         xhr.onreadystatechange = function () {
