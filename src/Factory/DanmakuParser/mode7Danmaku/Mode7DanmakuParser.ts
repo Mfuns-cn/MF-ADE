@@ -16,7 +16,7 @@ export class Mode7DanmakuParser implements DanmakuParserInterface {
    *    start:number//开始时间
    *    size:number,//文字大小
    *    color:"#ffffffff"//文字颜色
-   *    blod:400,//文本粗细
+   *    weight:400,//文本粗细
    *    shadow:true,//阴影
    *    stroke:number,//描边
    *    strokeColor:"#fffffff",//描边颜色
@@ -79,7 +79,7 @@ export class Mode7DanmakuParser implements DanmakuParserInterface {
     return {
       fontSize: `${danmaku.size || 40}px`,
       color: danmaku.color || "#000",
-      fontWeight: danmaku.blod || 400,
+      fontWeight: danmaku.weight || 400,
       textShadow: danmaku.shadow ? "5px 5px 5px rgba(0,0,0,0.4)" : "",
       "-webkit-text-stroke": `${danmaku.stroke || 0}px ${
         danmaku.strokeColor || "#000"

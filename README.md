@@ -176,7 +176,7 @@ containers 容器接受一个 html 元素,但并不会对元素的大小和位�
   "start":0,//开始时间
   "size":100,//文字大小
   "color":"#ffffffff",//文字颜色
-  "blod":400,//文本粗细
+  "weight":400,//文本粗细
   "shadow":true,//阴影
   "stroke":1,//描边
   "strokeColor":"#fffffff",//描边颜色
