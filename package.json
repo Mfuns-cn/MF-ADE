@@ -1,9 +1,9 @@
 {
   "name": "mf-ade",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "基于TS的高级弹幕引擎",
   "main": "dist/index.js",
-  "types": "src/ts/index.ts",
+  "types": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode=production && tsc",
