@@ -1,5 +1,5 @@
 # MFuns 高级弹幕引擎
-
+此项目已不再活跃，请移至我们的新项目 [mfuns-advanced-danmaku](https://github.com/Mfuns-cn/mfuns-advanced-danmaku)
 MF-ADE (MFuns Advanced Danmaku Engine) 高级弹幕引擎
 
 ## 特性
